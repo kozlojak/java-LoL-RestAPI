@@ -3,13 +3,11 @@ package pl.jakubkozlowski.learning.firststeps.mapper;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
 import pl.jakubkozlowski.learning.firststeps.model.Champion;
 
@@ -19,88 +17,112 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
 @MybatisTest
+//For autoincrement reset between tests
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class ChampionMapperTest {
 
+    private static final String AATROX = "Aatrox";
+    private static final String AHRI = "Ahri";
+    private static final Long id1 = 1L;
+    public static final Long ID_1 = id1;
+    private static final Long id2 = 2L;
+    public static final Long ID_2 = id2;
     @Autowired
     private ChampionMapper championMapper;
-    private Champion expected;
-    private Champion expected2;
+    private Champion expectedAatrox;
+    private Champion expectedAhri;
 
 
     @Before
     public void setUp() throws Exception {
-        expected = new Champion(1L, "Aatrox");
-//        System.out.println(championMapper);
+        expectedAatrox = new Champion(ID_1, AATROX);
+        expectedAhri = new Champion(ID_2, AHRI);
     }
 
     @Test
     public void whenFindOne_thenReturnChampion() {
         //given
-        championMapper.create(expected);
+        championMapper.persist(expectedAatrox);
         //when
-        Champion actual = championMapper.findOne(1L);
+        Champion actual = championMapper.findById(ID_1);
         //then
         assertThat(actual)
-                .isEqualTo(expected);
+                .isEqualTo(expectedAatrox);
     }
 
     @Test
-    public void whenFindAll_thenReturnChampions(){
+    public void whenFindAll_thenReturnChampionList(){
         //given
-        expected2 = new Champion(2L, "Ahri");
-        championMapper.create(expected);
-        championMapper.create(expected2);
+        championMapper.persist(expectedAatrox);
+        championMapper.persist(expectedAhri);
         //when
         List<Champion> actual = championMapper.findAll();
         //then
+        assertThat(actual.size())
+                .isEqualTo(2);
         assertThat(actual.get(0))
-                .isEqualTo(expected);
+                .isEqualTo(expectedAatrox);
         assertThat(actual.get(1))
-                .isEqualTo(expected2);
+                .isEqualTo(expectedAhri);
+    }
+
+    @Test
+    public void whenPersist_thenIdAutoincrementsAndReturnsChampion(){
+        //when
+        championMapper.persist(expectedAhri);
+        //then
+        assertThat(championMapper.findByName(expectedAhri.getName()))
+                .isEqualTo(new Champion(ID_1, AHRI));
+
     }
 
     @Test(expected = DuplicateKeyException.class)
-    public void whenCreateChampionWithSameId_thenExceptionOccurs(){
-        //given
-        championMapper.create(expected);
-        expected2 = new Champion(1L, "Ahri");
+    public void whenPersistWithTheSameName_thenExceptionOccur(){
         //when
-        championMapper.create(expected2);
+        championMapper.persist(expectedAhri);
+        championMapper.persist(expectedAhri);
         //then
-        //DuplicateKeyException occurs
+
     }
 
     @Test
     public void whenUpdate_thenUpdateChampionEntity(){
         //given
-        championMapper.create(expected);
-        expected2 = new Champion(3L, "Ahri");
+        championMapper.persist(expectedAatrox);
         //when
-        championMapper.update(1L, expected2);
-        System.out.println(championMapper.findOne(1L));
-        Champion prev = championMapper.findOne(1L);
-        Champion actual = championMapper.findOne(3L);
+        championMapper.update(ID_1, expectedAhri);
+        Champion prev = championMapper.findById(ID_1);
+        Champion actual = championMapper.findById(ID_2);
         //then
-        assertThat(prev)
-                .isEqualTo(null);
+        assertThat(prev).isNull();
         assertThat(actual)
-                .isEqualTo(expected2);
+                .isEqualTo(expectedAhri);
 
+    }
+
+    @Test(expected = DuplicateKeyException.class)
+    public void whenUpdateToUsedName_thenExceptionOccurs(){
+        //given
+        championMapper.persist(expectedAatrox);
+        championMapper.persist(expectedAhri);
+        //when
+        championMapper.update(ID_1, new Champion(ID_1, "Ahri"));
+        //then
+        //DuplicateKeyException throws
     }
 
     @Test
     public void whenDeleteById_theDeleteChampion(){
         //given
-        championMapper.create(expected);
-        Champion previous = championMapper.findOne(1L);
+        championMapper.persist(expectedAatrox);
+        Champion previous = championMapper.findById(ID_1);
         assertThat(previous)
-                .isEqualTo(expected);
+                .isEqualTo(expectedAatrox);
         //when
-        championMapper.deleteById(1L);
-        Champion actual = championMapper.findOne(1L);
+        championMapper.deleteById(ID_1);
+        Champion actual = championMapper.findById(ID_1);
         //then
-        assertThat(actual)
-                .isEqualTo(null);
+        assertThat(actual).isNull();
     }
 
 }

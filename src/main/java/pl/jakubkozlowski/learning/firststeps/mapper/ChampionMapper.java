@@ -1,6 +1,7 @@
 package pl.jakubkozlowski.learning.firststeps.mapper;
 
 import org.apache.ibatis.annotations.*;
+import org.springframework.http.ResponseEntity;
 import pl.jakubkozlowski.learning.firststeps.model.Champion;
 
 import java.util.List;
@@ -9,11 +10,15 @@ import java.util.List;
 public interface ChampionMapper{
 
 
-    @Insert("INSERT INTO champion VALUES ( #{champion.id}, #{champion.name} )")
-    void create(@Param("champion") Champion champion);
+    @Insert("INSERT INTO champion (name) VALUES (#{champion.name})")
+    @Options(useGeneratedKeys = true, keyProperty = "champion.id")
+    void persist(@Param("champion") Champion champion);
 
     @Select("SELECT * FROM champion WHERE id= #{id}")
-    Champion findOne(@Param("id") Long id);
+    Champion findById(@Param("id") Long id);
+
+    @Select("SELECT * FROM champion WHERE name= #{name}")
+    Champion findByName(@Param("name") String name);
 
     @Select("SELECT * FROM champion")
     List<Champion> findAll();
@@ -23,7 +28,6 @@ public interface ChampionMapper{
 
     @Delete("DELETE FROM champion WHERE id=#{id}")
     void deleteById(@Param("id") Long id);
-
 
 }
 

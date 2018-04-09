@@ -30,12 +30,12 @@ public class ChampionController {
 
     @GetMapping(value = BY_ID)
     public ResponseEntity<Champion> findOne(@PathVariable("id") Long id) {
-        return ResponseEntity.ok(championMapper.findOne(id));
+        return ResponseEntity.ok(championMapper.findById(id));
     }
 
     @PostMapping
-    public ResponseEntity<Champion> create(@RequestBody Champion champion) {
-         championMapper.create(champion);
+    public ResponseEntity<Champion> persist(@RequestBody Champion champion) {
+         championMapper.persist(champion);
          return ResponseEntity.status(HttpStatus.CREATED).body(champion);
     }
 
