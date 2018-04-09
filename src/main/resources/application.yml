@@ -7,7 +7,3 @@ spring:
 logging:
   level:
     pl.jakubkozlowski.learning.firststeps.mapper.ChampionMapper: DEBUG
-
-server:
-  port: 8081
-  context-path: /koziolek

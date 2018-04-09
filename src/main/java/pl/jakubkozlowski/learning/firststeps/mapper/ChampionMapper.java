@@ -8,24 +8,22 @@ import java.util.List;
 @Mapper
 public interface ChampionMapper{
 
-    @Insert("INSERT INTO champion VALUES ( #{id}, #{name} )")
-    void addOne(@Param("id") Long id, @Param("name") String name);
+
+    @Insert("INSERT INTO champion VALUES ( #{champion.id}, #{champion.name} )")
+    void create(@Param("champion") Champion champion);
 
     @Select("SELECT * FROM champion WHERE id= #{id}")
-    Champion findOne(Long id);
+    Champion findOne(@Param("id") Long id);
 
     @Select("SELECT * FROM champion")
     List<Champion> findAll();
 
-    @Update("UPDATE champion SET name= #{name} WHERE id= ${id}")
-    void updateOne(@Param("name") String name, @Param("id") Long id);
+    @Update("UPDATE champion SET id= #{champion.id}, name= #{champion.name} WHERE id= #{id}")
+    void update(@Param("id") Long a, @Param("champion") Champion champion);
 
     @Delete("DELETE FROM champion WHERE id=#{id}")
-    void deleteOne(Long id);
+    void deleteById(@Param("id") Long id);
 
-
-    @Delete("DELETE FROM champion")
-    Champion deleteAll();
 
 }
 

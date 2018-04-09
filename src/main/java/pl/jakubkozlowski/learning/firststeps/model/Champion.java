@@ -7,6 +7,10 @@ public class Champion{
     private Long id;
     private String name;
 
+    public Champion(){
+
+    }
+
     public Champion(Long id, String name) {
         this.id = id;
         this.name = name;
@@ -48,5 +52,31 @@ public class Champion{
                 "id=" + id +
                 ", name='" + name + '\'' +
                 '}';
+    }
+
+    public static ChampionBuilder builder() {
+        return new ChampionBuilder();
+    }
+
+    public static class ChampionBuilder {
+        private Champion champion;
+
+        public ChampionBuilder() {
+            this.champion = new Champion();
+        }
+
+        public ChampionBuilder id(Long id) {
+            this.champion.setId(id);
+            return this;
+        }
+
+        public ChampionBuilder name(String name) {
+            this.champion.setName(name);
+            return this;
+        }
+
+        public Champion build() {
+            return this.champion;
+        }
     }
 }
