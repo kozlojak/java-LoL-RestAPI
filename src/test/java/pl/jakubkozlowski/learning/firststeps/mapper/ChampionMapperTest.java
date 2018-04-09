@@ -92,11 +92,12 @@ public class ChampionMapperTest {
     public void whenDeleteById_theDeleteChampion(){
         //given
         championMapper.create(expected);
-        Champion actual = championMapper.findOne(1L);
-        assertThat(actual)
+        Champion previous = championMapper.findOne(1L);
+        assertThat(previous)
                 .isEqualTo(expected);
         //when
         championMapper.deleteById(1L);
+        Champion actual = championMapper.findOne(1L);
         //then
         assertThat(actual)
                 .isEqualTo(null);

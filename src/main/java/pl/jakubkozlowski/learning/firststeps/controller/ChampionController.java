@@ -3,7 +3,6 @@ package pl.jakubkozlowski.learning.firststeps.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import pl.jakubkozlowski.learning.firststeps.mapper.ChampionMapper;
 import pl.jakubkozlowski.learning.firststeps.model.Champion;
@@ -11,6 +10,7 @@ import pl.jakubkozlowski.learning.firststeps.model.Champion;
 import java.util.List;
 
 import static pl.jakubkozlowski.learning.firststeps.controller.descriptor.ChampionControllerDescriptor.BASE_PATH;
+import static pl.jakubkozlowski.learning.firststeps.controller.descriptor.ChampionControllerDescriptor.BY_ID;
 
 @RestController
 @RequestMapping(path = BASE_PATH)
@@ -28,7 +28,7 @@ public class ChampionController {
         return championMapper.findAll();
     }
 
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = BY_ID)
     public ResponseEntity<Champion> findOne(@PathVariable("id") Long id) {
         return ResponseEntity.ok(championMapper.findOne(id));
     }
@@ -39,13 +39,13 @@ public class ChampionController {
          return ResponseEntity.status(HttpStatus.CREATED).body(champion);
     }
 
-    @PutMapping(value = "/{id}")
+    @PutMapping(value = BY_ID)
     public ResponseEntity<Champion> update(@PathVariable("id") Long id, @RequestBody Champion champion) {
         championMapper.update(id, champion);
         return ResponseEntity.status(HttpStatus.OK).body(champion);
     }
 
-    @DeleteMapping(value = "/{id}")
+    @DeleteMapping(value = BY_ID)
     public ResponseEntity<Void> delete(@PathVariable("id") Long id) {
         championMapper.deleteById(id);
         return ResponseEntity.noContent().build();

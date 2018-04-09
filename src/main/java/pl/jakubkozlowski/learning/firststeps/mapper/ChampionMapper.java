@@ -9,8 +9,8 @@ import java.util.List;
 public interface ChampionMapper{
 
 
-    @Insert("INSERT INTO champion VALUES ( #{id}, #{name} )")
-    void create(Champion champion);
+    @Insert("INSERT INTO champion VALUES ( #{champion.id}, #{champion.name} )")
+    void create(@Param("champion") Champion champion);
 
     @Select("SELECT * FROM champion WHERE id= #{id}")
     Champion findOne(@Param("id") Long id);
