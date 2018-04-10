@@ -1,7 +1,6 @@
 package pl.jakubkozlowski.learning.firststeps.mapper;
 
 import org.apache.ibatis.annotations.*;
-import org.springframework.http.ResponseEntity;
 import pl.jakubkozlowski.learning.firststeps.model.Champion;
 
 import java.util.List;
@@ -24,10 +23,9 @@ public interface ChampionMapper{
     List<Champion> findAll();
 
     @Update("UPDATE champion SET id= #{champion.id}, name= #{champion.name} WHERE id= #{id}")
-    void update(@Param("id") Long a, @Param("champion") Champion champion);
+    void update(@Param("id") Long entity_id, @Param("champion") Champion champion);
 
     @Delete("DELETE FROM champion WHERE id=#{id}")
     void deleteById(@Param("id") Long id);
-
 }
 

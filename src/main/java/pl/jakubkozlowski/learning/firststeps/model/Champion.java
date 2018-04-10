@@ -16,10 +16,6 @@ public class Champion{
         this.name = name;
     }
 
-    public Champion(String name) {
-        this.name = name;
-    }
-
     public Long getId() {
         return id;
     }

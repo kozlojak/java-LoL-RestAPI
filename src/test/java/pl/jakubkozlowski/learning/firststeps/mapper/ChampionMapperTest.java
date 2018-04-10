@@ -23,12 +23,12 @@ public class ChampionMapperTest {
 
     private static final String AATROX = "Aatrox";
     private static final String AHRI = "Ahri";
-    private static final Long id1 = 1L;
-    public static final Long ID_1 = id1;
-    private static final Long id2 = 2L;
-    public static final Long ID_2 = id2;
+    public static final Long ID_1 = 1L;
+    public static final Long ID_2 = 2L;
+
     @Autowired
     private ChampionMapper championMapper;
+
     private Champion expectedAatrox;
     private Champion expectedAhri;
 
