@@ -3,15 +3,15 @@ package pl.jakubkozlowski.learning.firststeps.model;
 
 import java.util.Objects;
 
-public class Champion{
+public class ChampionEntity {
     private Long id;
     private String name;
 
-    public Champion(){
+    public ChampionEntity(){
 
     }
 
-    public Champion(Long id, String name) {
+    public ChampionEntity(Long id, String name) {
         this.id = id;
         this.name = name;
     }
@@ -36,9 +36,9 @@ public class Champion{
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Champion champion = (Champion) o;
-        return Objects.equals(id, champion.id) &&
-                Objects.equals(name, champion.name);
+        ChampionEntity championEntity = (ChampionEntity) o;
+        return Objects.equals(id, championEntity.id) &&
+                Objects.equals(name, championEntity.name);
     }
 
     @Override
@@ -49,7 +49,7 @@ public class Champion{
 
     @Override
     public String toString() {
-        return "Champion{" +
+        return "ChampionEntity{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 '}';
@@ -60,24 +60,24 @@ public class Champion{
     }
 
     public static class ChampionBuilder {
-        private Champion champion;
+        private ChampionEntity championEntity;
 
         public ChampionBuilder() {
-            this.champion = new Champion();
+            this.championEntity = new ChampionEntity();
         }
 
         public ChampionBuilder id(Long id) {
-            this.champion.setId(id);
+            this.championEntity.setId(id);
             return this;
         }
 
         public ChampionBuilder name(String name) {
-            this.champion.setName(name);
+            this.championEntity.setName(name);
             return this;
         }
 
-        public Champion build() {
-            return this.champion;
+        public ChampionEntity build() {
+            return this.championEntity;
         }
     }
 }

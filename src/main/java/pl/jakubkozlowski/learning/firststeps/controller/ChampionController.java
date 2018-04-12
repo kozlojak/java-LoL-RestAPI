@@ -17,15 +17,10 @@ import static pl.jakubkozlowski.learning.firststeps.controller.descriptor.Champi
 @RequestMapping(path = BASE_PATH)
 public class ChampionController {
 
-    @Autowired
     private ChampionService championService;
-
-//    private ChampionMapper championMapper;
-
-//    @Autowired
-//    public ChampionController(ChampionMapper championMapper) {
-//        this.championMapper = championMapper;
-//    }
+    public ChampionController(ChampionService championService){
+        this.championService= championService;
+    }
 
     @GetMapping
     public List<ChampionDTO> findAll() {

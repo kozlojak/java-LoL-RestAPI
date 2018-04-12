@@ -3,36 +3,28 @@ package pl.jakubkozlowski.learning.firststeps.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.jakubkozlowski.learning.firststeps.mapper.ChampionMapper;
-import pl.jakubkozlowski.learning.firststeps.model.Champion;
+import pl.jakubkozlowski.learning.firststeps.model.ChampionEntity;
 import pl.jakubkozlowski.learning.firststeps.model.ChampionConverter;
-import pl.jakubkozlowski.learning.firststeps.model.ChampionConverterImpl;
 import pl.jakubkozlowski.learning.firststeps.model.ChampionDTO;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class ChampionServiceImpl implements ChampionService {
 
-    public ChampionServiceImpl(ChampionMapper championMapper){
+    @Autowired
+    public ChampionServiceImpl(ChampionMapper championMapper, ChampionConverter championConverter){
         this.championMapper=championMapper;
+        this.championConverter = championConverter;
     }
 
-    @Autowired
     private ChampionMapper championMapper;
-
-    private ChampionConverter championConverter=new ChampionConverterImpl();
-
+    private ChampionConverter championConverter;
 
     @Override
     public List<ChampionDTO> findAll() {
-        List<Champion> championList=championMapper.findAll();
-        List<ChampionDTO> championDTOList=new ArrayList<>(championList.size());
-        for(Champion champion : championList){
-            championDTOList.add(championConverter.convert(champion));
-        }
-        return championDTOList;
-
+        List<ChampionEntity> championEntityList =championMapper.findAll();
+        return championConverter.convertListEntity(championEntityList);
     }
 
     @Override
