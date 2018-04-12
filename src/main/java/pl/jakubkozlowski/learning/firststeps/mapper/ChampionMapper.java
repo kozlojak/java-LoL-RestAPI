@@ -1,8 +1,7 @@
 package pl.jakubkozlowski.learning.firststeps.mapper;
 
 import org.apache.ibatis.annotations.*;
-import org.springframework.http.ResponseEntity;
-import pl.jakubkozlowski.learning.firststeps.model.Champion;
+import pl.jakubkozlowski.learning.firststeps.model.ChampionEntity;
 
 import java.util.List;
 
@@ -10,24 +9,23 @@ import java.util.List;
 public interface ChampionMapper{
 
 
-    @Insert("INSERT INTO champion (name) VALUES (#{champion.name})")
-    @Options(useGeneratedKeys = true, keyProperty = "champion.id")
-    void persist(@Param("champion") Champion champion);
+    @Insert("INSERT INTO champion (name) VALUES (#{championEntity.name})")
+    @Options(useGeneratedKeys = true, keyProperty = "championEntity.id")
+    void persist(@Param("championEntity") ChampionEntity championEntity);
 
     @Select("SELECT * FROM champion WHERE id= #{id}")
-    Champion findById(@Param("id") Long id);
+    ChampionEntity findById(@Param("id") Long id);
 
     @Select("SELECT * FROM champion WHERE name= #{name}")
-    Champion findByName(@Param("name") String name);
+    ChampionEntity findByName(@Param("name") String name);
 
     @Select("SELECT * FROM champion")
-    List<Champion> findAll();
+    List<ChampionEntity> findAll();
 
-    @Update("UPDATE champion SET id= #{champion.id}, name= #{champion.name} WHERE id= #{id}")
-    void update(@Param("id") Long a, @Param("champion") Champion champion);
+    @Update("UPDATE champion SET id= #{championEntity.id}, name= #{championEntity.name} WHERE id= #{id}")
+    void update(@Param("id") Long id, @Param("championEntity") ChampionEntity championEntity);
 
     @Delete("DELETE FROM champion WHERE id=#{id}")
     void deleteById(@Param("id") Long id);
-
 }
 
