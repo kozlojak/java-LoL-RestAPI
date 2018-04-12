@@ -35,7 +35,7 @@ public class ChampionControllerTest {
     @Autowired
     private MockMvc mvc;
 
-    ObjectMapper objectMapper = new ObjectMapper();
+    private ObjectMapper objectMapper;
 
     private ChampionDTO championDTOAatrox;
     private ChampionDTO championDTOAhri;
@@ -53,10 +53,10 @@ public class ChampionControllerTest {
         championDTOList = new ArrayList<>(3);
         championDTOList = Arrays.asList(championDTOAatrox, championDTOAhri, championDTOAnivia);
 
+        objectMapper = new ObjectMapper();
+
         Mockito.when(championService.findAll()).thenReturn(championDTOList);
         Mockito.when(championService.findById(ID_1)).thenReturn(championDTOAatrox);
-
-        ObjectMapper objectMapper= new ObjectMapper();
 
     }
 
