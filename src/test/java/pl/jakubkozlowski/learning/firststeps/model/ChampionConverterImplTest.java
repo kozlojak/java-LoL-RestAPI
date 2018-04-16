@@ -8,7 +8,6 @@ import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -62,12 +61,10 @@ public class ChampionConverterImplTest {
     }
 
     private void createNewChampionEntityList(){
-        championEntityList = new ArrayList<>(3);
         championEntityList = Arrays.asList(championEntityAatrox, championEntityAhri, championEntityAnivia);
     }
 
     private void createNewChampionDTOList(){
-        championDTOList = new ArrayList<>(3);
         championDTOList = Arrays.asList(championDTOAatrox, championDTOAhri, championDTOAnivia);
     }
 

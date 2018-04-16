@@ -15,7 +15,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import pl.jakubkozlowski.learning.firststeps.model.ChampionDTO;
 import pl.jakubkozlowski.learning.firststeps.service.ChampionService;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -50,7 +49,6 @@ public class ChampionControllerTest {
         championDTOAhri = new ChampionDTO(ID_2, AHRI);
         championDTOAnivia = new ChampionDTO(ID_3, ANIVIA);
 
-        championDTOList = new ArrayList<>(3);
         championDTOList = Arrays.asList(championDTOAatrox, championDTOAhri, championDTOAnivia);
 
         objectMapper = new ObjectMapper();
@@ -64,7 +62,7 @@ public class ChampionControllerTest {
     public void whenFindAll_thenReturnJsonArrayOfChampions() throws Exception {
 
 
-        String content = mvc.perform(get("/champions")
+        String content = mvc.perform(get(BASE_PATH)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
@@ -77,7 +75,7 @@ public class ChampionControllerTest {
     @Test
     public void whenFindOne_thenReturnJsonArrayOfChampionWithGivenID() throws Exception {
 
-        String content = mvc.perform(get("/champions/" + ID_1)
+        String content = mvc.perform(get(BASE_PATH + ID_1)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
@@ -90,7 +88,7 @@ public class ChampionControllerTest {
     @Test
     public void whenPersist_thenReturnJsonArrayOfPersistChampion() throws Exception {
 
-        String content=mvc.perform(post("/champions")
+        String content = mvc.perform(post(BASE_PATH)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsBytes(championDTOAatrox)))
                 .andExpect(status().isCreated())
@@ -103,9 +101,9 @@ public class ChampionControllerTest {
 
     @Test
     public void whenUpdate_thenReturnJsonArrayOfPersistChampion() throws Exception {
-        String content=mvc.perform(put("/champions/"+ID_1)
+        String content = mvc.perform(put(BASE_PATH + ID_1)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsBytes(championDTOAatrox)))
+                .content(objectMapper.writeValueAsString(championDTOAatrox)))
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
 
@@ -115,7 +113,7 @@ public class ChampionControllerTest {
 
     @Test
     public void whenDelete_thenReturnStatusNoContent() throws Exception {
-                mvc.perform(delete("/champions/"+ID_1)
+        mvc.perform(delete(BASE_PATH + ID_1)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent());
 
