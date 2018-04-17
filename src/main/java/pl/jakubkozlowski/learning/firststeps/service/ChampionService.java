@@ -1,6 +1,6 @@
 package pl.jakubkozlowski.learning.firststeps.service;
 
-import pl.jakubkozlowski.learning.firststeps.model.ChampionDTO;
+import pl.jakubkozlowski.learning.firststeps.DTO.ChampionDTO;
 
 import java.util.List;
 

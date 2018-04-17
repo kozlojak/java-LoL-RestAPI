@@ -7,8 +7,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class FirststepsApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(FirststepsApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(FirststepsApplication.class, args);
+    }
 }
 

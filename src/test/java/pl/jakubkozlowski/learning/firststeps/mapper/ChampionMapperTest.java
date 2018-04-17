@@ -46,7 +46,7 @@ public class ChampionMapperTest {
     }
 
     @Test
-    public void whenFindAll_thenReturnChampionList(){
+    public void whenFindAll_thenReturnChampionList() {
         //given
         championMapper.persist(expectedAatrox);
         championMapper.persist(expectedAhri);
@@ -62,7 +62,7 @@ public class ChampionMapperTest {
     }
 
     @Test
-    public void whenPersist_thenIdAutoincrementsAndReturnsChampion(){
+    public void whenPersist_thenIdAutoincrementsAndReturnsChampion() {
         //when
         championMapper.persist(expectedAhri);
         //then
@@ -72,7 +72,7 @@ public class ChampionMapperTest {
     }
 
     @Test(expected = DuplicateKeyException.class)
-    public void whenPersistWithTheSameName_thenExceptionOccur(){
+    public void whenPersistWithTheSameName_thenExceptionOccur() {
         //when
         championMapper.persist(expectedAhri);
         championMapper.persist(expectedAhri);
@@ -81,7 +81,7 @@ public class ChampionMapperTest {
     }
 
     @Test
-    public void whenUpdate_thenUpdateChampionEntity(){
+    public void whenUpdate_thenUpdateChampionEntity() {
         //given
         championMapper.persist(expectedAatrox);
         //when
@@ -96,7 +96,7 @@ public class ChampionMapperTest {
     }
 
     @Test(expected = DuplicateKeyException.class)
-    public void whenUpdateToUsedName_thenExceptionOccurs(){
+    public void whenUpdateToUsedName_thenExceptionOccurs() {
         //given
         championMapper.persist(expectedAatrox);
         championMapper.persist(expectedAhri);
@@ -107,7 +107,7 @@ public class ChampionMapperTest {
     }
 
     @Test
-    public void whenDeleteById_theDeleteChampion(){
+    public void whenDeleteById_theDeleteChampion() {
         //given
         championMapper.persist(expectedAatrox);
         ChampionEntity previous = championMapper.findById(ID_1);

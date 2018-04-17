@@ -7,7 +7,7 @@ public class ChampionEntity {
     private Long id;
     private String name;
 
-    public ChampionEntity(){
+    public ChampionEntity() {
 
     }
 

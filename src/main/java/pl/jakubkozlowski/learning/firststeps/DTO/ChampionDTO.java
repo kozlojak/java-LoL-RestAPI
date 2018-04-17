@@ -1,4 +1,4 @@
-package pl.jakubkozlowski.learning.firststeps.model;
+package pl.jakubkozlowski.learning.firststeps.DTO;
 
 import java.util.Objects;
 

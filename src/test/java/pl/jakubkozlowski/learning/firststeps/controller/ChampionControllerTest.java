@@ -12,7 +12,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import pl.jakubkozlowski.learning.firststeps.model.ChampionDTO;
+import pl.jakubkozlowski.learning.firststeps.DTO.ChampionDTO;
 import pl.jakubkozlowski.learning.firststeps.service.ChampionService;
 
 import java.util.Arrays;
@@ -81,7 +81,8 @@ public class ChampionControllerTest {
                 .andReturn().getResponse().getContentAsString();
 
 
-        ChampionDTO actual= objectMapper.readValue(content, new TypeReference<ChampionDTO>(){});
+        ChampionDTO actual = objectMapper.readValue(content, new TypeReference<ChampionDTO>() {
+        });
         assertThat(actual).isEqualTo(championDTOAatrox);
     }
 
@@ -94,7 +95,8 @@ public class ChampionControllerTest {
                 .andExpect(status().isCreated())
                 .andReturn().getResponse().getContentAsString();
 
-        ChampionDTO actual= objectMapper.readValue(content, new TypeReference<ChampionDTO>(){});
+        ChampionDTO actual = objectMapper.readValue(content, new TypeReference<ChampionDTO>() {
+        });
         assertThat(actual).isEqualTo(championDTOAatrox);
 
     }
@@ -107,7 +109,8 @@ public class ChampionControllerTest {
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
 
-        ChampionDTO actual= objectMapper.readValue(content, new TypeReference<ChampionDTO>(){});
+        ChampionDTO actual = objectMapper.readValue(content, new TypeReference<ChampionDTO>() {
+        });
         assertThat(actual).isEqualTo(championDTOAatrox);
     }
 

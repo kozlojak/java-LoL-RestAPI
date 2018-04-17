@@ -4,9 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pl.jakubkozlowski.learning.firststeps.model.ChampionDTO;
+import pl.jakubkozlowski.learning.firststeps.DTO.ChampionDTO;
+import pl.jakubkozlowski.learning.firststeps.exception.ChampionException;
+import pl.jakubkozlowski.learning.firststeps.exception.ChampionNotExistException;
 import pl.jakubkozlowski.learning.firststeps.service.ChampionService;
-import pl.jakubkozlowski.learning.firststeps.service.ChampionServiceImpl;
 
 import java.util.List;
 
@@ -20,8 +21,8 @@ public class ChampionController {
     private ChampionService championService;
 
     @Autowired
-    public ChampionController(ChampionService championService){
-        this.championService= championService;
+    public ChampionController(ChampionService championService) {
+        this.championService = championService;
     }
 
     @GetMapping
@@ -30,24 +31,27 @@ public class ChampionController {
     }
 
     @GetMapping(value = BY_ID)
-    public ResponseEntity<ChampionDTO> findOne(@PathVariable("id") Long id) {
+    public ResponseEntity<ChampionDTO> findOne(@PathVariable("id") Long id) throws ChampionException {
+        if (championService.findById(id) == null) throw new ChampionNotExistException();
         return ResponseEntity.ok(championService.findById(id));
     }
 
     @PostMapping
     public ResponseEntity<ChampionDTO> persist(@RequestBody ChampionDTO champion) {
-         championService.persist(champion);
-         return ResponseEntity.status(HttpStatus.CREATED).body(champion);
+        championService.persist(champion);
+        return ResponseEntity.status(HttpStatus.CREATED).body(champion);
     }
 
     @PutMapping(value = BY_ID)
-    public ResponseEntity<ChampionDTO> update(@PathVariable("id") Long id, @RequestBody ChampionDTO champion) {
+    public ResponseEntity<ChampionDTO> update(@PathVariable("id") Long id, @RequestBody ChampionDTO champion) throws ChampionException {
+        if (championService.findById(id) == null) throw new ChampionNotExistException();
         championService.update(id, champion);
         return ResponseEntity.status(HttpStatus.OK).body(champion);
     }
 
     @DeleteMapping(value = BY_ID)
-    public ResponseEntity<Void> deleteById(@PathVariable("id") Long id) {
+    public ResponseEntity<Void> deleteById(@PathVariable("id") Long id) throws ChampionException {
+        if (championService.findById(id) == null) throw new ChampionNotExistException();
         championService.deleteById(id);
         return ResponseEntity.noContent().build();
     }
