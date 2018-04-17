@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 @Component
 public class ChampionConverterImpl implements ChampionConverter{
 
+
     @Override
     public ChampionDTO convert (ChampionEntity championEntity){
         if (championEntity == null){

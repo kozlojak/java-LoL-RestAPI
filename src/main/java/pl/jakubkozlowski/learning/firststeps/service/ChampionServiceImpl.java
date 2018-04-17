@@ -12,14 +12,14 @@ import java.util.List;
 @Service
 public class ChampionServiceImpl implements ChampionService {
 
+    private ChampionMapper championMapper;
+    private ChampionConverter championConverter;
+
     @Autowired
     public ChampionServiceImpl(ChampionMapper championMapper, ChampionConverter championConverter){
         this.championMapper=championMapper;
         this.championConverter = championConverter;
     }
-
-    private ChampionMapper championMapper;
-    private ChampionConverter championConverter;
 
     @Override
     public List<ChampionDTO> findAll() {

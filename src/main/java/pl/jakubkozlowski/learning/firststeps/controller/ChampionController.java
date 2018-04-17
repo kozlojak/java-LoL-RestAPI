@@ -18,6 +18,8 @@ import static pl.jakubkozlowski.learning.firststeps.controller.descriptor.Champi
 public class ChampionController {
 
     private ChampionService championService;
+
+    @Autowired
     public ChampionController(ChampionService championService){
         this.championService= championService;
     }

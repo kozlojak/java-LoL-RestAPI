@@ -11,14 +11,15 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.test.context.junit4.SpringRunner;
 import pl.jakubkozlowski.learning.firststeps.mapper.ChampionMapper;
 import pl.jakubkozlowski.learning.firststeps.model.ChampionConverter;
-import pl.jakubkozlowski.learning.firststeps.model.ChampionEntity;
 import pl.jakubkozlowski.learning.firststeps.model.ChampionDTO;
-import static pl.jakubkozlowski.learning.firststeps.descriptor.TestDescriptor.*;
+import pl.jakubkozlowski.learning.firststeps.model.ChampionEntity;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static pl.jakubkozlowski.learning.firststeps.descriptor.TestDescriptor.*;
 
 @RunWith(SpringRunner.class)
 //@SpringBootTest ->1st solution- to Integration Testing. All @Beans are injected
