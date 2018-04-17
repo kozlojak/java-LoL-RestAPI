@@ -7,9 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.test.context.junit4.SpringRunner;
-import pl.jakubkozlowski.learning.firststeps.DTO.ChampionDTO;
 import pl.jakubkozlowski.learning.firststeps.converter.ChampionConverter;
 import pl.jakubkozlowski.learning.firststeps.converter.ChampionConverterImpl;
+import pl.jakubkozlowski.learning.firststeps.dto.ChampionDTO;
 
 import java.util.Arrays;
 import java.util.List;

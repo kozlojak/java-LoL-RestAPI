@@ -1,16 +1,13 @@
-package pl.jakubkozlowski.learning.firststeps.model;
-
+package pl.jakubkozlowski.learning.firststeps.dto;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-public class ChampionEntity {
+public class ChampionDTO {
     private Long id;
     private String name;
 }

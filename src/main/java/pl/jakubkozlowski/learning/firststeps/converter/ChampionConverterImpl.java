@@ -2,7 +2,7 @@ package pl.jakubkozlowski.learning.firststeps.converter;
 
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
-import pl.jakubkozlowski.learning.firststeps.DTO.ChampionDTO;
+import pl.jakubkozlowski.learning.firststeps.dto.ChampionDTO;
 import pl.jakubkozlowski.learning.firststeps.model.ChampionEntity;
 
 import java.util.Collections;

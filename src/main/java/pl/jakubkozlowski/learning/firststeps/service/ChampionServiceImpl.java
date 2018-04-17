@@ -2,8 +2,8 @@ package pl.jakubkozlowski.learning.firststeps.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pl.jakubkozlowski.learning.firststeps.DTO.ChampionDTO;
 import pl.jakubkozlowski.learning.firststeps.converter.ChampionConverter;
+import pl.jakubkozlowski.learning.firststeps.dto.ChampionDTO;
 import pl.jakubkozlowski.learning.firststeps.mapper.ChampionMapper;
 import pl.jakubkozlowski.learning.firststeps.model.ChampionEntity;
 

@@ -4,9 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pl.jakubkozlowski.learning.firststeps.DTO.ChampionDTO;
+import pl.jakubkozlowski.learning.firststeps.dto.ChampionDTO;
 import pl.jakubkozlowski.learning.firststeps.exception.ChampionException;
-import pl.jakubkozlowski.learning.firststeps.exception.ChampionNotExistException;
 import pl.jakubkozlowski.learning.firststeps.service.ChampionService;
 
 import java.util.List;
@@ -32,7 +31,7 @@ public class ChampionController {
 
     @GetMapping(value = BY_ID)
     public ResponseEntity<ChampionDTO> findOne(@PathVariable("id") Long id) throws ChampionException {
-        if (championService.findById(id) == null) throw new ChampionNotExistException();
+        if (championService.findById(id) == null) throw ChampionException.wrongData();
         return ResponseEntity.ok(championService.findById(id));
     }
 
@@ -44,14 +43,14 @@ public class ChampionController {
 
     @PutMapping(value = BY_ID)
     public ResponseEntity<ChampionDTO> update(@PathVariable("id") Long id, @RequestBody ChampionDTO champion) throws ChampionException {
-        if (championService.findById(id) == null) throw new ChampionNotExistException();
+        if (championService.findById(id) == null) throw ChampionException.isNoLongerAvailable();
         championService.update(id, champion);
         return ResponseEntity.status(HttpStatus.OK).body(champion);
     }
 
     @DeleteMapping(value = BY_ID)
     public ResponseEntity<Void> deleteById(@PathVariable("id") Long id) throws ChampionException {
-        if (championService.findById(id) == null) throw new ChampionNotExistException();
+        if (championService.findById(id) == null) throw ChampionException.doesNotExist();
         championService.deleteById(id);
         return ResponseEntity.noContent().build();
     }

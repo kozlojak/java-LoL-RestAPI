@@ -1,6 +1,6 @@
 package pl.jakubkozlowski.learning.firststeps.converter;
 
-import pl.jakubkozlowski.learning.firststeps.DTO.ChampionDTO;
+import pl.jakubkozlowski.learning.firststeps.dto.ChampionDTO;
 import pl.jakubkozlowski.learning.firststeps.model.ChampionEntity;
 
 import java.util.List;
