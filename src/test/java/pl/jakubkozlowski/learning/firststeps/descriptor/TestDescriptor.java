@@ -1,7 +1,7 @@
 package pl.jakubkozlowski.learning.firststeps.descriptor;
 
 public class TestDescriptor {
-    public static final String BASE_PATH = "/champions";
+    public static final String BASE_PATH = "/champions/";
     public static final String AATROX = "Aatrox";
     public static final String AHRI = "Ahri";
     public static final String ANIVIA = "Anivia";

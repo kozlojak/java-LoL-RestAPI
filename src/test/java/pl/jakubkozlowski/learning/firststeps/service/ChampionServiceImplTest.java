@@ -9,9 +9,9 @@ import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.test.context.junit4.SpringRunner;
+import pl.jakubkozlowski.learning.firststeps.converter.ChampionConverter;
+import pl.jakubkozlowski.learning.firststeps.dto.ChampionDTO;
 import pl.jakubkozlowski.learning.firststeps.mapper.ChampionMapper;
-import pl.jakubkozlowski.learning.firststeps.model.ChampionConverter;
-import pl.jakubkozlowski.learning.firststeps.model.ChampionDTO;
 import pl.jakubkozlowski.learning.firststeps.model.ChampionEntity;
 
 import java.util.ArrayList;
@@ -35,20 +35,10 @@ public class ChampionServiceImplTest {
     private ChampionConverter championConverter;
 
 
-    @TestConfiguration
-    static class ChampionServiceImplTestContextConfiguration {
-
-        @MockBean
-        private ChampionMapper championMapper;
-
-        @MockBean
-        private ChampionConverter championConverter;
-
-        @Bean
-        public ChampionService championService() {
-            return new ChampionServiceImpl(championMapper,championConverter);
-        }
-
+    private void createNewChampionEntities() {
+        championEntityAatrox = new ChampionEntity(ID_1, AATROX);
+        championEntityAhri = new ChampionEntity(ID_2, AHRI);
+        championEntityAnivia = new ChampionEntity(ID_3, ANIVIA);
     }
 
     private ChampionEntity championEntityAatrox;
@@ -61,7 +51,6 @@ public class ChampionServiceImplTest {
 
     private List<ChampionEntity> championEntityList;
     private List<ChampionDTO> championDTOList;
-
 
 
     @Before
@@ -86,24 +75,18 @@ public class ChampionServiceImplTest {
 
     }
 
-    private void createNewChampionEntities(){
-        championEntityAatrox = new ChampionEntity(ID_1, AATROX);
-        championEntityAhri = new ChampionEntity(ID_2, AHRI);
-        championEntityAnivia = new ChampionEntity(ID_3, ANIVIA);
-    }
-
-    private void createNewChampionDTOs(){
+    private void createNewChampionDTOs() {
         championDTOAatrox = new ChampionDTO(ID_1, AATROX);
         championDTOAhri = new ChampionDTO(ID_2, AHRI);
         championDTOAnivia = new ChampionDTO(ID_3, ANIVIA);
     }
 
-    private void createNewChampionEntityList(){
+    private void createNewChampionEntityList() {
         championEntityList = new ArrayList<>(3);
         championEntityList = Arrays.asList(championEntityAatrox, championEntityAhri, championEntityAnivia);
     }
 
-    private void createNewChampionDTOList(){
+    private void createNewChampionDTOList() {
         championDTOList = new ArrayList<>(3);
         championDTOList = Arrays.asList(championDTOAatrox, championDTOAhri, championDTOAnivia);
     }
@@ -111,13 +94,21 @@ public class ChampionServiceImplTest {
     @Test
     public void whenFindAll_thenReturnChampionDTOList() {
         //when
-        List<ChampionDTO> expectedChampionDTOList= championService.findAll();
+        List<ChampionDTO> expectedChampionDTOList = championService.findAll();
         //then
         assertThat(expectedChampionDTOList.size())
                 .isEqualTo(3);
-            assertThat(expectedChampionDTOList)
-                    .isEqualTo(championDTOList);
+        assertThat(expectedChampionDTOList)
+                .isEqualTo(championDTOList);
 
+    }
+
+    @Test
+    public void whenPersist_thenMethodInvokedWithGivenParameter() {
+        //when
+        championService.persist(championDTOAatrox);
+        //then
+        Mockito.verify(championMapper, Mockito.times(1)).persist(championEntityAatrox);
     }
 
     @Test
@@ -128,27 +119,36 @@ public class ChampionServiceImplTest {
         assertThat(actual)
                 .isEqualTo(championDTOAatrox);
     }
-    @Test
-    public void whenPersist_thenMethodInvokedWithGivenParameter(){
-        //when
-        championService.persist(championDTOAatrox);
-        //then
-        Mockito.verify(championMapper, Mockito.times(1) ).persist(championEntityAatrox);
-    }
 
     @Test
-    public void whenUpdate_thenMethodInvokedWithExpectedParameter(){
+    public void whenUpdate_thenMethodInvokedWithExpectedParameter() {
         //when
         championService.update(1L, championDTOAatrox);
         //then
-        Mockito.verify(championMapper, Mockito.times(1) ).update(ID_1, championEntityAatrox);
+        Mockito.verify(championMapper, Mockito.times(1)).update(ID_1, championEntityAatrox);
     }
 
     @Test
-    public void whenDeleteById_thenMethodInvokedWithExpectedParameter (){
+    public void whenDeleteById_thenMethodInvokedWithExpectedParameter() {
         //when
         championService.deleteById(1L);
         //then
-        Mockito.verify(championMapper, Mockito.times(1) ).deleteById(ID_1);
+        Mockito.verify(championMapper, Mockito.times(1)).deleteById(ID_1);
+    }
+
+    @TestConfiguration
+    static class ChampionServiceImplTestContextConfiguration {
+
+        @MockBean
+        private ChampionMapper championMapper;
+
+        @MockBean
+        private ChampionConverter championConverter;
+
+        @Bean
+        public ChampionService championService() {
+            return new ChampionServiceImpl(championMapper, championConverter);
+        }
+
     }
 }

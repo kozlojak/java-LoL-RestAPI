@@ -7,6 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.test.context.junit4.SpringRunner;
+import pl.jakubkozlowski.learning.firststeps.converter.ChampionConverter;
+import pl.jakubkozlowski.learning.firststeps.converter.ChampionConverterImpl;
+import pl.jakubkozlowski.learning.firststeps.dto.ChampionDTO;
 
 import java.util.Arrays;
 import java.util.List;
@@ -48,28 +51,28 @@ public class ChampionConverterImplTest {
         createNewChampionDTOList();
     }
 
-    private void createNewChampionEntities(){
+    private void createNewChampionEntities() {
         championEntityAatrox = new ChampionEntity(ID_1, AATROX);
         championEntityAhri = new ChampionEntity(ID_2, AHRI);
         championEntityAnivia = new ChampionEntity(ID_3, ANIVIA);
     }
 
-    private void createNewChampionDTOs(){
+    private void createNewChampionDTOs() {
         championDTOAatrox = new ChampionDTO(ID_1, AATROX);
         championDTOAhri = new ChampionDTO(ID_2, AHRI);
         championDTOAnivia = new ChampionDTO(ID_3, ANIVIA);
     }
 
-    private void createNewChampionEntityList(){
+    private void createNewChampionEntityList() {
         championEntityList = Arrays.asList(championEntityAatrox, championEntityAhri, championEntityAnivia);
     }
 
-    private void createNewChampionDTOList(){
+    private void createNewChampionDTOList() {
         championDTOList = Arrays.asList(championDTOAatrox, championDTOAhri, championDTOAnivia);
     }
 
     @Test
-    public void whenConvertChampionEntity_thenReturnChampionDTO(){
+    public void whenConvertChampionEntity_thenReturnChampionDTO() {
         //when
         ChampionDTO actual = championConverter.convert(championEntityAatrox);
         //then
@@ -78,7 +81,7 @@ public class ChampionConverterImplTest {
     }
 
     @Test
-    public void whenConvertChampionDTO_thenReturnChampionEntity(){
+    public void whenConvertChampionDTO_thenReturnChampionEntity() {
         //when
         ChampionEntity actual = championConverter.convert(championDTOAatrox);
         //then
@@ -89,7 +92,7 @@ public class ChampionConverterImplTest {
     @Test
     public void whenConvertChampionListEntity_thenReturnChampionListDTO() {
         //when
-        List<ChampionDTO> actual= championConverter.convertListEntity(championEntityList);
+        List<ChampionDTO> actual = championConverter.convertListEntity(championEntityList);
         //then
         assertThat(actual)
                 .isEqualTo(championDTOList);
@@ -98,7 +101,7 @@ public class ChampionConverterImplTest {
     @Test
     public void whenConvertChampionListDTO_thenReturnChampionListEntity() {
         //when
-        List<ChampionEntity> actual= championConverter.convertListDTO(championDTOList);
+        List<ChampionEntity> actual = championConverter.convertListDTO(championDTOList);
         //then
         assertThat(actual)
                 .isEqualTo(championEntityList);

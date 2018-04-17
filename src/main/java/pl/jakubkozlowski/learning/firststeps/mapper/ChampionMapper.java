@@ -6,7 +6,7 @@ import pl.jakubkozlowski.learning.firststeps.model.ChampionEntity;
 import java.util.List;
 
 @Mapper
-public interface ChampionMapper{
+public interface ChampionMapper {
 
 
     @Insert("INSERT INTO champion (name) VALUES (#{championEntity.name})")
