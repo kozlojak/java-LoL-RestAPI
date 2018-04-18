@@ -33,8 +33,8 @@ public class ChampionServiceImpl implements ChampionService {
     }
 
     @Override
-    public void persist(ChampionDTO championDTO) {
-        championMapper.persist(championConverter.convert(championDTO));
+    public void save(ChampionDTO championDTO) {
+        championMapper.save(championConverter.convert(championDTO));
     }
 
     @Override

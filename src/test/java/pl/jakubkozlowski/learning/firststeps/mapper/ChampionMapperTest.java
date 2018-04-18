@@ -14,7 +14,7 @@ import pl.jakubkozlowski.learning.firststeps.model.ChampionEntity;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static pl.jakubkozlowski.learning.firststeps.descriptor.TestDescriptor.*;
+import static pl.jakubkozlowski.learning.firststeps.descriptor.ChampionTestDescriptor.*;
 
 @RunWith(SpringRunner.class)
 @MybatisTest
@@ -37,7 +37,7 @@ public class ChampionMapperTest {
     @Test
     public void whenFindOne_thenReturnChampion() {
         //given
-        championMapper.persist(expectedAatrox);
+        championMapper.save(expectedAatrox);
         //when
         ChampionEntity actual = championMapper.findById(ID_1);
         //then
@@ -48,8 +48,8 @@ public class ChampionMapperTest {
     @Test
     public void whenFindAll_thenReturnChampionList() {
         //given
-        championMapper.persist(expectedAatrox);
-        championMapper.persist(expectedAhri);
+        championMapper.save(expectedAatrox);
+        championMapper.save(expectedAhri);
         //when
         List<ChampionEntity> actual = championMapper.findAll();
         //then
@@ -64,7 +64,7 @@ public class ChampionMapperTest {
     @Test
     public void whenPersist_thenIdAutoincrementsAndReturnsChampion() {
         //when
-        championMapper.persist(expectedAhri);
+        championMapper.save(expectedAhri);
         //then
         assertThat(championMapper.findByName(expectedAhri.getName()))
                 .isEqualTo(new ChampionEntity(ID_1, AHRI));
@@ -74,8 +74,8 @@ public class ChampionMapperTest {
     @Test(expected = DuplicateKeyException.class)
     public void whenPersistWithTheSameName_thenExceptionOccur() {
         //when
-        championMapper.persist(expectedAhri);
-        championMapper.persist(expectedAhri);
+        championMapper.save(expectedAhri);
+        championMapper.save(expectedAhri);
         //then
 
     }
@@ -83,7 +83,7 @@ public class ChampionMapperTest {
     @Test
     public void whenUpdate_thenUpdateChampionEntity() {
         //given
-        championMapper.persist(expectedAatrox);
+        championMapper.save(expectedAatrox);
         //when
         championMapper.update(ID_1, expectedAhri);
         ChampionEntity prev = championMapper.findById(ID_1);
@@ -98,8 +98,8 @@ public class ChampionMapperTest {
     @Test(expected = DuplicateKeyException.class)
     public void whenUpdateToUsedName_thenExceptionOccurs() {
         //given
-        championMapper.persist(expectedAatrox);
-        championMapper.persist(expectedAhri);
+        championMapper.save(expectedAatrox);
+        championMapper.save(expectedAhri);
         //when
         championMapper.update(ID_1, new ChampionEntity(ID_1, AHRI));
         //then
@@ -109,7 +109,7 @@ public class ChampionMapperTest {
     @Test
     public void whenDeleteById_theDeleteChampion() {
         //given
-        championMapper.persist(expectedAatrox);
+        championMapper.save(expectedAatrox);
         ChampionEntity previous = championMapper.findById(ID_1);
         assertThat(previous)
                 .isEqualTo(expectedAatrox);

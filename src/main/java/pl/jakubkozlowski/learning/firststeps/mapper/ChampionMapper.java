@@ -11,7 +11,7 @@ public interface ChampionMapper {
 
     @Insert("INSERT INTO champion (name) VALUES (#{championEntity.name})")
     @Options(useGeneratedKeys = true, keyProperty = "championEntity.id")
-    void persist(@Param("championEntity") ChampionEntity championEntity);
+    void save(@Param("championEntity") ChampionEntity championEntity);
 
     @Select("SELECT * FROM champion WHERE id= #{id}")
     ChampionEntity findById(@Param("id") Long id);

@@ -10,7 +10,7 @@ public interface ChampionService {
 
     ChampionDTO findById(Long id);
 
-    void persist(ChampionDTO championDTO);
+    void save(ChampionDTO championDTO);
 
     void update(Long id, ChampionDTO championDTO);
 
