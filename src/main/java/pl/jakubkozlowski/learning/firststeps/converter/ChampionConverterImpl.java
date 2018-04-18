@@ -15,32 +15,24 @@ public class ChampionConverterImpl implements ChampionConverter {
 
     @Override
     public ChampionDTO convert(ChampionEntity championEntity) {
-        if (championEntity == null) {
-            return null;
-        }
-        return new ChampionDTO(championEntity.getId(), championEntity.getName());
+        return (championEntity == null) ? null : new ChampionDTO(championEntity.getId(), championEntity.getName());
     }
 
     @Override
     public ChampionEntity convert(ChampionDTO championDTO) {
-
-        return new ChampionEntity(championDTO.getId(), championDTO.getName());
+        return (championDTO == null) ? null : new ChampionEntity(championDTO.getId(), championDTO.getName());
     }
 
     @Override
     public List<ChampionDTO> convertListEntity(List<ChampionEntity> championEntityList) {
-        if (CollectionUtils.isEmpty(championEntityList)) {
-            return Collections.emptyList();
-        }
-        return championEntityList.stream().map(this::convert).collect(Collectors.toList());
+        return (CollectionUtils.isEmpty(championEntityList)) ? Collections.emptyList()
+                : championEntityList.stream().map(this::convert).collect(Collectors.toList());
     }
 
     @Override
     public List<ChampionEntity> convertListDTO(List<ChampionDTO> championDTOList) {
-        if (CollectionUtils.isEmpty(championDTOList)) {
-            return Collections.emptyList();
-        }
-        return championDTOList.stream().map(this::convert).collect(Collectors.toList());
+        return (CollectionUtils.isEmpty(championDTOList)) ? Collections.emptyList()
+                : championDTOList.stream().map(this::convert).collect(Collectors.toList());
     }
 
 }
