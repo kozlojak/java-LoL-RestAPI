@@ -14,7 +14,7 @@ import pl.jakubkozlowski.learning.firststeps.model.ChampionEntity;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static pl.jakubkozlowski.learning.firststeps.descriptor.ChampionTestDescriptor.*;
+import static pl.jakubkozlowski.learning.firststeps.descriptor.ChampionTestConstants.*;
 
 @RunWith(SpringRunner.class)
 @MybatisTest
@@ -33,6 +33,7 @@ public class ChampionMapperTest {
         expectedAatrox = new ChampionEntity(ID_1, AATROX);
         expectedAhri = new ChampionEntity(ID_2, AHRI);
     }
+
 
     @Test
     public void whenFindOne_thenReturnChampion() {

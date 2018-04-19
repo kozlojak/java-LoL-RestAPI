@@ -10,7 +10,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import pl.jakubkozlowski.learning.firststeps.model.UserEntity;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static pl.jakubkozlowski.learning.firststeps.descriptor.UserTestDescriptor.*;
+import static pl.jakubkozlowski.learning.firststeps.descriptor.UserTestConstants.*;
 
 @RunWith(SpringRunner.class)
 @MybatisTest
@@ -45,7 +45,7 @@ public class UserMapperTest {
         //given
         userMapper.saveUser(expectedMark);
         //when
-        UserEntity actual = userMapper.findUserByName(MARK);
+        UserEntity actual = userMapper.findUserByUsername(MARK);
         //then
         assertThat(actual.getUsername())
                 .isEqualTo(expectedMark.getUsername());

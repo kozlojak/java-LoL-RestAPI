@@ -1,7 +1,6 @@
 package pl.jakubkozlowski.learning.firststeps.controller.descriptor;
 
-public class ChampionControllerDescriptor {
-    public static final String CHAMPION_BASE_PATH = "/champions";
+public class UserControllerDescriptor {
+    public static final String USER_BASE_PATH = "/users";
     public static final String BY_ID = "/{id}";
-
 }

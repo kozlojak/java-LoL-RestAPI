@@ -1,6 +1,6 @@
 package pl.jakubkozlowski.learning.firststeps.descriptor;
 
-public class ChampionTestDescriptor {
+public class ChampionTestConstants {
     public static final String BASE_PATH = "/champions";
     public static final String BY_ID = "/1";
     public static final String AATROX = "Aatrox";

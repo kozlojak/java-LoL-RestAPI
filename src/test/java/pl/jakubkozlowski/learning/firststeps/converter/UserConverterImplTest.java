@@ -12,7 +12,7 @@ import pl.jakubkozlowski.learning.firststeps.dto.UserDTO;
 import pl.jakubkozlowski.learning.firststeps.model.UserEntity;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static pl.jakubkozlowski.learning.firststeps.descriptor.UserTestDescriptor.*;
+import static pl.jakubkozlowski.learning.firststeps.descriptor.UserTestConstants.*;
 
 @RunWith(SpringRunner.class)
 public class UserConverterImplTest {
@@ -22,6 +22,21 @@ public class UserConverterImplTest {
 
     @Autowired
     private UserConverter userConverter;
+
+    @TestConfiguration
+    static class UserConverterImplTestContextConfiguration {
+
+        @Bean
+        public UserConverter userConverter() {
+            return new UserConverterImpl();
+        }
+
+        @Bean
+        public ModelMapper modelMapper() {
+            return new ModelMapper();
+        }
+    }
+
     private UserEntity userEntityMark;
     private UserDTO userDTOMark;
 
@@ -47,19 +62,5 @@ public class UserConverterImplTest {
         //then
         assertThat(actual)
                 .isEqualTo(userEntityMark);
-    }
-
-    @TestConfiguration
-    static class UserConverterImplTestContextConfiguration {
-
-        @Bean
-        public UserConverter userConverter() {
-            return new UserConverterImpl();
-        }
-
-        @Bean
-        public ModelMapper modelMapper() {
-            return new ModelMapper();
-        }
     }
 }

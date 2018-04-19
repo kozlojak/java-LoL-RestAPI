@@ -1,6 +1,6 @@
 package pl.jakubkozlowski.learning.firststeps.descriptor;
 
-public class UserTestDescriptor {
+public class UserTestConstants {
     public static final String BASE_PATH = "/users";
     public static final String BY_ID = "/1";
     public static final Long ID_1 = 1L;

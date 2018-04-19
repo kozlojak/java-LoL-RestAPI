@@ -10,11 +10,11 @@ import pl.jakubkozlowski.learning.firststeps.service.ChampionService;
 
 import java.util.List;
 
-import static pl.jakubkozlowski.learning.firststeps.controller.descriptor.ChampionControllerDescriptor.BASE_PATH_CHAMPION;
 import static pl.jakubkozlowski.learning.firststeps.controller.descriptor.ChampionControllerDescriptor.BY_ID;
+import static pl.jakubkozlowski.learning.firststeps.controller.descriptor.ChampionControllerDescriptor.CHAMPION_BASE_PATH;
 
 @RestController
-@RequestMapping(path = BASE_PATH_CHAMPION)
+@RequestMapping(path = CHAMPION_BASE_PATH)
 public class ChampionController {
 
     private ChampionService championService;

@@ -15,7 +15,7 @@ import pl.jakubkozlowski.learning.firststeps.mapper.UserMapper;
 import pl.jakubkozlowski.learning.firststeps.model.UserEntity;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static pl.jakubkozlowski.learning.firststeps.descriptor.UserTestDescriptor.*;
+import static pl.jakubkozlowski.learning.firststeps.descriptor.UserTestConstants.*;
 
 @RunWith(SpringRunner.class)
 public class UserServiceImplTest {
@@ -42,7 +42,7 @@ public class UserServiceImplTest {
 
         Mockito.when(userMapper.findUserById(userEntityMark.getId()))
                 .thenReturn(userEntityMark);
-        Mockito.when(userMapper.findUserByName(userEntityMark.getUsername()))
+        Mockito.when(userMapper.findUserByUsername(userEntityMark.getUsername()))
                 .thenReturn(userEntityMarkWithSelectedFields);
         Mockito.when(userConverter.convert(userDTOMark))
                 .thenReturn(userEntityMark);
@@ -74,7 +74,7 @@ public class UserServiceImplTest {
     @Test
     public void whenFindUserByName_thenReturnUncompletedUserDTO() {
         //when
-        UserDTO actual = userService.findUserByName(userEntityMark.getUsername());
+        UserDTO actual = userService.findUserByUsername(userEntityMark.getUsername());
         //then
         assertThat(actual)
                 .isEqualTo(userDTOMarkWithSelectedFields);

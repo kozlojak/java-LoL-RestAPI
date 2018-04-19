@@ -7,11 +7,11 @@ import org.springframework.web.bind.annotation.*;
 import pl.jakubkozlowski.learning.firststeps.dto.UserDTO;
 import pl.jakubkozlowski.learning.firststeps.service.UserService;
 
-import static pl.jakubkozlowski.learning.firststeps.controller.descriptor.ChampionControllerDescriptor.BASE_PATH_USER;
-import static pl.jakubkozlowski.learning.firststeps.controller.descriptor.ChampionControllerDescriptor.BY_ID;
+import static pl.jakubkozlowski.learning.firststeps.controller.descriptor.UserControllerDescriptor.BY_ID;
+import static pl.jakubkozlowski.learning.firststeps.controller.descriptor.UserControllerDescriptor.USER_BASE_PATH;
 
 @RestController
-@RequestMapping(path = BASE_PATH_USER)
+@RequestMapping(path = USER_BASE_PATH)
 public class UserController {
 
     private UserService userService;
@@ -33,8 +33,8 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<UserDTO> findUserById(@RequestParam("name") String name) {
-        return ResponseEntity.ok(userService.findUserByName(name));
+    public ResponseEntity<UserDTO> findUserByName(@RequestParam("name") String name) {
+        return ResponseEntity.ok(userService.findUserByUsername(name));
     }
 
     @PutMapping(value = BY_ID)

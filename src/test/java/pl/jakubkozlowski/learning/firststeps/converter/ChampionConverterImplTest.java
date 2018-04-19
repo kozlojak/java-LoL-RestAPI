@@ -3,6 +3,7 @@ package pl.jakubkozlowski.learning.firststeps.converter;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
@@ -14,10 +15,11 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static pl.jakubkozlowski.learning.firststeps.descriptor.ChampionTestDescriptor.*;
+import static pl.jakubkozlowski.learning.firststeps.descriptor.ChampionTestConstants.*;
 
 @RunWith(SpringRunner.class)
 public class ChampionConverterImplTest {
+
 
     @Autowired
     private ChampionConverter championConverter;
@@ -25,9 +27,17 @@ public class ChampionConverterImplTest {
     @TestConfiguration
     static class ChampionConverterImplTestContextConfiguration {
 
+        @Autowired
+        private ModelMapper modelMapper;
+
+        @Bean
+        public ModelMapper modelMapper() {
+            return new ModelMapper();
+        }
+
         @Bean
         public ChampionConverter championConverter() {
-            return new ChampionConverterImpl();
+            return new ChampionConverterImpl(modelMapper);
         }
     }
 

@@ -16,7 +16,7 @@ public interface UserMapper {
     UserEntity findUserById(@Param("id") Long id);
 
     @Select("SELECT username, email, favoriteRoleId, favoriteChampionId FROM user WHERE username= #{username}")
-    UserEntity findUserByName(@Param("username") String username);
+    UserEntity findUserByUsername(@Param("username") String username);
 
     @Update("UPDATE user SET username=#{userEntity.username}, email=#{userEntity.email}, password=#{userEntity.password}," +
             "favoriteRoleId=#{userEntity.favoriteRoleId}, favoriteChampionId=#{userEntity.favoriteChampionId}" +

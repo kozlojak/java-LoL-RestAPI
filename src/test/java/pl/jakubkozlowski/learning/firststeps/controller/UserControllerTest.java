@@ -18,7 +18,7 @@ import pl.jakubkozlowski.learning.firststeps.service.UserService;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static pl.jakubkozlowski.learning.firststeps.descriptor.UserTestDescriptor.*;
+import static pl.jakubkozlowski.learning.firststeps.descriptor.UserTestConstants.*;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(UserController.class)
@@ -42,7 +42,7 @@ public class UserControllerTest {
         objectMapper = new ObjectMapper();
 
         Mockito.when(userService.findUserById(ID_1)).thenReturn(userDTOMark);
-        Mockito.when(userService.findUserByName(userDTOMark.getUsername())).thenReturn(userDTOMarkWithSelectedFields);
+        Mockito.when(userService.findUserByUsername(userDTOMark.getUsername())).thenReturn(userDTOMarkWithSelectedFields);
     }
 
     @Test
@@ -66,7 +66,7 @@ public class UserControllerTest {
                 .andReturn().getResponse().getContentAsString();
 
 
-        UserDTO actual = objectMapper.readValue(content, new com.fasterxml.jackson.core.type.TypeReference<UserDTO>() {
+        UserDTO actual = objectMapper.readValue(content, new TypeReference<UserDTO>() {
         });
         assertThat(actual).isEqualTo(userDTOMark);
     }
@@ -80,7 +80,7 @@ public class UserControllerTest {
                 .andReturn().getResponse().getContentAsString();
 
 
-        UserDTO actual = objectMapper.readValue(content, new com.fasterxml.jackson.core.type.TypeReference<UserDTO>() {
+        UserDTO actual = objectMapper.readValue(content, new TypeReference<UserDTO>() {
         });
         assertThat(actual).isEqualTo(userDTOMarkWithSelectedFields);
     }
@@ -93,7 +93,7 @@ public class UserControllerTest {
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
 
-        UserDTO actual = objectMapper.readValue(content, new com.fasterxml.jackson.core.type.TypeReference<UserDTO>() {
+        UserDTO actual = objectMapper.readValue(content, new TypeReference<UserDTO>() {
         });
         assertThat(actual).isEqualTo(userDTOMark);
     }
