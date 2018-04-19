@@ -1,10 +1,13 @@
 package pl.jakubkozlowski.learning.firststeps.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import pl.jakubkozlowski.learning.firststeps.converter.UserConverter;
 import pl.jakubkozlowski.learning.firststeps.dto.UserDTO;
 import pl.jakubkozlowski.learning.firststeps.mapper.UserMapper;
+import pl.jakubkozlowski.learning.firststeps.model.UserEntity;
 
+@Service
 public class UserServiceImpl implements UserService {
 
     private UserMapper userMapper;
@@ -17,8 +20,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void saveUser(UserDTO userDTO) {
-        userMapper.saveUser(userConverter.convert(userDTO));
+    public UserDTO saveUser(UserDTO userDTO) {
+        UserEntity userEntity = userConverter.convert(userDTO);
+        userMapper.saveUser(userEntity);
+        return userConverter.convert(userEntity);
     }
 
     @Override
@@ -27,8 +32,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO findUserByName(String name) {
-        return userConverter.convert(userMapper.findUserByName(name));
+    public UserDTO findUserByUsername(String username) {
+        return userConverter.convert(userMapper.findUserByUsername(username));
     }
 
     @Override
