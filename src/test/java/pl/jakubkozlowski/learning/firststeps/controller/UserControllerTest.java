@@ -25,13 +25,12 @@ import static pl.jakubkozlowski.learning.firststeps.descriptor.UserTestConstants
 public class UserControllerTest {
 
     @MockBean
-    public UserService userService;
+    private UserService userService;
 
     @Autowired
     private MockMvc mvc;
 
     private ObjectMapper objectMapper;
-
     private UserDTO userDTOMark;
     private UserDTO userDTOMarkWithSelectedFields;
 
@@ -73,9 +72,8 @@ public class UserControllerTest {
 
     @Test
     public void whenFindUserByName_thenReturnJsonArrayOfUserWithGivenName() throws Exception {
-        String content = mvc.perform(get(BASE_PATH)
-                .contentType(MediaType.APPLICATION_JSON)
-                .param("name", userDTOMarkWithSelectedFields.getUsername()))
+        String content = mvc.perform(get(BASE_PATH + USERNAME)
+                .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
 
@@ -86,7 +84,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void whenUpdateEmail_thenReturnJsonArrayOfUpdatedUser() throws Exception {
+    public void whenUpdateUser_thenReturnJsonArrayOfUpdatedUser() throws Exception {
         String content = mvc.perform(put(BASE_PATH + BY_ID)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(userDTOMark)))

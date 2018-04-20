@@ -20,7 +20,6 @@ import static pl.jakubkozlowski.learning.firststeps.descriptor.ChampionTestConst
 @RunWith(SpringRunner.class)
 public class ChampionConverterImplTest {
 
-
     @Autowired
     private ChampionConverter championConverter;
 
@@ -43,41 +42,19 @@ public class ChampionConverterImplTest {
 
     private ChampionEntity championEntityAatrox;
     private ChampionEntity championEntityAhri;
-    private ChampionEntity championEntityAnivia;
-
     private ChampionDTO championDTOAatrox;
     private ChampionDTO championDTOAhri;
-    private ChampionDTO championDTOAnivia;
-
     private List<ChampionEntity> championEntityList;
     private List<ChampionDTO> championDTOList;
 
     @Before
     public void setUp() throws Exception {
-        createNewChampionEntities();
-        createNewChampionDTOs();
-        createNewChampionEntityList();
-        createNewChampionDTOList();
-    }
-
-    private void createNewChampionEntities() {
         championEntityAatrox = new ChampionEntity(ID_1, AATROX);
         championEntityAhri = new ChampionEntity(ID_2, AHRI);
-        championEntityAnivia = new ChampionEntity(ID_3, ANIVIA);
-    }
-
-    private void createNewChampionDTOs() {
         championDTOAatrox = new ChampionDTO(ID_1, AATROX);
         championDTOAhri = new ChampionDTO(ID_2, AHRI);
-        championDTOAnivia = new ChampionDTO(ID_3, ANIVIA);
-    }
-
-    private void createNewChampionEntityList() {
-        championEntityList = Arrays.asList(championEntityAatrox, championEntityAhri, championEntityAnivia);
-    }
-
-    private void createNewChampionDTOList() {
-        championDTOList = Arrays.asList(championDTOAatrox, championDTOAhri, championDTOAnivia);
+        championEntityList = Arrays.asList(championEntityAatrox, championEntityAhri);
+        championDTOList = Arrays.asList(championDTOAatrox, championDTOAhri);
     }
 
     @Test

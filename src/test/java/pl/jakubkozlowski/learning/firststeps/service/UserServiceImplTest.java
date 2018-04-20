@@ -28,6 +28,17 @@ public class UserServiceImplTest {
 
     @Autowired
     private UserConverter userConverter;
+
+
+    @Test
+    public void whenSaveUser_thenReturnUserDTO() {
+        //when
+        UserDTO actual = userService.saveUser(userDTOMark);
+        //then
+        assertThat(actual)
+                .isEqualTo(userDTOMark);
+    }
+
     private UserEntity userEntityMark;
     private UserDTO userDTOMark;
     private UserEntity userEntityMarkWithSelectedFields;
@@ -54,12 +65,20 @@ public class UserServiceImplTest {
                 .thenReturn(userDTOMarkWithSelectedFields);
     }
 
-    @Test
-    public void whenSaveUser_thenReturnUserDTO() {
-        //when
-        userService.saveUser(userDTOMark);
-        //then
-        Mockito.verify(userMapper, Mockito.times(1)).saveUser(userEntityMark);
+    @TestConfiguration
+    static class UserServiceImplTestContextConfiguration {
+
+        @MockBean
+        private UserMapper userMapper;
+
+        @MockBean
+        private UserConverter userConverter;
+
+        @Bean
+        public UserService userService() {
+            return new UserServiceImpl(userMapper, userConverter);
+        }
+
     }
 
     @Test
@@ -94,22 +113,6 @@ public class UserServiceImplTest {
         userService.deleteById(ID_1);
         //then
         Mockito.verify(userMapper, Mockito.times(1)).deleteById(ID_1);
-    }
-
-    @TestConfiguration
-    static class UserServiceImplTestContextConfiguration {
-
-        @MockBean
-        private UserMapper userMapper;
-
-        @MockBean
-        private UserConverter userConverter;
-
-        @Bean
-        public UserService userService() {
-            return new UserServiceImpl(userMapper, userConverter);
-        }
-
     }
 
 }

@@ -27,30 +27,22 @@ import static pl.jakubkozlowski.learning.firststeps.descriptor.ChampionTestConst
 @WebMvcTest(ChampionController.class)
 public class ChampionControllerTest {
 
-
     @MockBean
-    public ChampionService championService;
+    private ChampionService championService;
 
     @Autowired
     private MockMvc mvc;
 
     private ObjectMapper objectMapper;
-
     private ChampionDTO championDTOAatrox;
     private ChampionDTO championDTOAhri;
-    private ChampionDTO championDTOAnivia;
-
     private List<ChampionDTO> championDTOList;
 
     @Before
     public void setUp() throws Exception {
-
         championDTOAatrox = new ChampionDTO(ID_1, AATROX);
         championDTOAhri = new ChampionDTO(ID_2, AHRI);
-        championDTOAnivia = new ChampionDTO(ID_3, ANIVIA);
-
-        championDTOList = Arrays.asList(championDTOAatrox, championDTOAhri, championDTOAnivia);
-
+        championDTOList = Arrays.asList(championDTOAatrox, championDTOAhri);
         objectMapper = new ObjectMapper();
 
         Mockito.when(championService.findAll()).thenReturn(championDTOList);

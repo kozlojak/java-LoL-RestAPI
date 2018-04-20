@@ -19,7 +19,6 @@ public class UserMapperTest {
 
     @Autowired
     private UserMapper userMapper;
-
     private UserEntity expectedMark;
     private UserEntity expectedKate;
 

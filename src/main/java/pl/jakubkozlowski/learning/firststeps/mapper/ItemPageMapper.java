@@ -11,7 +11,7 @@ public interface ItemPageMapper {
     @Insert("INSERT INTO item_page (pagename, description, championId, roleId, userId)" +
             " VALUES (#{itemPageEntity.pagename}, #{itemPageEntity.description}, #{itemPageEntity.championId}, " +
             "#{itemPageEntity.roleId}, #{itemPageEntity.userId})")
-    @Options(useGeneratedKeys = true, keyProperty = "userEntity.id")
+    @Options(useGeneratedKeys = true, keyProperty = "itemPageEntity.id")
     void saveItemPage(@Param("itemPageEntity") ItemPageEntity itemPageEntity);
 
     @Select("SELECT * FROM item_page WHERE id= #{id}")
@@ -24,7 +24,7 @@ public interface ItemPageMapper {
     List<ItemPageEntity> findAllItemPages();
 
     @Update("UPDATE item_page SET pagename=#{itemPageEntity.pagename}, description=#{itemPageEntity.description}," +
-            "championId=#{itemPageEntity.championId},roleId=#{itemPageEntity.roleId}, userId=#{itemPageEntity.userId}")
+            "championId=#{itemPageEntity.championId},roleId=#{itemPageEntity.roleId}, userId=#{itemPageEntity.userId} WHERE id=#{id}")
     void updateItemPage(@Param("id") Long id, @Param("itemPageEntity") ItemPageEntity itemPageEntity);
 
     @Delete("DELETE FROM item_page WHERE id=#{id}")

@@ -34,6 +34,15 @@ public class ChampionServiceImplTest {
     @Autowired
     private ChampionConverter championConverter;
 
+    @Test
+    public void whenPersist_thenMethodInvokedWithGivenParameter() {
+        //when
+        ChampionDTO actual = championService.save(championDTOAatrox);
+        //then
+        assertThat(actual)
+                .isEqualTo(championDTOAatrox);
+    }
+
     private void createNewChampionDTOs() {
         championDTOAatrox = new ChampionDTO(ID_1, AATROX);
         championDTOAhri = new ChampionDTO(ID_2, AHRI);
@@ -67,22 +76,6 @@ public class ChampionServiceImplTest {
         championDTOList = Arrays.asList(championDTOAatrox, championDTOAhri, championDTOAnivia);
     }
 
-    @TestConfiguration
-    static class ChampionServiceImplTestContextConfiguration {
-
-        @MockBean
-        private ChampionMapper championMapper;
-
-        @MockBean
-        private ChampionConverter championConverter;
-
-        @Bean
-        public ChampionService championService() {
-            return new ChampionServiceImpl(championMapper, championConverter);
-        }
-
-    }
-
     @Before
     public void setUp() throws Exception {
         createNewChampionEntities();
@@ -105,12 +98,20 @@ public class ChampionServiceImplTest {
 
     }
 
-    @Test
-    public void whenPersist_thenMethodInvokedWithGivenParameter() {
-        //when
-        championService.save(championDTOAatrox);
-        //then
-        Mockito.verify(championMapper, Mockito.times(1)).save(championEntityAatrox);
+    @TestConfiguration
+    static class ChampionServiceImplTestContextConfiguration {
+
+        @MockBean
+        private ChampionMapper championMapper;
+
+        @MockBean
+        private ChampionConverter championConverter;
+
+        @Bean
+        public ChampionService championService() {
+            return new ChampionServiceImpl(championMapper, championConverter);
+        }
+
     }
 
 

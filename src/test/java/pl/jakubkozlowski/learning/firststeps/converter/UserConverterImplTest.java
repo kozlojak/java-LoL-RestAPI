@@ -18,23 +18,24 @@ import static pl.jakubkozlowski.learning.firststeps.descriptor.UserTestConstants
 public class UserConverterImplTest {
 
     @Autowired
-    private ModelMapper modelMapper;
-
-    @Autowired
     private UserConverter userConverter;
 
     @TestConfiguration
     static class UserConverterImplTestContextConfiguration {
 
-        @Bean
-        public UserConverter userConverter() {
-            return new UserConverterImpl();
-        }
+        @Autowired
+        private ModelMapper modelMapper;
 
         @Bean
         public ModelMapper modelMapper() {
             return new ModelMapper();
         }
+
+        @Bean
+        public UserConverter userConverter() {
+            return new UserConverterImpl(modelMapper);
+        }
+
     }
 
     private UserEntity userEntityMark;

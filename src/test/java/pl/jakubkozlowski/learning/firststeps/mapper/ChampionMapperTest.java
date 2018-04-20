@@ -1,6 +1,5 @@
 package pl.jakubkozlowski.learning.firststeps.mapper;
 
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,7 +26,6 @@ public class ChampionMapperTest {
     private ChampionEntity expectedAatrox;
     private ChampionEntity expectedAhri;
 
-
     @Before
     public void setUp() throws Exception {
         expectedAatrox = new ChampionEntity(ID_1, AATROX);
@@ -47,7 +45,7 @@ public class ChampionMapperTest {
     }
 
     @Test
-    public void whenFindAll_thenReturnChampionList() {
+    public void whenFindAll_thenReturnListOfChampions() {
         //given
         championMapper.save(expectedAatrox);
         championMapper.save(expectedAhri);
