@@ -31,12 +31,6 @@ public class ItemOrderServiceImplTest {
 
     @Autowired
     private ItemOrderConverter itemOrderConverter;
-    private ItemOrderEntity itemOrderEntitySet1;
-    private ItemOrderDTO itemOrderDTOSet1;
-    private ItemOrderEntity itemOrderEntitySet2;
-    private ItemOrderDTO itemOrderDTOSet2;
-    private List<ItemOrderEntity> itemOrderEntityList;
-    private List<ItemOrderDTO> itemOrderDTOList;
 
     @Before
     public void setUp() throws Exception {
@@ -51,9 +45,9 @@ public class ItemOrderServiceImplTest {
                 .thenReturn(itemOrderEntityList);
         Mockito.when(itemOrderMapper.findById(itemOrderEntitySet1.getItemPageId()))
                 .thenReturn(itemOrderEntitySet1);
-        Mockito.when(itemOrderConverter.convert(itemOrderDTOSet1))
+        Mockito.when(itemOrderConverter.convertDTO(itemOrderDTOSet1))
                 .thenReturn(itemOrderEntitySet1);
-        Mockito.when(itemOrderConverter.convert(itemOrderEntitySet1))
+        Mockito.when(itemOrderConverter.convertEntity(itemOrderEntitySet1))
                 .thenReturn(itemOrderDTOSet1);
         Mockito.when(itemOrderConverter.convertListDTO(itemOrderDTOList))
                 .thenReturn(itemOrderEntityList);
@@ -61,8 +55,15 @@ public class ItemOrderServiceImplTest {
                 .thenReturn(itemOrderDTOList);
     }
 
+    private ItemOrderEntity itemOrderEntitySet1;
+    private ItemOrderDTO itemOrderDTOSet1;
+    private ItemOrderEntity itemOrderEntitySet2;
+    private ItemOrderDTO itemOrderDTOSet2;
+    private List<ItemOrderEntity> itemOrderEntityList;
+    private List<ItemOrderDTO> itemOrderDTOList;
+
     @Test
-    public void whenSaveItemOrder_thenReturnItemOrderDTO() {
+    public void whenSave_thenReturnItemOrderDTO() {
         //when
         ItemOrderDTO actual = itemOrderService.save(itemOrderDTOSet1);
         //then
@@ -71,7 +72,7 @@ public class ItemOrderServiceImplTest {
     }
 
     @Test
-    public void whenFindAllItemOrders_thenReturnListOfItemOrdersDTO() {
+    public void whenFindAll_thenReturnListOfItemOrdersDTO() {
         //when
         List<ItemOrderDTO> actual = itemOrderService.findAll();
         //then
@@ -80,7 +81,7 @@ public class ItemOrderServiceImplTest {
     }
 
     @Test
-    public void whenFindItemOrderById_thenReturnItemOrderDTO() {
+    public void whenFindById_thenReturnItemOrderDTO() {
         //when
         ItemOrderDTO actual = itemOrderService.findById(itemOrderEntitySet1.getItemPageId());
         //then
@@ -89,19 +90,11 @@ public class ItemOrderServiceImplTest {
     }
 
     @Test
-    public void whenUpdateItemOrder_thenReturnUpdatedItemOrderDTO() {
+    public void whenUpdate_thenReturnUpdatedItemOrderDTO() {
         //when
         itemOrderService.update(ID_1, itemOrderDTOSet1);
         //then
         Mockito.verify(itemOrderMapper, Mockito.times(1)).update(ID_1, itemOrderEntitySet1);
-    }
-
-    @Test
-    public void whenDeleteById_thenDeleteItemOrderDTO() {
-        //when
-        itemOrderService.deleteById(ID_1);
-        //then
-        Mockito.verify(itemOrderMapper, Mockito.times(1)).deleteById(ID_1);
     }
 
     @TestConfiguration
@@ -118,5 +111,13 @@ public class ItemOrderServiceImplTest {
             return new ItemOrderServiceImpl(itemOrderMapper, itemOrderConverter);
         }
 
+    }
+
+    @Test
+    public void whenDeleteById_thenDeleteItemOrderDTO() {
+        //when
+        itemOrderService.deleteById(ID_1);
+        //then
+        Mockito.verify(itemOrderMapper, Mockito.times(1)).deleteById(ID_1);
     }
 }

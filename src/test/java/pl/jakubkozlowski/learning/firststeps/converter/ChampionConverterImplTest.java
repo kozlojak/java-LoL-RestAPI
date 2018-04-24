@@ -1,7 +1,5 @@
 package pl.jakubkozlowski.learning.firststeps.converter;
 
-import org.junit.Before;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,11 +12,8 @@ import pl.jakubkozlowski.learning.firststeps.model.ChampionEntity;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static pl.jakubkozlowski.learning.firststeps.descriptor.ChampionTestConstants.*;
-
 @RunWith(SpringRunner.class)
-public class ChampionConverterImplTest {
+public class ChampionConverterImplTest extends ModelMapperConverterTest<ChampionDTO, ChampionEntity> {
 
     @Autowired
     private ChampionConverter championConverter;
@@ -40,56 +35,29 @@ public class ChampionConverterImplTest {
         }
     }
 
-    private ChampionEntity championEntityAatrox;
-    private ChampionEntity championEntityAhri;
-    private ChampionDTO championDTOAatrox;
-    private ChampionDTO championDTOAhri;
-    private List<ChampionEntity> championEntityList;
-    private List<ChampionDTO> championDTOList;
-
-    @Before
-    public void setUp() throws Exception {
-        championEntityAatrox = new ChampionEntity(ID_1, AATROX);
-        championEntityAhri = new ChampionEntity(ID_2, AHRI);
-        championDTOAatrox = new ChampionDTO(ID_1, AATROX);
-        championDTOAhri = new ChampionDTO(ID_2, AHRI);
-        championEntityList = Arrays.asList(championEntityAatrox, championEntityAhri);
-        championDTOList = Arrays.asList(championDTOAatrox, championDTOAhri);
+    @Override
+    public ChampionDTO prepareDTO() {
+        return new ChampionDTO();
     }
 
-    @Test
-    public void whenConvertChampionEntity_thenReturnChampionDTO() {
-        //when
-        ChampionDTO actual = championConverter.convert(championEntityAatrox);
-        //then
-        assertThat(actual)
-                .isEqualTo(championDTOAatrox);
+    @Override
+    public ChampionEntity prepareEntity() {
+        return new ChampionEntity();
     }
 
-    @Test
-    public void whenConvertChampionDTO_thenReturnChampionEntity() {
-        //when
-        ChampionEntity actual = championConverter.convert(championDTOAatrox);
-        //then
-        assertThat(actual)
-                .isEqualTo(championEntityAatrox);
+    @Override
+    public List<ChampionDTO> prepareListDTO() {
+        return Arrays.asList(new ChampionDTO(), new ChampionDTO());
     }
 
-    @Test
-    public void whenConvertChampionListEntity_thenReturnChampionListDTO() {
-        //when
-        List<ChampionDTO> actual = championConverter.convertListEntity(championEntityList);
-        //then
-        assertThat(actual)
-                .isEqualTo(championDTOList);
+    @Override
+    public List<ChampionEntity> prepareListEntity() {
+
+        return Arrays.asList(new ChampionEntity(), new ChampionEntity());
     }
 
-    @Test
-    public void whenConvertChampionListDTO_thenReturnChampionListEntity() {
-        //when
-        List<ChampionEntity> actual = championConverter.convertListDTO(championDTOList);
-        //then
-        assertThat(actual)
-                .isEqualTo(championEntityList);
+    @Override
+    public ModelMapperConverter<ChampionDTO, ChampionEntity> getConverter() {
+        return championConverter;
     }
 }

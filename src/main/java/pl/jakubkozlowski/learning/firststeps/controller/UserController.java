@@ -21,24 +21,24 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<UserDTO> saveUser(@RequestBody UserDTO user) {
-        userService.saveUser(user);
+    public ResponseEntity<UserDTO> save(@RequestBody UserDTO user) {
+        userService.save(user);
         return ResponseEntity.status(HttpStatus.CREATED).body(user);
     }
 
     @GetMapping(value = BY_ID)
-    public ResponseEntity<UserDTO> findUserById(@PathVariable("id") Long id) {
-        return ResponseEntity.ok(userService.findUserById(id));
+    public ResponseEntity<UserDTO> findById(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(userService.findById(id));
     }
 
     @GetMapping(value = USERNAME)
-    public ResponseEntity<UserDTO> findUserByName(@PathVariable("username") String username) {
-        return ResponseEntity.ok(userService.findUserByUsername(username));
+    public ResponseEntity<UserDTO> findByUsername(@PathVariable("username") String username) {
+        return ResponseEntity.ok(userService.findByUsername(username));
     }
 
     @PutMapping(value = BY_ID)
-    public ResponseEntity<UserDTO> updateUser(@PathVariable("id") Long id, @RequestBody UserDTO user) {
-        userService.updateUser(id, user);
+    public ResponseEntity<UserDTO> update(@PathVariable("id") Long id, @RequestBody UserDTO user) {
+        userService.update(id, user);
         return ResponseEntity.status(HttpStatus.OK).body(user);
     }
 

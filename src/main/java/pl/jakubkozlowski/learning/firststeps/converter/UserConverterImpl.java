@@ -17,12 +17,18 @@ public class UserConverterImpl implements UserConverter {
     }
 
     @Override
-    public UserDTO convert(UserEntity userEntity) {
-        return (userEntity == null) ? null : modelMapper.map(userEntity, UserDTO.class);
+    public Class<UserEntity> getEntityClass() {
+        return UserEntity.class;
     }
 
     @Override
-    public UserEntity convert(UserDTO userDTO) {
-        return (userDTO == null) ? null : modelMapper.map(userDTO, UserEntity.class);
+    public Class<UserDTO> getDTOClass() {
+        return UserDTO.class;
     }
+
+    @Override
+    public ModelMapper getModelMapper() {
+        return modelMapper;
+    }
+
 }

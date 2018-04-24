@@ -33,10 +33,10 @@ public class ItemPageMapperTest {
     @Test
     public void whenFindAllItemPages_thenReturnListOfItemPages() {
         //given
-        itemPageMapper.saveItemPage(expectedAttack);
-        itemPageMapper.saveItemPage(expectedDefence);
+        itemPageMapper.save(expectedAttack);
+        itemPageMapper.save(expectedDefence);
         //when
-        List<ItemPageEntity> actual = itemPageMapper.findAllItemPages();
+        List<ItemPageEntity> actual = itemPageMapper.findAll();
         //then
         assertThat(actual.size())
                 .isEqualTo(2);
@@ -49,9 +49,9 @@ public class ItemPageMapperTest {
     @Test
     public void whenFindItemPageById_thenReturnItemPage() {
         //given
-        itemPageMapper.saveItemPage(expectedAttack);
+        itemPageMapper.save(expectedAttack);
         //when
-        ItemPageEntity actual = itemPageMapper.findItemPageById(ID_1);
+        ItemPageEntity actual = itemPageMapper.findById(ID_1);
         //then
         assertThat(actual)
                 .isEqualTo(expectedAttack);
@@ -60,9 +60,9 @@ public class ItemPageMapperTest {
     @Test
     public void whenFindItemPageByName_thenReturnUncompletedItemPage() {
         //given
-        itemPageMapper.saveItemPage(expectedAttack);
+        itemPageMapper.save(expectedAttack);
         //when
-        ItemPageEntity actual = itemPageMapper.findItemPageByPagename(ATTACK);
+        ItemPageEntity actual = itemPageMapper.findByPagename(ATTACK);
         //then
         assertThat(actual)
                 .isEqualTo(expectedAttack);
@@ -71,10 +71,10 @@ public class ItemPageMapperTest {
     @Test
     public void whenUpdateUser_thenReturnUpdatedItemPage() {
         //given
-        itemPageMapper.saveItemPage(expectedAttack);
+        itemPageMapper.save(expectedAttack);
         //when
-        itemPageMapper.updateItemPage(ID_1, expectedDefence);
-        ItemPageEntity actual = itemPageMapper.findItemPageById(ID_1);
+        itemPageMapper.update(ID_1, expectedDefence);
+        ItemPageEntity actual = itemPageMapper.findById(ID_1);
         //then
         assertThat(actual.getPagename())
                 .isEqualTo(expectedDefence.getPagename());
@@ -85,10 +85,10 @@ public class ItemPageMapperTest {
     @Test
     public void whenDeleteById_thenDeleteItemPage() {
         //given
-        itemPageMapper.saveItemPage(expectedAttack);
+        itemPageMapper.save(expectedAttack);
         //when
-        itemPageMapper.deleteItemPageById(ID_1);
-        ItemPageEntity actual = itemPageMapper.findItemPageById(ID_1);
+        itemPageMapper.deleteById(ID_1);
+        ItemPageEntity actual = itemPageMapper.findById(ID_1);
         //then
         assertThat(actual)
                 .isNull();

@@ -13,35 +13,34 @@ import java.util.List;
 public class ItemOrderServiceImpl implements ItemOrderService {
 
     private ItemOrderMapper itemOrderMapper;
-    private ItemOrderConverter itemOrderConverter;
+    private ItemOrderConverter ItemOrderConverter;
 
     @Autowired
-    public ItemOrderServiceImpl(ItemOrderMapper itemOrderMapper, ItemOrderConverter itemOrderConverter) {
+    public ItemOrderServiceImpl(ItemOrderMapper itemOrderMapper, ItemOrderConverter ItemOrderConverter) {
         this.itemOrderMapper = itemOrderMapper;
-        this.itemOrderConverter = itemOrderConverter;
-    }
-
-    @Override
-    public ItemOrderDTO save(ItemOrderDTO itemOrderDTO) {
-        ItemOrderEntity userEntity = itemOrderConverter.convert(itemOrderDTO);
-        itemOrderMapper.save(userEntity);
-        return itemOrderConverter.convert(userEntity);
+        this.ItemOrderConverter = ItemOrderConverter;
     }
 
     @Override
     public List<ItemOrderDTO> findAll() {
-        return itemOrderConverter.convertListEntity(itemOrderMapper.findAll());
+        return ItemOrderConverter.convertListEntity(itemOrderMapper.findAll());
     }
 
     @Override
     public ItemOrderDTO findById(Long id) {
-        return itemOrderConverter.convert(itemOrderMapper.findById(id));
+        return ItemOrderConverter.convertEntity(itemOrderMapper.findById(id));
     }
 
+    @Override
+    public ItemOrderDTO save(ItemOrderDTO itemOrderDTO) {
+        ItemOrderEntity userEntity = ItemOrderConverter.convertDTO(itemOrderDTO);
+        itemOrderMapper.save(userEntity);
+        return ItemOrderConverter.convertEntity(userEntity);
+    }
 
     @Override
     public void update(Long id, ItemOrderDTO itemOrderDTO) {
-        itemOrderMapper.update(id, itemOrderConverter.convert(itemOrderDTO));
+        itemOrderMapper.update(id, ItemOrderConverter.convertDTO(itemOrderDTO));
     }
 
     @Override
