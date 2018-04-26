@@ -4,7 +4,7 @@ import pl.jakubkozlowski.learning.firststeps.dto.ItemOrderDTO;
 
 import java.util.List;
 
-public interface ItemOrderService extends CRUDservice<ItemOrderDTO> {
+public interface ItemOrderService extends CRUDService<ItemOrderDTO> {
 
     List<ItemOrderDTO> findAll();
 }

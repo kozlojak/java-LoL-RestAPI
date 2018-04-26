@@ -1,6 +1,6 @@
 package pl.jakubkozlowski.learning.firststeps.service;
 
-public interface CRUDservice<DTO> {
+public interface CRUDService<DTO> {
 
     DTO findById(Long id);
 

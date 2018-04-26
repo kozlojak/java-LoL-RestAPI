@@ -4,7 +4,7 @@ import pl.jakubkozlowski.learning.firststeps.dto.ChampionDTO;
 
 import java.util.List;
 
-public interface ChampionService extends CRUDservice<ChampionDTO> {
+public interface ChampionService extends CRUDService<ChampionDTO> {
 
     List<ChampionDTO> findAll();
 }

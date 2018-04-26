@@ -4,7 +4,7 @@ import pl.jakubkozlowski.learning.firststeps.dto.ItemPageDTO;
 
 import java.util.List;
 
-public interface ItemPageService extends CRUDservice<ItemPageDTO> {
+public interface ItemPageService extends CRUDService<ItemPageDTO> {
 
     List<ItemPageDTO> findAll();
 
