@@ -4,15 +4,7 @@ import pl.jakubkozlowski.learning.firststeps.dto.ChampionDTO;
 
 import java.util.List;
 
-public interface ChampionService {
+public interface ChampionService extends CRUDService<ChampionDTO> {
 
     List<ChampionDTO> findAll();
-
-    ChampionDTO findById(Long id);
-
-    ChampionDTO save(ChampionDTO championDTO);
-
-    void update(Long id, ChampionDTO championDTO);
-
-    void deleteById(Long id);
 }

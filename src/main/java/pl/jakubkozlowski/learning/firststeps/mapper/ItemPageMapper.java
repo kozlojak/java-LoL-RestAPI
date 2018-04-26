@@ -12,21 +12,21 @@ public interface ItemPageMapper {
             " VALUES (#{itemPageEntity.pagename}, #{itemPageEntity.description}, #{itemPageEntity.championId}, " +
             "#{itemPageEntity.roleId}, #{itemPageEntity.userId})")
     @Options(useGeneratedKeys = true, keyProperty = "itemPageEntity.id")
-    void saveItemPage(@Param("itemPageEntity") ItemPageEntity itemPageEntity);
+    void save(@Param("itemPageEntity") ItemPageEntity itemPageEntity);
 
     @Select("SELECT * FROM item_page WHERE id= #{id}")
-    ItemPageEntity findItemPageById(@Param("id") Long id);
+    ItemPageEntity findById(@Param("id") Long id);
 
     @Select("SELECT * FROM item_page WHERE pagename= #{pagename}")
-    ItemPageEntity findItemPageByPagename(@Param("pagename") String pagename);
+    ItemPageEntity findByPagename(@Param("pagename") String pagename);
 
     @Select("SELECT * FROM item_page")
-    List<ItemPageEntity> findAllItemPages();
+    List<ItemPageEntity> findAll();
 
     @Update("UPDATE item_page SET pagename=#{itemPageEntity.pagename}, description=#{itemPageEntity.description}," +
             "championId=#{itemPageEntity.championId},roleId=#{itemPageEntity.roleId}, userId=#{itemPageEntity.userId} WHERE id=#{id}")
-    void updateItemPage(@Param("id") Long id, @Param("itemPageEntity") ItemPageEntity itemPageEntity);
+    void update(@Param("id") Long id, @Param("itemPageEntity") ItemPageEntity itemPageEntity);
 
     @Delete("DELETE FROM item_page WHERE id=#{id}")
-    void deleteItemPageById(@Param("id") Long id);
+    void deleteById(@Param("id") Long id);
 }

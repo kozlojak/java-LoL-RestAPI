@@ -40,8 +40,8 @@ public class UserControllerTest {
         userDTOMarkWithSelectedFields = new UserDTO(MARK, MARK_EMAIL, MARK_FAV_ROLE_ID, MARK_FAV_CHAMP_ID);
         objectMapper = new ObjectMapper();
 
-        Mockito.when(userService.findUserById(ID_1)).thenReturn(userDTOMark);
-        Mockito.when(userService.findUserByUsername(userDTOMark.getUsername())).thenReturn(userDTOMarkWithSelectedFields);
+        Mockito.when(userService.findById(ID_1)).thenReturn(userDTOMark);
+        Mockito.when(userService.findByUsername(userDTOMark.getUsername())).thenReturn(userDTOMarkWithSelectedFields);
     }
 
     @Test

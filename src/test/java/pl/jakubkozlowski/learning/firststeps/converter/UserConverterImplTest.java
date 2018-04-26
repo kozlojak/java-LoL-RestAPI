@@ -1,7 +1,5 @@
 package pl.jakubkozlowski.learning.firststeps.converter;
 
-import org.junit.Before;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,11 +9,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 import pl.jakubkozlowski.learning.firststeps.dto.UserDTO;
 import pl.jakubkozlowski.learning.firststeps.model.UserEntity;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static pl.jakubkozlowski.learning.firststeps.descriptor.UserTestConstants.*;
+import java.util.Arrays;
+import java.util.List;
 
 @RunWith(SpringRunner.class)
-public class UserConverterImplTest {
+public class UserConverterImplTest extends ModelMapperConverterTest<UserDTO, UserEntity> {
 
     @Autowired
     private UserConverter userConverter;
@@ -38,30 +36,28 @@ public class UserConverterImplTest {
 
     }
 
-    private UserEntity userEntityMark;
-    private UserDTO userDTOMark;
-
-    @Before
-    public void setUp() throws Exception {
-        userEntityMark = new UserEntity(ID_1, MARK, MARK_EMAIL, MARK_PASSWORD, MARK_FAV_ROLE_ID, MARK_FAV_CHAMP_ID);
-        userDTOMark = new UserDTO(ID_1, MARK, MARK_EMAIL, MARK_PASSWORD, MARK_FAV_ROLE_ID, MARK_FAV_CHAMP_ID);
+    @Override
+    public UserDTO prepareDTO() {
+        return new UserDTO();
     }
 
-    @Test
-    public void whenConvertUserEntity_thenReturnUserDTO() {
-        //when
-        UserDTO actual = userConverter.convert(userEntityMark);
-        //then
-        assertThat(actual)
-                .isEqualTo(userDTOMark);
+    @Override
+    public UserEntity prepareEntity() {
+        return new UserEntity();
     }
 
-    @Test
-    public void whenConvertChampionDTO_thenReturnChampionEntity() {
-        //when
-        UserEntity actual = userConverter.convert(userDTOMark);
-        //then
-        assertThat(actual)
-                .isEqualTo(userEntityMark);
+    @Override
+    public List<UserDTO> prepareListDTO() {
+        return Arrays.asList(new UserDTO(), new UserDTO());
+    }
+
+    @Override
+    public List<UserEntity> prepareListEntity() {
+        return Arrays.asList(new UserEntity(), new UserEntity());
+    }
+
+    @Override
+    public ModelMapperConverter getConverter() {
+        return userConverter;
     }
 }

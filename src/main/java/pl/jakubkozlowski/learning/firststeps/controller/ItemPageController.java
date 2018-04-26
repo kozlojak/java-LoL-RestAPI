@@ -23,29 +23,29 @@ public class ItemPageController {
     }
 
     @GetMapping
-    public List<ItemPageDTO> findAllItemPages() {
-        return itemPageService.findAllItemPages();
+    public List<ItemPageDTO> findAll() {
+        return itemPageService.findAll();
     }
 
     @PostMapping
-    public ResponseEntity<ItemPageDTO> saveItemPage(@RequestBody ItemPageDTO itemPage) {
-        itemPageService.saveItemPage(itemPage);
+    public ResponseEntity<ItemPageDTO> save(@RequestBody ItemPageDTO itemPage) {
+        itemPageService.save(itemPage);
         return ResponseEntity.status(HttpStatus.CREATED).body(itemPage);
     }
 
     @GetMapping(value = BY_ID)
-    public ResponseEntity<ItemPageDTO> findItemPageById(@PathVariable("id") Long id) {
-        return ResponseEntity.ok(itemPageService.findItemPageById(id));
+    public ResponseEntity<ItemPageDTO> findById(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(itemPageService.findById(id));
     }
 
     @GetMapping(value = PAGENAME)
-    public ResponseEntity<ItemPageDTO> findItemPageByPagename(@PathVariable("pagename") String pagename) {
-        return ResponseEntity.ok(itemPageService.findItemPageByPagename(pagename));
+    public ResponseEntity<ItemPageDTO> findByPagename(@PathVariable("pagename") String pagename) {
+        return ResponseEntity.ok(itemPageService.findByPagename(pagename));
     }
 
     @PutMapping(value = BY_ID)
-    public ResponseEntity<ItemPageDTO> updateItemPage(@PathVariable("id") Long id, @RequestBody ItemPageDTO itemPage) {
-        itemPageService.updateItemPage(id, itemPage);
+    public ResponseEntity<ItemPageDTO> update(@PathVariable("id") Long id, @RequestBody ItemPageDTO itemPage) {
+        itemPageService.update(id, itemPage);
         return ResponseEntity.status(HttpStatus.OK).body(itemPage);
     }
 

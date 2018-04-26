@@ -34,13 +34,26 @@ public class ChampionServiceImplTest {
     @Autowired
     private ChampionConverter championConverter;
 
-    @Test
-    public void whenPersist_thenMethodInvokedWithGivenParameter() {
-        //when
-        ChampionDTO actual = championService.save(championDTOAatrox);
-        //then
-        assertThat(actual)
-                .isEqualTo(championDTOAatrox);
+    @Before
+    public void setUp() throws Exception {
+        createNewChampionEntities();
+        createNewChampionDTOs();
+        createNewChampionEntityList();
+        createNewChampionDTOList();
+
+        Mockito.when(championMapper.findById(championEntityAatrox.getId()))
+                .thenReturn(championEntityAatrox);
+        Mockito.when(championMapper.findAll())
+                .thenReturn(championEntityList);
+        Mockito.when(championConverter.convertEntity(championEntityAatrox))
+                .thenReturn(championDTOAatrox);
+        Mockito.when(championConverter.convertDTO(championDTOAatrox))
+                .thenReturn(championEntityAatrox);
+        Mockito.when(championConverter.convertListDTO(championDTOList))
+                .thenReturn(championEntityList);
+        Mockito.when(championConverter.convertListEntity(championEntityList))
+                .thenReturn(championDTOList);
+
     }
 
     private void createNewChampionDTOs() {
@@ -76,26 +89,34 @@ public class ChampionServiceImplTest {
         championDTOList = Arrays.asList(championDTOAatrox, championDTOAhri, championDTOAnivia);
     }
 
-    @Before
-    public void setUp() throws Exception {
-        createNewChampionEntities();
-        createNewChampionDTOs();
-        createNewChampionEntityList();
-        createNewChampionDTOList();
+    @Test
+    public void whenPersist_thenMethodInvokedWithGivenParameter() {
+        //when
+        ChampionDTO actual = championService.save(championDTOAatrox);
+        //then
+        assertThat(actual)
+                .isEqualTo(championDTOAatrox);
+    }
 
-        Mockito.when(championMapper.findById(championEntityAatrox.getId()))
-                .thenReturn(championEntityAatrox);
-        Mockito.when(championMapper.findAll())
-                .thenReturn(championEntityList);
-        Mockito.when(championConverter.convert(championEntityAatrox))
-                .thenReturn(championDTOAatrox);
-        Mockito.when(championConverter.convert(championDTOAatrox))
-                .thenReturn(championEntityAatrox);
-        Mockito.when(championConverter.convertListDTO(championDTOList))
-                .thenReturn(championEntityList);
-        Mockito.when(championConverter.convertListEntity(championEntityList))
-                .thenReturn(championDTOList);
+    @Test
+    public void whenFindAll_thenReturnChampionDTOList() {
+        //when
+        List<ChampionDTO> expectedChampionDTOList = championService.findAll();
+        //then
+        assertThat(expectedChampionDTOList.size())
+                .isEqualTo(3);
+        assertThat(expectedChampionDTOList)
+                .isEqualTo(championDTOList);
 
+    }
+
+    @Test
+    public void whenFindById_thenReturnChampionDTO() {
+        //when
+        ChampionDTO actual = championService.findById(championEntityAatrox.getId());
+        //then
+        assertThat(actual)
+                .isEqualTo(championDTOAatrox);
     }
 
     @TestConfiguration
@@ -112,29 +133,6 @@ public class ChampionServiceImplTest {
             return new ChampionServiceImpl(championMapper, championConverter);
         }
 
-    }
-
-
-    @Test
-    public void whenFindAll_thenReturnChampionDTOList() {
-        //when
-        List<ChampionDTO> expectedChampionDTOList = championService.findAll();
-        //then
-        assertThat(expectedChampionDTOList.size())
-                .isEqualTo(3);
-        assertThat(expectedChampionDTOList)
-                .isEqualTo(championDTOList);
-
-    }
-
-
-    @Test
-    public void whenFindById_thenReturnChampionDTO() {
-        //when
-        ChampionDTO actual = championService.findById(championEntityAatrox.getId());
-        //then
-        assertThat(actual)
-                .isEqualTo(championDTOAatrox);
     }
 
     @Test

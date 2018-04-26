@@ -20,29 +20,29 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO saveUser(UserDTO userDTO) {
-        UserEntity userEntity = userConverter.convert(userDTO);
+    public UserDTO save(UserDTO userDTO) {
+        UserEntity userEntity = userConverter.convertDTO(userDTO);
         userMapper.saveUser(userEntity);
-        return userConverter.convert(userEntity);
+        return userConverter.convertEntity(userEntity);
     }
 
     @Override
-    public UserDTO findUserById(Long id) {
-        return userConverter.convert(userMapper.findUserById(id));
+    public UserDTO findById(Long id) {
+        return userConverter.convertEntity(userMapper.findUserById(id));
     }
 
     @Override
-    public UserDTO findUserByUsername(String username) {
-        return userConverter.convert(userMapper.findUserByUsername(username));
-    }
-
-    @Override
-    public void updateUser(Long id, UserDTO userDTO) {
-        userMapper.updateUser(id, userConverter.convert(userDTO));
+    public void update(Long id, UserDTO userDTO) {
+        userMapper.updateUser(id, userConverter.convertDTO(userDTO));
     }
 
     @Override
     public void deleteById(Long id) {
         userMapper.deleteById(id);
+    }
+
+    @Override
+    public UserDTO findByUsername(String username) {
+        return userConverter.convertEntity(userMapper.findUserByUsername(username));
     }
 }

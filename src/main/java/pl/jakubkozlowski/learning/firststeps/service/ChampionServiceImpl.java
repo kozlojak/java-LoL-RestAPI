@@ -23,25 +23,24 @@ public class ChampionServiceImpl implements ChampionService {
 
     @Override
     public List<ChampionDTO> findAll() {
-        List<ChampionEntity> championEntityList = championMapper.findAll();
-        return championConverter.convertListEntity(championEntityList);
+        return championConverter.convertListEntity(championMapper.findAll());
     }
 
     @Override
     public ChampionDTO findById(Long id) {
-        return championConverter.convert(championMapper.findById(id));
+        return championConverter.convertEntity(championMapper.findById(id));
     }
 
     @Override
     public ChampionDTO save(ChampionDTO championDTO) {
-        ChampionEntity championEntity = championConverter.convert(championDTO);
+        ChampionEntity championEntity = championConverter.convertDTO(championDTO);
         championMapper.save(championEntity);
-        return championConverter.convert(championEntity);
+        return championConverter.convertEntity(championEntity);
     }
 
     @Override
     public void update(Long id, ChampionDTO championDTO) {
-        championMapper.update(id, championConverter.convert(championDTO));
+        championMapper.update(id, championConverter.convertDTO(championDTO));
     }
 
     @Override

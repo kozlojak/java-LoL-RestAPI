@@ -45,9 +45,9 @@ public class ItemPageControllerTest {
         itemPageDTOList = Arrays.asList(itemPageDTOAttack, itemPageDTODefence);
         objectMapper = new ObjectMapper();
 
-        Mockito.when(itemPageService.findItemPageById(ID_1)).thenReturn(itemPageDTOAttack);
-        Mockito.when(itemPageService.findItemPageByPagename(ATTACK)).thenReturn(itemPageDTOAttack);
-        Mockito.when(itemPageService.findAllItemPages()).thenReturn(itemPageDTOList);
+        Mockito.when(itemPageService.findById(ID_1)).thenReturn(itemPageDTOAttack);
+        Mockito.when(itemPageService.findByPagename(ATTACK)).thenReturn(itemPageDTOAttack);
+        Mockito.when(itemPageService.findAll()).thenReturn(itemPageDTOList);
     }
 
     @Test

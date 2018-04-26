@@ -22,34 +22,34 @@ public class ItemPageServiceImpl implements ItemPageService {
     }
 
     @Override
-    public ItemPageDTO saveItemPage(ItemPageDTO itemPageDTO) {
-        ItemPageEntity userEntity = itemPageConverter.convert(itemPageDTO);
-        itemPageMapper.saveItemPage(userEntity);
-        return itemPageConverter.convert(userEntity);
+    public List<ItemPageDTO> findAll() {
+        return itemPageConverter.convertListEntity(itemPageMapper.findAll());
     }
 
     @Override
-    public List<ItemPageDTO> findAllItemPages() {
-        return itemPageConverter.convertListEntity(itemPageMapper.findAllItemPages());
+    public ItemPageDTO findById(Long id) {
+        return itemPageConverter.convertEntity(itemPageMapper.findById(id));
     }
 
     @Override
-    public ItemPageDTO findItemPageById(Long id) {
-        return itemPageConverter.convert(itemPageMapper.findItemPageById(id));
+    public ItemPageDTO save(ItemPageDTO itemPageDTO) {
+        ItemPageEntity userEntity = itemPageConverter.convertDTO(itemPageDTO);
+        itemPageMapper.save(userEntity);
+        return itemPageConverter.convertEntity(userEntity);
     }
 
     @Override
-    public ItemPageDTO findItemPageByPagename(String pagename) {
-        return itemPageConverter.convert(itemPageMapper.findItemPageByPagename(pagename));
-    }
-
-    @Override
-    public void updateItemPage(Long id, ItemPageDTO itemPageDTO) {
-        itemPageMapper.updateItemPage(id, itemPageConverter.convert(itemPageDTO));
+    public void update(Long id, ItemPageDTO itemPageDTO) {
+        itemPageMapper.update(id, itemPageConverter.convertDTO(itemPageDTO));
     }
 
     @Override
     public void deleteById(Long id) {
-        itemPageMapper.deleteItemPageById(id);
+        itemPageMapper.deleteById(id);
+    }
+
+    @Override
+    public ItemPageDTO findByPagename(String pagename) {
+        return itemPageConverter.convertEntity(itemPageMapper.findByPagename(pagename));
     }
 }

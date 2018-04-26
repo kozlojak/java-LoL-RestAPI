@@ -4,17 +4,9 @@ import pl.jakubkozlowski.learning.firststeps.dto.ItemPageDTO;
 
 import java.util.List;
 
-public interface ItemPageService {
+public interface ItemPageService extends CRUDService<ItemPageDTO> {
 
-    ItemPageDTO saveItemPage(ItemPageDTO itemPageDTO);
+    List<ItemPageDTO> findAll();
 
-    List<ItemPageDTO> findAllItemPages();
-
-    ItemPageDTO findItemPageById(Long id);
-
-    ItemPageDTO findItemPageByPagename(String name);
-
-    void updateItemPage(Long id, ItemPageDTO ItemPageDTO);
-
-    void deleteById(Long id);
+    ItemPageDTO findByPagename(String name);
 }

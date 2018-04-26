@@ -32,12 +32,6 @@ public class ItemPageServiceImplTest {
 
     @Autowired
     private ItemPageConverter itemPageConverter;
-    private ItemPageEntity itemPageEntityAttack;
-    private ItemPageDTO itemPageDTOAttack;
-    private ItemPageEntity itemPageEntityDefence;
-    private ItemPageDTO itemPageDTODefence;
-    private List<ItemPageEntity> itemPageEntityList;
-    private List<ItemPageDTO> itemPageDTOList;
 
     @Before
     public void setUp() throws Exception {
@@ -48,15 +42,15 @@ public class ItemPageServiceImplTest {
         itemPageEntityList = Arrays.asList(itemPageEntityAttack, itemPageEntityDefence);
         itemPageDTOList = Arrays.asList(itemPageDTOAttack, itemPageDTODefence);
 
-        Mockito.when(itemPageMapper.findAllItemPages())
+        Mockito.when(itemPageMapper.findAll())
                 .thenReturn(itemPageEntityList);
-        Mockito.when(itemPageMapper.findItemPageById(itemPageEntityAttack.getId()))
+        Mockito.when(itemPageMapper.findById(itemPageEntityAttack.getId()))
                 .thenReturn(itemPageEntityAttack);
-        Mockito.when(itemPageMapper.findItemPageByPagename(itemPageEntityAttack.getPagename()))
+        Mockito.when(itemPageMapper.findByPagename(itemPageEntityAttack.getPagename()))
                 .thenReturn(itemPageEntityAttack);
-        Mockito.when(itemPageConverter.convert(itemPageDTOAttack))
+        Mockito.when(itemPageConverter.convertDTO(itemPageDTOAttack))
                 .thenReturn(itemPageEntityAttack);
-        Mockito.when(itemPageConverter.convert(itemPageEntityAttack))
+        Mockito.when(itemPageConverter.convertEntity(itemPageEntityAttack))
                 .thenReturn(itemPageDTOAttack);
         Mockito.when(itemPageConverter.convertListDTO(itemPageDTOList))
                 .thenReturn(itemPageEntityList);
@@ -64,48 +58,55 @@ public class ItemPageServiceImplTest {
                 .thenReturn(itemPageDTOList);
     }
 
+    private ItemPageEntity itemPageEntityAttack;
+    private ItemPageDTO itemPageDTOAttack;
+    private ItemPageEntity itemPageEntityDefence;
+    private ItemPageDTO itemPageDTODefence;
+    private List<ItemPageEntity> itemPageEntityList;
+    private List<ItemPageDTO> itemPageDTOList;
+
     @Test
-    public void whenSaveItemPage_thenReturnItemPageDTO() {
+    public void whenSave_thenReturnItemPageDTO() {
         //when
-        ItemPageDTO actual = itemPageService.saveItemPage(itemPageDTOAttack);
+        ItemPageDTO actual = itemPageService.save(itemPageDTOAttack);
         //then
         assertThat(actual)
                 .isEqualTo(itemPageDTOAttack);
     }
 
     @Test
-    public void whenFindAllItemPages_thenReturnListOfItemPagesDTO() {
+    public void whenFindAll_thenReturnListOfItemPagesDTO() {
         //when
-        List<ItemPageDTO> actual = itemPageService.findAllItemPages();
+        List<ItemPageDTO> actual = itemPageService.findAll();
         //then
         assertThat(actual)
                 .isEqualTo(itemPageDTOList);
     }
 
     @Test
-    public void whenFindItemPageById_thenReturnItemPageDTO() {
+    public void whenFindById_thenReturnItemPageDTO() {
         //when
-        ItemPageDTO actual = itemPageService.findItemPageById(itemPageEntityAttack.getId());
+        ItemPageDTO actual = itemPageService.findById(itemPageEntityAttack.getId());
         //then
         assertThat(actual)
                 .isEqualTo(itemPageDTOAttack);
     }
 
     @Test
-    public void whenFindItemPageByName_thenReturnUncompletedItemPageDTO() {
+    public void whenFindByName_thenReturnUncompletedItemPageDTO() {
         //when
-        ItemPageDTO actual = itemPageService.findItemPageByPagename(itemPageEntityAttack.getPagename());
+        ItemPageDTO actual = itemPageService.findByPagename(itemPageEntityAttack.getPagename());
         //then
         assertThat(actual)
                 .isEqualTo(itemPageDTOAttack);
     }
 
     @Test
-    public void whenUpdateItemPage_thenReturnUpdatedItemPageDTO() {
+    public void whenUpdate_thenReturnUpdatedItemPageDTO() {
         //when
-        itemPageService.updateItemPage(ID_1, itemPageDTOAttack);
+        itemPageService.update(ID_1, itemPageDTOAttack);
         //then
-        Mockito.verify(itemPageMapper, Mockito.times(1)).updateItemPage(ID_1, itemPageEntityAttack);
+        Mockito.verify(itemPageMapper, Mockito.times(1)).update(ID_1, itemPageEntityAttack);
     }
 
     @Test
@@ -113,7 +114,7 @@ public class ItemPageServiceImplTest {
         //when
         itemPageService.deleteById(ID_1);
         //then
-        Mockito.verify(itemPageMapper, Mockito.times(1)).deleteItemPageById(ID_1);
+        Mockito.verify(itemPageMapper, Mockito.times(1)).deleteById(ID_1);
     }
 
     @TestConfiguration
@@ -131,4 +132,6 @@ public class ItemPageServiceImplTest {
         }
 
     }
+
+
 }

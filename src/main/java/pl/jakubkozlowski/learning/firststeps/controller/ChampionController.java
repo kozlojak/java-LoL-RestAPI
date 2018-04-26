@@ -30,7 +30,7 @@ public class ChampionController {
     }
 
     @GetMapping(value = BY_ID)
-    public ResponseEntity<ChampionDTO> findOne(@PathVariable("id") Long id) throws ChampionException {
+    public ResponseEntity<ChampionDTO> findById(@PathVariable("id") Long id) throws ChampionException {
         if (championService.findById(id) == null) throw ChampionException.wrongData();
         return ResponseEntity.ok(championService.findById(id));
     }

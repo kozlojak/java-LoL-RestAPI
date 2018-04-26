@@ -4,15 +4,7 @@ import pl.jakubkozlowski.learning.firststeps.dto.ItemOrderDTO;
 
 import java.util.List;
 
-public interface ItemOrderService {
-
-    ItemOrderDTO save(ItemOrderDTO itemOrderDTO);
+public interface ItemOrderService extends CRUDService<ItemOrderDTO> {
 
     List<ItemOrderDTO> findAll();
-
-    ItemOrderDTO findById(Long id);
-
-    void update(Long id, ItemOrderDTO ItemOrderDTO);
-
-    void deleteById(Long id);
 }
