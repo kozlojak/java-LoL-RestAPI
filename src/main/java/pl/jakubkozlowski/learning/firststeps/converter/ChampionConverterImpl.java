@@ -1,5 +1,7 @@
 package pl.jakubkozlowski.learning.firststeps.converter;
 
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 import pl.jakubkozlowski.learning.firststeps.dto.ChampionDTO;
@@ -12,35 +14,37 @@ import java.util.stream.Collectors;
 @Component
 public class ChampionConverterImpl implements ChampionConverter {
 
+    private ModelMapper modelMapper;
+
+    @Autowired
+    public ChampionConverterImpl(ModelMapper modelMapper) {
+        this.modelMapper = modelMapper;
+    }
 
     @Override
     public ChampionDTO convert(ChampionEntity championEntity) {
-        if (championEntity == null) {
-            return null;
-        }
-        return new ChampionDTO(championEntity.getId(), championEntity.getName());
+        return (championEntity == null) ? null : modelMapper.map(championEntity, ChampionDTO.class);
     }
 
     @Override
     public ChampionEntity convert(ChampionDTO championDTO) {
-
-        return new ChampionEntity(championDTO.getId(), championDTO.getName());
+        return (championDTO == null) ? null : modelMapper.map(championDTO, ChampionEntity.class);
     }
 
     @Override
     public List<ChampionDTO> convertListEntity(List<ChampionEntity> championEntityList) {
-        if (CollectionUtils.isEmpty(championEntityList)) {
+        if (CollectionUtils.isEmpty(championEntityList))
             return Collections.emptyList();
-        }
-        return championEntityList.stream().map(this::convert).collect(Collectors.toList());
+        else
+            return championEntityList.stream().map(this::convert).collect(Collectors.toList());
     }
 
     @Override
     public List<ChampionEntity> convertListDTO(List<ChampionDTO> championDTOList) {
-        if (CollectionUtils.isEmpty(championDTOList)) {
+        if (CollectionUtils.isEmpty(championDTOList))
             return Collections.emptyList();
-        }
-        return championDTOList.stream().map(this::convert).collect(Collectors.toList());
+        else
+            return championDTOList.stream().map(this::convert).collect(Collectors.toList());
     }
 
 }

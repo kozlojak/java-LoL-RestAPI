@@ -10,11 +10,11 @@ import pl.jakubkozlowski.learning.firststeps.service.ChampionService;
 
 import java.util.List;
 
-import static pl.jakubkozlowski.learning.firststeps.controller.descriptor.ChampionControllerDescriptor.BASE_PATH;
 import static pl.jakubkozlowski.learning.firststeps.controller.descriptor.ChampionControllerDescriptor.BY_ID;
+import static pl.jakubkozlowski.learning.firststeps.controller.descriptor.ChampionControllerDescriptor.CHAMPION_BASE_PATH;
 
 @RestController
-@RequestMapping(path = BASE_PATH)
+@RequestMapping(path = CHAMPION_BASE_PATH)
 public class ChampionController {
 
     private ChampionService championService;
@@ -36,8 +36,8 @@ public class ChampionController {
     }
 
     @PostMapping
-    public ResponseEntity<ChampionDTO> persist(@RequestBody ChampionDTO champion) {
-        championService.persist(champion);
+    public ResponseEntity<ChampionDTO> save(@RequestBody ChampionDTO champion) {
+        championService.save(champion);
         return ResponseEntity.status(HttpStatus.CREATED).body(champion);
     }
 

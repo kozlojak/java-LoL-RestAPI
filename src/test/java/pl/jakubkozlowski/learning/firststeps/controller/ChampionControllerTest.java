@@ -21,36 +21,28 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static pl.jakubkozlowski.learning.firststeps.descriptor.TestDescriptor.*;
+import static pl.jakubkozlowski.learning.firststeps.descriptor.ChampionTestConstants.*;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(ChampionController.class)
 public class ChampionControllerTest {
 
-
     @MockBean
-    public ChampionService championService;
+    private ChampionService championService;
 
     @Autowired
     private MockMvc mvc;
 
     private ObjectMapper objectMapper;
-
     private ChampionDTO championDTOAatrox;
     private ChampionDTO championDTOAhri;
-    private ChampionDTO championDTOAnivia;
-
     private List<ChampionDTO> championDTOList;
 
     @Before
     public void setUp() throws Exception {
-
         championDTOAatrox = new ChampionDTO(ID_1, AATROX);
         championDTOAhri = new ChampionDTO(ID_2, AHRI);
-        championDTOAnivia = new ChampionDTO(ID_3, ANIVIA);
-
-        championDTOList = Arrays.asList(championDTOAatrox, championDTOAhri, championDTOAnivia);
-
+        championDTOList = Arrays.asList(championDTOAatrox, championDTOAhri);
         objectMapper = new ObjectMapper();
 
         Mockito.when(championService.findAll()).thenReturn(championDTOList);
@@ -75,7 +67,7 @@ public class ChampionControllerTest {
     @Test
     public void whenFindOne_thenReturnJsonArrayOfChampionWithGivenID() throws Exception {
 
-        String content = mvc.perform(get(BASE_PATH + ID_1)
+        String content = mvc.perform(get(BASE_PATH + BY_ID)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
@@ -91,7 +83,7 @@ public class ChampionControllerTest {
 
         String content = mvc.perform(post(BASE_PATH)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsBytes(championDTOAatrox)))
+                .content(objectMapper.writeValueAsString(championDTOAatrox)))
                 .andExpect(status().isCreated())
                 .andReturn().getResponse().getContentAsString();
 
@@ -103,7 +95,7 @@ public class ChampionControllerTest {
 
     @Test
     public void whenUpdate_thenReturnJsonArrayOfPersistChampion() throws Exception {
-        String content = mvc.perform(put(BASE_PATH + ID_1)
+        String content = mvc.perform(put(BASE_PATH + BY_ID)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(championDTOAatrox)))
                 .andExpect(status().isOk())
@@ -116,9 +108,8 @@ public class ChampionControllerTest {
 
     @Test
     public void whenDelete_thenReturnStatusNoContent() throws Exception {
-        mvc.perform(delete(BASE_PATH + ID_1)
+        mvc.perform(delete(BASE_PATH + BY_ID)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent());
-
     }
 }

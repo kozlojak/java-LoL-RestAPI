@@ -1,21 +1,21 @@
-package pl.jakubkozlowski.learning.firststeps.model;
+package pl.jakubkozlowski.learning.firststeps.converter;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.test.context.junit4.SpringRunner;
-import pl.jakubkozlowski.learning.firststeps.converter.ChampionConverter;
-import pl.jakubkozlowski.learning.firststeps.converter.ChampionConverterImpl;
 import pl.jakubkozlowski.learning.firststeps.dto.ChampionDTO;
+import pl.jakubkozlowski.learning.firststeps.model.ChampionEntity;
 
 import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static pl.jakubkozlowski.learning.firststeps.descriptor.TestDescriptor.*;
+import static pl.jakubkozlowski.learning.firststeps.descriptor.ChampionTestConstants.*;
 
 @RunWith(SpringRunner.class)
 public class ChampionConverterImplTest {
@@ -24,51 +24,37 @@ public class ChampionConverterImplTest {
     private ChampionConverter championConverter;
 
     @TestConfiguration
-    static class EmployeeConverterImplTestContextConfiguration {
+    static class ChampionConverterImplTestContextConfiguration {
+
+        @Autowired
+        private ModelMapper modelMapper;
+
+        @Bean
+        public ModelMapper modelMapper() {
+            return new ModelMapper();
+        }
 
         @Bean
         public ChampionConverter championConverter() {
-            return new ChampionConverterImpl();
+            return new ChampionConverterImpl(modelMapper);
         }
     }
 
     private ChampionEntity championEntityAatrox;
     private ChampionEntity championEntityAhri;
-    private ChampionEntity championEntityAnivia;
-
     private ChampionDTO championDTOAatrox;
     private ChampionDTO championDTOAhri;
-    private ChampionDTO championDTOAnivia;
-
     private List<ChampionEntity> championEntityList;
     private List<ChampionDTO> championDTOList;
 
     @Before
     public void setUp() throws Exception {
-        createNewChampionEntities();
-        createNewChampionDTOs();
-        createNewChampionEntityList();
-        createNewChampionDTOList();
-    }
-
-    private void createNewChampionEntities() {
         championEntityAatrox = new ChampionEntity(ID_1, AATROX);
         championEntityAhri = new ChampionEntity(ID_2, AHRI);
-        championEntityAnivia = new ChampionEntity(ID_3, ANIVIA);
-    }
-
-    private void createNewChampionDTOs() {
         championDTOAatrox = new ChampionDTO(ID_1, AATROX);
         championDTOAhri = new ChampionDTO(ID_2, AHRI);
-        championDTOAnivia = new ChampionDTO(ID_3, ANIVIA);
-    }
-
-    private void createNewChampionEntityList() {
-        championEntityList = Arrays.asList(championEntityAatrox, championEntityAhri, championEntityAnivia);
-    }
-
-    private void createNewChampionDTOList() {
-        championDTOList = Arrays.asList(championDTOAatrox, championDTOAhri, championDTOAnivia);
+        championEntityList = Arrays.asList(championEntityAatrox, championEntityAhri);
+        championDTOList = Arrays.asList(championDTOAatrox, championDTOAhri);
     }
 
     @Test
