@@ -17,7 +17,6 @@ import pl.jakubkozlowski.learning.firststeps.model.ChampionEntity;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static pl.jakubkozlowski.learning.firststeps.descriptor.ChampionTestConstants.*;
@@ -58,6 +57,26 @@ public class ChampionServiceImplTest {
         championEntityAnivia = new ChampionEntity(ID_3, ANIVIA);
     }
 
+    private void createNewChampionEntityList() {
+        championEntityList = new ArrayList<>(3);
+        championEntityList = Arrays.asList(championEntityAatrox, championEntityAhri, championEntityAnivia);
+    }
+
+    private void createNewChampionDTOList() {
+        championDTOList = new ArrayList<>(3);
+        championDTOList = Arrays.asList(championDTOAatrox, championDTOAhri, championDTOAnivia);
+    }
+
+    @Test
+    public void whenFindAll_thenReturnChampionDTOList() {
+        //when
+        List<ChampionDTO> expectedChampionDTOList = championService.findAll().get();
+        //then
+        assertThat(expectedChampionDTOList)
+                .isEqualTo(championDTOList);
+
+    }
+
     @Before
     public void setUp() throws Exception {
         createNewChampionEntities();
@@ -79,24 +98,13 @@ public class ChampionServiceImplTest {
                 .thenReturn(championDTOList);
     }
 
-    private void createNewChampionEntityList() {
-        championEntityList = new ArrayList<>(3);
-        championEntityList = Arrays.asList(championEntityAatrox, championEntityAhri, championEntityAnivia);
-    }
-
-    private void createNewChampionDTOList() {
-        championDTOList = new ArrayList<>(3);
-        championDTOList = Arrays.asList(championDTOAatrox, championDTOAhri, championDTOAnivia);
-    }
-
     @Test
-    public void whenFindAll_thenReturnChampionDTOList() {
+    public void whenFindById_thenReturnChampionDTO() {
         //when
-        Optional<List<ChampionDTO>> expectedChampionDTOList = championService.findAll();
+        ChampionDTO actual = championService.findById(championEntityAatrox.getId()).get();
         //then
-        assertThat(expectedChampionDTOList)
-                .isEqualTo(Optional.of(championDTOList));
-
+        assertThat(actual)
+                .isEqualTo(championDTOAatrox);
     }
 
     @Test
@@ -106,15 +114,6 @@ public class ChampionServiceImplTest {
         //then
         assertThat(actual)
                 .isEqualTo(championDTOAatrox);
-    }
-
-    @Test
-    public void whenFindById_thenReturnChampionDTO() {
-        //when
-        Optional<ChampionDTO> actual = championService.findById(championEntityAatrox.getId());
-        //then
-        assertThat(actual)
-                .isEqualTo(Optional.of(championDTOAatrox));
     }
 
     @TestConfiguration

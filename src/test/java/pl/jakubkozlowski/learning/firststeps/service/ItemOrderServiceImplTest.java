@@ -16,7 +16,6 @@ import pl.jakubkozlowski.learning.firststeps.model.ItemOrderEntity;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
 import static pl.jakubkozlowski.learning.firststeps.descriptor.ItemOrderTestConstants.*;
@@ -32,6 +31,15 @@ public class ItemOrderServiceImplTest {
 
     @Autowired
     private ItemOrderConverter itemOrderConverter;
+
+    @Test
+    public void whenFindAll_thenReturnListOfItemOrdersDTO() {
+        //when
+        List<ItemOrderDTO> actual = itemOrderService.findAll().get();
+        //then
+        assertThat(actual)
+                .isEqualTo(itemOrderDTOList);
+    }
 
     @Before
     public void setUp() throws Exception {
@@ -64,12 +72,12 @@ public class ItemOrderServiceImplTest {
     private List<ItemOrderDTO> itemOrderDTOList;
 
     @Test
-    public void whenFindAll_thenReturnListOfItemOrdersDTO() {
+    public void whenFindById_thenReturnItemOrderDTO() {
         //when
-        Optional<List<ItemOrderDTO>> actual = itemOrderService.findAll();
+        ItemOrderDTO actual = itemOrderService.findById(itemOrderEntitySet1.getItemPageId()).get();
         //then
         assertThat(actual)
-                .isEqualTo(Optional.of(itemOrderDTOList));
+                .isEqualTo(itemOrderDTOSet1);
     }
 
     @Test
@@ -79,15 +87,6 @@ public class ItemOrderServiceImplTest {
         //then
         assertThat(actual)
                 .isEqualTo(itemOrderDTOSet1);
-    }
-
-    @Test
-    public void whenFindById_thenReturnItemOrderDTO() {
-        //when
-        Optional<ItemOrderDTO> actual = itemOrderService.findById(itemOrderEntitySet1.getItemPageId());
-        //then
-        assertThat(actual)
-                .isEqualTo(Optional.of(itemOrderDTOSet1));
     }
 
     @TestConfiguration

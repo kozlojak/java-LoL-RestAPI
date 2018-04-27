@@ -16,7 +16,6 @@ import pl.jakubkozlowski.learning.firststeps.model.ItemPageEntity;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
 import static pl.jakubkozlowski.learning.firststeps.descriptor.ItemPageTestConstans.*;
@@ -34,21 +33,21 @@ public class ItemPageServiceImplTest {
     @Autowired
     private ItemPageConverter itemPageConverter;
 
+    @Test
+    public void whenFindAll_thenReturnListOfItemPagesDTO() {
+        //when
+        List<ItemPageDTO> actual = itemPageService.findAll().get();
+        //then
+        assertThat(actual)
+                .isEqualTo(itemPageDTOList);
+    }
+
     private ItemPageEntity itemPageEntityAttack;
     private ItemPageDTO itemPageDTOAttack;
     private ItemPageEntity itemPageEntityDefence;
     private ItemPageDTO itemPageDTODefence;
     private List<ItemPageEntity> itemPageEntityList;
     private List<ItemPageDTO> itemPageDTOList;
-
-    @Test
-    public void whenFindAll_thenReturnListOfItemPagesDTO() {
-        //when
-        Optional<List<ItemPageDTO>> actual = itemPageService.findAll();
-        //then
-        assertThat(actual)
-                .isEqualTo(Optional.of(itemPageDTOList));
-    }
 
     @Before
     public void setUp() throws Exception {
@@ -76,6 +75,15 @@ public class ItemPageServiceImplTest {
     }
 
     @Test
+    public void whenFindById_thenReturnItemPageDTO() {
+        //when
+        ItemPageDTO actual = itemPageService.findById(itemPageEntityAttack.getId()).get();
+        //then
+        assertThat(actual)
+                .isEqualTo(itemPageDTOAttack);
+    }
+
+    @Test
     public void whenSave_thenReturnItemPageDTO() {
         //when
         ItemPageDTO actual = itemPageService.save(itemPageDTOAttack);
@@ -85,21 +93,12 @@ public class ItemPageServiceImplTest {
     }
 
     @Test
-    public void whenFindById_thenReturnItemPageDTO() {
-        //when
-        Optional<ItemPageDTO> actual = itemPageService.findById(itemPageEntityAttack.getId());
-        //then
-        assertThat(actual)
-                .isEqualTo(Optional.of(itemPageDTOAttack));
-    }
-
-    @Test
     public void whenFindByPagename_thenReturnUncompletedItemPageDTO() {
         //when
-        Optional<ItemPageDTO> actual = itemPageService.findByPagename(itemPageEntityAttack.getPagename());
+        ItemPageDTO actual = itemPageService.findByPagename(itemPageEntityAttack.getPagename()).get();
         //then
         assertThat(actual)
-                .isEqualTo(Optional.of(itemPageDTOAttack));
+                .isEqualTo(itemPageDTOAttack);
     }
 
     @TestConfiguration

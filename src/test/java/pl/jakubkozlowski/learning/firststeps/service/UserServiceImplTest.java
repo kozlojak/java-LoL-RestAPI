@@ -14,8 +14,6 @@ import pl.jakubkozlowski.learning.firststeps.dto.UserDTO;
 import pl.jakubkozlowski.learning.firststeps.mapper.UserMapper;
 import pl.jakubkozlowski.learning.firststeps.model.UserEntity;
 
-import java.util.Optional;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static pl.jakubkozlowski.learning.firststeps.descriptor.UserTestConstants.*;
 
@@ -31,6 +29,14 @@ public class UserServiceImplTest {
     @Autowired
     private UserConverter userConverter;
 
+    @Test
+    public void whenFindById_thenReturnUserDTO() {
+        //when
+        UserDTO actual = userService.findById(userEntityMark.getId()).get();
+        //then
+        assertThat(actual)
+                .isEqualTo(userDTOMark);
+    }
 
     private UserEntity userEntityMark;
     private UserDTO userDTOMark;
@@ -38,12 +44,12 @@ public class UserServiceImplTest {
     private UserDTO userDTOMarkWithSelectedFields;
 
     @Test
-    public void whenFindById_thenReturnUserDTO() {
+    public void whenFindByName_thenReturnUncompletedUserDTO() {
         //when
-        Optional<UserDTO> actual = userService.findById(userEntityMark.getId());
+        UserDTO actual = userService.findByUsername(userEntityMark.getUsername()).get();
         //then
         assertThat(actual)
-                .isEqualTo(Optional.of(userDTOMark));
+                .isEqualTo(userDTOMarkWithSelectedFields);
     }
 
     @Before
@@ -65,15 +71,6 @@ public class UserServiceImplTest {
                 .thenReturn(userEntityMarkWithSelectedFields);
         Mockito.when(userConverter.convertEntity(userEntityMarkWithSelectedFields))
                 .thenReturn(userDTOMarkWithSelectedFields);
-    }
-
-    @Test
-    public void whenFindByName_thenReturnUncompletedUserDTO() {
-        //when
-        Optional<UserDTO> actual = userService.findByUsername(userEntityMark.getUsername());
-        //then
-        assertThat(actual)
-                .isEqualTo(Optional.of(userDTOMarkWithSelectedFields));
     }
 
     @TestConfiguration
