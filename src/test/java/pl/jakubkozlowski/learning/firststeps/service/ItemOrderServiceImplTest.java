@@ -16,6 +16,7 @@ import pl.jakubkozlowski.learning.firststeps.model.ItemOrderEntity;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
 import static pl.jakubkozlowski.learning.firststeps.descriptor.ItemOrderTestConstants.*;
@@ -63,6 +64,15 @@ public class ItemOrderServiceImplTest {
     private List<ItemOrderDTO> itemOrderDTOList;
 
     @Test
+    public void whenFindAll_thenReturnListOfItemOrdersDTO() {
+        //when
+        Optional<List<ItemOrderDTO>> actual = itemOrderService.findAll();
+        //then
+        assertThat(actual)
+                .isEqualTo(Optional.of(itemOrderDTOList));
+    }
+
+    @Test
     public void whenSave_thenReturnItemOrderDTO() {
         //when
         ItemOrderDTO actual = itemOrderService.save(itemOrderDTOSet1);
@@ -72,29 +82,12 @@ public class ItemOrderServiceImplTest {
     }
 
     @Test
-    public void whenFindAll_thenReturnListOfItemOrdersDTO() {
-        //when
-        List<ItemOrderDTO> actual = itemOrderService.findAll();
-        //then
-        assertThat(actual)
-                .isEqualTo(itemOrderDTOList);
-    }
-
-    @Test
     public void whenFindById_thenReturnItemOrderDTO() {
         //when
-        ItemOrderDTO actual = itemOrderService.findById(itemOrderEntitySet1.getItemPageId());
+        Optional<ItemOrderDTO> actual = itemOrderService.findById(itemOrderEntitySet1.getItemPageId());
         //then
         assertThat(actual)
-                .isEqualTo(itemOrderDTOSet1);
-    }
-
-    @Test
-    public void whenUpdate_thenReturnUpdatedItemOrderDTO() {
-        //when
-        itemOrderService.update(ID_1, itemOrderDTOSet1);
-        //then
-        Mockito.verify(itemOrderMapper, Mockito.times(1)).update(ID_1, itemOrderEntitySet1);
+                .isEqualTo(Optional.of(itemOrderDTOSet1));
     }
 
     @TestConfiguration
@@ -111,6 +104,14 @@ public class ItemOrderServiceImplTest {
             return new ItemOrderServiceImpl(itemOrderMapper, itemOrderConverter);
         }
 
+    }
+
+    @Test
+    public void whenUpdate_thenReturnUpdatedItemOrderDTO() {
+        //when
+        itemOrderService.update(ID_1, itemOrderDTOSet1);
+        //then
+        Mockito.verify(itemOrderMapper, Mockito.times(1)).update(ID_1, itemOrderEntitySet1);
     }
 
     @Test

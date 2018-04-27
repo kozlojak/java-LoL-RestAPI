@@ -17,6 +17,7 @@ import pl.jakubkozlowski.learning.firststeps.service.ItemPageService;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -45,9 +46,9 @@ public class ItemPageControllerTest {
         itemPageDTOList = Arrays.asList(itemPageDTOAttack, itemPageDTODefence);
         objectMapper = new ObjectMapper();
 
-        Mockito.when(itemPageService.findById(ID_1)).thenReturn(itemPageDTOAttack);
-        Mockito.when(itemPageService.findByPagename(ATTACK)).thenReturn(itemPageDTOAttack);
-        Mockito.when(itemPageService.findAll()).thenReturn(itemPageDTOList);
+        Mockito.when(itemPageService.findById(ID_1)).thenReturn(Optional.of(itemPageDTOAttack));
+        Mockito.when(itemPageService.findByPagename(ATTACK)).thenReturn(Optional.of(itemPageDTOAttack));
+        Mockito.when(itemPageService.findAll()).thenReturn(Optional.of(itemPageDTOList));
     }
 
     @Test

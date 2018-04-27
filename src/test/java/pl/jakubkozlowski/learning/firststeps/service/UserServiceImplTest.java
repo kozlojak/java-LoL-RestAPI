@@ -14,6 +14,8 @@ import pl.jakubkozlowski.learning.firststeps.dto.UserDTO;
 import pl.jakubkozlowski.learning.firststeps.mapper.UserMapper;
 import pl.jakubkozlowski.learning.firststeps.model.UserEntity;
 
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static pl.jakubkozlowski.learning.firststeps.descriptor.UserTestConstants.*;
 
@@ -28,6 +30,21 @@ public class UserServiceImplTest {
 
     @Autowired
     private UserConverter userConverter;
+
+
+    private UserEntity userEntityMark;
+    private UserDTO userDTOMark;
+    private UserEntity userEntityMarkWithSelectedFields;
+    private UserDTO userDTOMarkWithSelectedFields;
+
+    @Test
+    public void whenFindById_thenReturnUserDTO() {
+        //when
+        Optional<UserDTO> actual = userService.findById(userEntityMark.getId());
+        //then
+        assertThat(actual)
+                .isEqualTo(Optional.of(userDTOMark));
+    }
 
     @Before
     public void setUp() throws Exception {
@@ -50,27 +67,28 @@ public class UserServiceImplTest {
                 .thenReturn(userDTOMarkWithSelectedFields);
     }
 
-    private UserEntity userEntityMark;
-    private UserDTO userDTOMark;
-    private UserEntity userEntityMarkWithSelectedFields;
-    private UserDTO userDTOMarkWithSelectedFields;
-
-    @Test
-    public void whenFindById_thenReturnUserDTO() {
-        //when
-        UserDTO actual = userService.findById(userEntityMark.getId());
-        //then
-        assertThat(actual)
-                .isEqualTo(userDTOMark);
-    }
-
     @Test
     public void whenFindByName_thenReturnUncompletedUserDTO() {
         //when
-        UserDTO actual = userService.findByUsername(userEntityMark.getUsername());
+        Optional<UserDTO> actual = userService.findByUsername(userEntityMark.getUsername());
         //then
         assertThat(actual)
-                .isEqualTo(userDTOMarkWithSelectedFields);
+                .isEqualTo(Optional.of(userDTOMarkWithSelectedFields));
+    }
+
+    @TestConfiguration
+    static class UserServiceImplTestContextConfiguration {
+
+        @MockBean
+        private UserMapper userMapper;
+
+        @MockBean
+        private UserConverter userConverter;
+
+        @Bean
+        public UserService userService() {
+            return new UserServiceImpl(userMapper, userConverter);
+        }
     }
 
     @Test
@@ -88,21 +106,6 @@ public class UserServiceImplTest {
         userService.update(ID_1, userDTOMark);
         //then
         Mockito.verify(userMapper, Mockito.times(1)).updateUser(ID_1, userEntityMark);
-    }
-
-    @TestConfiguration
-    static class UserServiceImplTestContextConfiguration {
-
-        @MockBean
-        private UserMapper userMapper;
-
-        @MockBean
-        private UserConverter userConverter;
-
-        @Bean
-        public UserService userService() {
-            return new UserServiceImpl(userMapper, userConverter);
-        }
     }
 
     @Test

@@ -15,6 +15,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import pl.jakubkozlowski.learning.firststeps.dto.UserDTO;
 import pl.jakubkozlowski.learning.firststeps.service.UserService;
 
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -40,8 +42,8 @@ public class UserControllerTest {
         userDTOMarkWithSelectedFields = new UserDTO(MARK, MARK_EMAIL, MARK_FAV_ROLE_ID, MARK_FAV_CHAMP_ID);
         objectMapper = new ObjectMapper();
 
-        Mockito.when(userService.findById(ID_1)).thenReturn(userDTOMark);
-        Mockito.when(userService.findByUsername(userDTOMark.getUsername())).thenReturn(userDTOMarkWithSelectedFields);
+        Mockito.when(userService.findById(ID_1)).thenReturn(Optional.of(userDTOMark));
+        Mockito.when(userService.findByUsername(userDTOMark.getUsername())).thenReturn(Optional.of(userDTOMarkWithSelectedFields));
     }
 
     @Test

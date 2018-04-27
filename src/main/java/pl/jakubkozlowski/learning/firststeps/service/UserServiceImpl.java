@@ -7,6 +7,8 @@ import pl.jakubkozlowski.learning.firststeps.dto.UserDTO;
 import pl.jakubkozlowski.learning.firststeps.mapper.UserMapper;
 import pl.jakubkozlowski.learning.firststeps.model.UserEntity;
 
+import java.util.Optional;
+
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -27,8 +29,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO findById(Long id) {
-        return userConverter.convertEntity(userMapper.findUserById(id));
+    public Optional<UserDTO> findById(Long id) {
+        return Optional.ofNullable(userConverter.convertEntity(userMapper.findUserById(id)));
     }
 
     @Override
@@ -42,7 +44,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO findByUsername(String username) {
-        return userConverter.convertEntity(userMapper.findUserByUsername(username));
+    public Optional<UserDTO> findByUsername(String username) {
+        return Optional.ofNullable(userConverter.convertEntity(userMapper.findUserByUsername(username)));
     }
 }

@@ -8,6 +8,7 @@ import pl.jakubkozlowski.learning.firststeps.mapper.ChampionMapper;
 import pl.jakubkozlowski.learning.firststeps.model.ChampionEntity;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ChampionServiceImpl implements ChampionService {
@@ -22,13 +23,13 @@ public class ChampionServiceImpl implements ChampionService {
     }
 
     @Override
-    public List<ChampionDTO> findAll() {
-        return championConverter.convertListEntity(championMapper.findAll());
+    public Optional<List<ChampionDTO>> findAll() {
+        return Optional.ofNullable(championConverter.convertListEntity(championMapper.findAll()));
     }
 
     @Override
-    public ChampionDTO findById(Long id) {
-        return championConverter.convertEntity(championMapper.findById(id));
+    public Optional<ChampionDTO> findById(Long id) {
+        return Optional.ofNullable(championConverter.convertEntity(championMapper.findById(id)));
     }
 
     @Override
