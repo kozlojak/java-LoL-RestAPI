@@ -17,6 +17,7 @@ import pl.jakubkozlowski.learning.firststeps.service.ItemOrderService;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -46,8 +47,8 @@ public class ItemOrderControllerTest {
         itemOrderDTOList = Arrays.asList(itemOrderDTOSet1, itemOrderDTOSet2);
         objectMapper = new ObjectMapper();
 
-        Mockito.when(itemOrderService.findById(ID_1)).thenReturn(itemOrderDTOSet1);
-        Mockito.when(itemOrderService.findAll()).thenReturn(itemOrderDTOList);
+        Mockito.when(itemOrderService.findById(ID_1)).thenReturn(Optional.of(itemOrderDTOSet1));
+        Mockito.when(itemOrderService.findAll()).thenReturn(Optional.of(itemOrderDTOList));
     }
 
     @Test

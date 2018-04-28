@@ -8,6 +8,7 @@ import pl.jakubkozlowski.learning.firststeps.mapper.ItemPageMapper;
 import pl.jakubkozlowski.learning.firststeps.model.ItemPageEntity;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ItemPageServiceImpl implements ItemPageService {
@@ -22,13 +23,13 @@ public class ItemPageServiceImpl implements ItemPageService {
     }
 
     @Override
-    public List<ItemPageDTO> findAll() {
-        return itemPageConverter.convertListEntity(itemPageMapper.findAll());
+    public Optional<List<ItemPageDTO>> findAll() {
+        return Optional.ofNullable(itemPageConverter.convertListEntity(itemPageMapper.findAll()));
     }
 
     @Override
-    public ItemPageDTO findById(Long id) {
-        return itemPageConverter.convertEntity(itemPageMapper.findById(id));
+    public Optional<ItemPageDTO> findById(Long id) {
+        return Optional.ofNullable(itemPageConverter.convertEntity(itemPageMapper.findById(id)));
     }
 
     @Override
@@ -49,7 +50,7 @@ public class ItemPageServiceImpl implements ItemPageService {
     }
 
     @Override
-    public ItemPageDTO findByPagename(String pagename) {
-        return itemPageConverter.convertEntity(itemPageMapper.findByPagename(pagename));
+    public Optional<ItemPageDTO> findByPagename(String pagename) {
+        return Optional.ofNullable(itemPageConverter.convertEntity(itemPageMapper.findByPagename(pagename)));
     }
 }

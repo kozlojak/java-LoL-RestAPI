@@ -1,8 +1,10 @@
 package pl.jakubkozlowski.learning.firststeps.service;
 
+import java.util.Optional;
+
 public interface CRUDService<DTO> {
 
-    DTO findById(Long id);
+    Optional<DTO> findById(Long id);
 
     DTO save(DTO championDTO);
 

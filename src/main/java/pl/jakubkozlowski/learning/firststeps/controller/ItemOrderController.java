@@ -24,8 +24,8 @@ public class ItemOrderController {
     }
 
     @GetMapping
-    public List<ItemOrderDTO> findAll() {
-        return itemOrderService.findAll();
+    public ResponseEntity<List<ItemOrderDTO>> findAll() {
+        return itemOrderService.findAll().map(ResponseEntity::ok).orElse(ResponseEntity.badRequest().build());
     }
 
     @PostMapping
@@ -36,7 +36,7 @@ public class ItemOrderController {
 
     @GetMapping(value = BY_ID)
     public ResponseEntity<ItemOrderDTO> findById(@PathVariable("id") Long id) {
-        return ResponseEntity.ok(itemOrderService.findById(id));
+        return itemOrderService.findById(id).map(ResponseEntity::ok).orElse(ResponseEntity.badRequest().build());
     }
 
     @PutMapping(value = BY_ID)

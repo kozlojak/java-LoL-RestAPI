@@ -23,8 +23,8 @@ public class ItemPageController {
     }
 
     @GetMapping
-    public List<ItemPageDTO> findAll() {
-        return itemPageService.findAll();
+    public ResponseEntity<List<ItemPageDTO>> findAll() {
+        return itemPageService.findAll().map(ResponseEntity::ok).orElse(ResponseEntity.badRequest().build());
     }
 
     @PostMapping
@@ -35,12 +35,12 @@ public class ItemPageController {
 
     @GetMapping(value = BY_ID)
     public ResponseEntity<ItemPageDTO> findById(@PathVariable("id") Long id) {
-        return ResponseEntity.ok(itemPageService.findById(id));
+        return itemPageService.findById(id).map(ResponseEntity::ok).orElse(ResponseEntity.badRequest().build());
     }
 
     @GetMapping(value = PAGENAME)
     public ResponseEntity<ItemPageDTO> findByPagename(@PathVariable("pagename") String pagename) {
-        return ResponseEntity.ok(itemPageService.findByPagename(pagename));
+        return itemPageService.findByPagename(pagename).map(ResponseEntity::ok).orElse(ResponseEntity.badRequest().build());
     }
 
     @PutMapping(value = BY_ID)

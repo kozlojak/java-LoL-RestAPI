@@ -3,10 +3,11 @@ package pl.jakubkozlowski.learning.firststeps.service;
 import pl.jakubkozlowski.learning.firststeps.dto.ItemPageDTO;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ItemPageService extends CRUDService<ItemPageDTO> {
 
-    List<ItemPageDTO> findAll();
+    Optional<List<ItemPageDTO>> findAll();
 
-    ItemPageDTO findByPagename(String name);
+    Optional<ItemPageDTO> findByPagename(String name);
 }
