@@ -33,6 +33,22 @@ public class ItemPageServiceImplTest {
     @Autowired
     private ItemPageConverter itemPageConverter;
 
+    @Test
+    public void whenFindAll_thenReturnListOfItemPagesDTO() {
+        //when
+        List<ItemPageDTO> actual = itemPageService.findAll().get();
+        //then
+        assertThat(actual)
+                .isEqualTo(itemPageDTOList);
+    }
+
+    private ItemPageEntity itemPageEntityAttack;
+    private ItemPageDTO itemPageDTOAttack;
+    private ItemPageEntity itemPageEntityDefence;
+    private ItemPageDTO itemPageDTODefence;
+    private List<ItemPageEntity> itemPageEntityList;
+    private List<ItemPageDTO> itemPageDTOList;
+
     @Before
     public void setUp() throws Exception {
         itemPageEntityAttack = new ItemPageEntity(ID_1, ATTACK, ATTACK_DSC, ATTACK_CHAMPION_ID, ATTACK_ROLE_ID, ATTACK_USER_ID);
@@ -58,12 +74,14 @@ public class ItemPageServiceImplTest {
                 .thenReturn(itemPageDTOList);
     }
 
-    private ItemPageEntity itemPageEntityAttack;
-    private ItemPageDTO itemPageDTOAttack;
-    private ItemPageEntity itemPageEntityDefence;
-    private ItemPageDTO itemPageDTODefence;
-    private List<ItemPageEntity> itemPageEntityList;
-    private List<ItemPageDTO> itemPageDTOList;
+    @Test
+    public void whenFindById_thenReturnItemPageDTO() {
+        //when
+        ItemPageDTO actual = itemPageService.findById(itemPageEntityAttack.getId()).get();
+        //then
+        assertThat(actual)
+                .isEqualTo(itemPageDTOAttack);
+    }
 
     @Test
     public void whenSave_thenReturnItemPageDTO() {
@@ -75,46 +93,12 @@ public class ItemPageServiceImplTest {
     }
 
     @Test
-    public void whenFindAll_thenReturnListOfItemPagesDTO() {
+    public void whenFindByPagename_thenReturnUncompletedItemPageDTO() {
         //when
-        List<ItemPageDTO> actual = itemPageService.findAll();
-        //then
-        assertThat(actual)
-                .isEqualTo(itemPageDTOList);
-    }
-
-    @Test
-    public void whenFindById_thenReturnItemPageDTO() {
-        //when
-        ItemPageDTO actual = itemPageService.findById(itemPageEntityAttack.getId());
+        ItemPageDTO actual = itemPageService.findByPagename(itemPageEntityAttack.getPagename()).get();
         //then
         assertThat(actual)
                 .isEqualTo(itemPageDTOAttack);
-    }
-
-    @Test
-    public void whenFindByName_thenReturnUncompletedItemPageDTO() {
-        //when
-        ItemPageDTO actual = itemPageService.findByPagename(itemPageEntityAttack.getPagename());
-        //then
-        assertThat(actual)
-                .isEqualTo(itemPageDTOAttack);
-    }
-
-    @Test
-    public void whenUpdate_thenReturnUpdatedItemPageDTO() {
-        //when
-        itemPageService.update(ID_1, itemPageDTOAttack);
-        //then
-        Mockito.verify(itemPageMapper, Mockito.times(1)).update(ID_1, itemPageEntityAttack);
-    }
-
-    @Test
-    public void whenDeleteById_thenDeleteItemPageDTO() {
-        //when
-        itemPageService.deleteById(ID_1);
-        //then
-        Mockito.verify(itemPageMapper, Mockito.times(1)).deleteById(ID_1);
     }
 
     @TestConfiguration
@@ -133,5 +117,19 @@ public class ItemPageServiceImplTest {
 
     }
 
+    @Test
+    public void whenUpdate_thenReturnUpdatedItemPageDTO() {
+        //when
+        itemPageService.update(ID_1, itemPageDTOAttack);
+        //then
+        Mockito.verify(itemPageMapper, Mockito.times(1)).update(ID_1, itemPageEntityAttack);
+    }
 
+    @Test
+    public void whenDeleteById_thenDeleteItemPageDTO() {
+        //when
+        itemPageService.deleteById(ID_1);
+        //then
+        Mockito.verify(itemPageMapper, Mockito.times(1)).deleteById(ID_1);
+    }
 }

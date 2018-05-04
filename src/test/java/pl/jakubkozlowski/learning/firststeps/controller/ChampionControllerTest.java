@@ -17,6 +17,7 @@ import pl.jakubkozlowski.learning.firststeps.service.ChampionService;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -45,8 +46,8 @@ public class ChampionControllerTest {
         championDTOList = Arrays.asList(championDTOAatrox, championDTOAhri);
         objectMapper = new ObjectMapper();
 
-        Mockito.when(championService.findAll()).thenReturn(championDTOList);
-        Mockito.when(championService.findById(ID_1)).thenReturn(championDTOAatrox);
+        Mockito.when(championService.findAll()).thenReturn(Optional.of(championDTOList));
+        Mockito.when(championService.findById(ID_1)).thenReturn(Optional.of(championDTOAatrox));
 
     }
 

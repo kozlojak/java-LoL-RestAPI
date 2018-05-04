@@ -28,12 +28,12 @@ public class UserController {
 
     @GetMapping(value = BY_ID)
     public ResponseEntity<UserDTO> findById(@PathVariable("id") Long id) {
-        return ResponseEntity.ok(userService.findById(id));
+        return userService.findById(id).map(ResponseEntity::ok).orElse(ResponseEntity.badRequest().build());
     }
 
     @GetMapping(value = USERNAME)
     public ResponseEntity<UserDTO> findByUsername(@PathVariable("username") String username) {
-        return ResponseEntity.ok(userService.findByUsername(username));
+        return userService.findByUsername(username).map(ResponseEntity::ok).orElse(ResponseEntity.badRequest().build());
     }
 
     @PutMapping(value = BY_ID)

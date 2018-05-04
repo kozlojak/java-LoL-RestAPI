@@ -8,6 +8,7 @@ import pl.jakubkozlowski.learning.firststeps.mapper.ItemOrderMapper;
 import pl.jakubkozlowski.learning.firststeps.model.ItemOrderEntity;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ItemOrderServiceImpl implements ItemOrderService {
@@ -22,13 +23,13 @@ public class ItemOrderServiceImpl implements ItemOrderService {
     }
 
     @Override
-    public List<ItemOrderDTO> findAll() {
-        return ItemOrderConverter.convertListEntity(itemOrderMapper.findAll());
+    public Optional<List<ItemOrderDTO>> findAll() {
+        return Optional.ofNullable(ItemOrderConverter.convertListEntity(itemOrderMapper.findAll()));
     }
 
     @Override
-    public ItemOrderDTO findById(Long id) {
-        return ItemOrderConverter.convertEntity(itemOrderMapper.findById(id));
+    public Optional<ItemOrderDTO> findById(Long id) {
+        return Optional.ofNullable(ItemOrderConverter.convertEntity(itemOrderMapper.findById(id)));
     }
 
     @Override

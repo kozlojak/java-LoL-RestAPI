@@ -25,14 +25,14 @@ public class ChampionController {
     }
 
     @GetMapping
-    public List<ChampionDTO> findAll() {
-        return championService.findAll();
+    public ResponseEntity<List<ChampionDTO>> findAll() {
+        return championService.findAll().map(ResponseEntity::ok).orElse(ResponseEntity.badRequest().build());
     }
 
     @GetMapping(value = BY_ID)
     public ResponseEntity<ChampionDTO> findById(@PathVariable("id") Long id) throws ChampionException {
         if (championService.findById(id) == null) throw ChampionException.wrongData();
-        return ResponseEntity.ok(championService.findById(id));
+        return championService.findById(id).map(ResponseEntity::ok).orElse(ResponseEntity.badRequest().build());
     }
 
     @PostMapping
