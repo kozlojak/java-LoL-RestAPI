@@ -7,11 +7,16 @@ import pl.jakubkozlowski.learning.firststeps.dto.UserDTO;
 import pl.jakubkozlowski.learning.firststeps.mapper.UserMapper;
 import pl.jakubkozlowski.learning.firststeps.model.UserEntity;
 
+import java.util.Optional;
+import java.util.function.Function;
+
 @Service
 public class UserServiceImpl implements UserService {
 
     private UserMapper userMapper;
     private UserConverter userConverter;
+
+    Function<UserEntity, UserEntity> shadowUserEmail= res->{res.setEmail("");return res;};
 
     @Autowired
     public UserServiceImpl(UserMapper userMapper, UserConverter userConverter) {
@@ -27,8 +32,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO findById(Long id) {
-        return userConverter.convertEntity(userMapper.findUserById(id));
+    public Optional<UserDTO> findById(Long id) {
+        return Optional.ofNullable(userConverter.convertEntity(userMapper.findUserById(id)));
     }
 
     @Override
@@ -42,7 +47,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO findByUsername(String username) {
-        return userConverter.convertEntity(userMapper.findUserByUsername(username));
+    public Optional<UserDTO> findByUsername(String username) {
+        return Optional.ofNullable(userConverter.convertEntity(shadowUserEmail.apply(userMapper.findUserByUsername(username))));
     }
 }
