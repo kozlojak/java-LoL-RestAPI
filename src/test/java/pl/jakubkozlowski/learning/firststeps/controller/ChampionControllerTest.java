@@ -14,9 +14,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import pl.jakubkozlowski.learning.firststeps.dto.ChampionDTO;
 import pl.jakubkozlowski.learning.firststeps.service.ChampionService;
+import pl.jakubkozlowski.learning.firststeps.shared.Page;
+import pl.jakubkozlowski.learning.firststeps.shared.Pageable;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -37,32 +38,36 @@ public class ChampionControllerTest {
     private ObjectMapper objectMapper;
     private ChampionDTO championDTOAatrox;
     private ChampionDTO championDTOAhri;
-    private List<ChampionDTO> championDTOList;
+    private Pageable pageable;
+    private Page<ChampionDTO> page;
 
     @Before
     public void setUp() throws Exception {
         championDTOAatrox = new ChampionDTO(ID_1, AATROX);
         championDTOAhri = new ChampionDTO(ID_2, AHRI);
-        championDTOList = Arrays.asList(championDTOAatrox, championDTOAhri);
         objectMapper = new ObjectMapper();
+        pageable = new Pageable(0, 2);
+        page = new Page<>(Arrays.asList(championDTOAatrox, championDTOAhri), 0, 2L);
 
-        Mockito.when(championService.findAll()).thenReturn(Optional.of(championDTOList));
+
+        Mockito.when(championService.findPage(pageable)).thenReturn(Optional.of(page));
         Mockito.when(championService.findById(ID_1)).thenReturn(Optional.of(championDTOAatrox));
 
     }
 
     @Test
-    public void whenFindAll_thenReturnJsonArrayOfChampions() throws Exception {
-
+    public void whenFindPage_thenReturnJsonPageOfChampions() throws Exception {
 
         String content = mvc.perform(get(BASE_PATH)
+                .param("page", "0")
+                .param("size", "2")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
 
-        List<ChampionDTO> actualList = objectMapper.readValue(content, new TypeReference<List<ChampionDTO>>() {
+        Page<ChampionDTO> actualList = objectMapper.readValue(content, new TypeReference<Page<ChampionDTO>>() {
         });
-        assertThat(actualList).isEqualTo(championDTOList);
+        assertThat(actualList).isEqualTo(page);
     }
 
     @Test
