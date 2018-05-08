@@ -11,6 +11,9 @@ import pl.jakubkozlowski.learning.firststeps.model.ItemOrderEntity;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Function;
+
+import static pl.jakubkozlowski.learning.firststeps.descriptor.ItemOrderTestConstants.*;
 
 @RunWith(SpringRunner.class)
 public class ItemOrderConverterImplTest extends ModelMapperConverterTest<ItemOrderDTO, ItemOrderEntity> {
@@ -37,27 +40,47 @@ public class ItemOrderConverterImplTest extends ModelMapperConverterTest<ItemOrd
 
     @Override
     public ItemOrderDTO prepareDTO() {
-        return new ItemOrderDTO();
+        return new ItemOrderDTO(ID_1, ITEM_1, ORDER_1);
     }
 
     @Override
     public ItemOrderEntity prepareEntity() {
-        return new ItemOrderEntity();
+        return new ItemOrderEntity(ID_1, ITEM_1, ORDER_1);
     }
 
     @Override
     public List<ItemOrderDTO> prepareListDTO() {
-        return Arrays.asList(new ItemOrderDTO(), new ItemOrderDTO());
+        return Arrays.asList(new ItemOrderDTO(ID_1, ITEM_1, ORDER_1), new ItemOrderDTO(ID_2, ITEM_2, ORDER_2));
     }
 
     @Override
     public List<ItemOrderEntity> prepareListEntity() {
 
-        return Arrays.asList(new ItemOrderEntity(), new ItemOrderEntity());
+        return Arrays.asList(new ItemOrderEntity(ID_1, ITEM_1, ORDER_1), new ItemOrderEntity(ID_2, ITEM_2, ORDER_2));
     }
 
     @Override
     public ModelMapperConverter getConverter() {
         return itemOrderConverter;
+    }
+
+    @Override
+    public List<Function<ItemOrderDTO, ItemOrderDTO>> getFunctions() {
+        Function<ItemOrderDTO, ItemOrderDTO> substractFromItemId = (dto) -> {
+            dto.setItemId(dto.getItemId() - 5L);
+            return dto;
+        };
+        Function<ItemOrderDTO, ItemOrderDTO> multipleItemId = dto -> {
+            dto.setItemId(dto.getItemId() * 3L);
+            return dto;
+        };
+        return Arrays.asList(substractFromItemId, multipleItemId);
+    }
+
+    @Override
+    public ItemOrderDTO getConvertedAfterAdditionalFunctions() {
+        ItemOrderDTO dto = prepareDTO();
+        dto.setItemId(339L);
+        return dto;
     }
 }
