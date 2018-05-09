@@ -46,8 +46,8 @@ public class ChampionControllerTest {
         championDTOAatrox = new ChampionDTO(ID_1, AATROX);
         championDTOAhri = new ChampionDTO(ID_2, AHRI);
         objectMapper = new ObjectMapper();
-        pageable = new Pageable(0, 2);
-        page = new Page<>(Arrays.asList(championDTOAatrox, championDTOAhri), 0, 2L);
+        pageable = new Pageable(PAGE_0, SIZE_2);
+        page = new Page<>(Arrays.asList(championDTOAatrox, championDTOAhri), PAGE_0, TOTAL_COUNT_2);
 
 
         Mockito.when(championService.findPage(pageable)).thenReturn(Optional.of(page));
@@ -59,8 +59,8 @@ public class ChampionControllerTest {
     public void whenFindPage_thenReturnJsonPageOfChampions() throws Exception {
 
         String content = mvc.perform(get(BASE_PATH)
-                .param("page", "0")
-                .param("size", "2")
+                .param(PARAM_PAGE, VALUE_0)
+                .param(PARAM_SIZE, VALUE_2)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();

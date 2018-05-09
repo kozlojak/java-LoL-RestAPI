@@ -1,11 +1,12 @@
 package pl.jakubkozlowski.learning.firststeps.service;
 
 import pl.jakubkozlowski.learning.firststeps.dto.ChampionDTO;
+import pl.jakubkozlowski.learning.firststeps.shared.Page;
+import pl.jakubkozlowski.learning.firststeps.shared.Pageable;
 
-import java.util.List;
 import java.util.Optional;
 
 public interface ChampionService extends CRUDService<ChampionDTO> {
 
-    Optional<List<ChampionDTO>> findAll();
+    Optional<Page<ChampionDTO>> findPage(Pageable pageable);
 }

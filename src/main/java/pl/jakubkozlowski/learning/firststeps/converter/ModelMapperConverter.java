@@ -3,6 +3,7 @@ package pl.jakubkozlowski.learning.firststeps.converter;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.util.CollectionUtils;
+import pl.jakubkozlowski.learning.firststeps.shared.Page;
 
 import java.util.Collections;
 import java.util.List;
@@ -40,4 +41,10 @@ public interface ModelMapperConverter<DTO, Entity> {
             return dTOList.stream().map(this::convertDTO).collect(Collectors.toList());
     }
 
+    default Page<DTO> convertPageEntity(Page<Entity> entityPage) {
+        if (entityPage == Page.empty()) {
+            return Page.empty();
+        } else
+            return new Page<>(convertListEntity(entityPage.getContent()), entityPage.getPage(), entityPage.getTotalCount());
+    }
 }

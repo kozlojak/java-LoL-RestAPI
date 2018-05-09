@@ -6,8 +6,9 @@ import pl.jakubkozlowski.learning.firststeps.converter.ChampionConverter;
 import pl.jakubkozlowski.learning.firststeps.dto.ChampionDTO;
 import pl.jakubkozlowski.learning.firststeps.mapper.ChampionMapper;
 import pl.jakubkozlowski.learning.firststeps.model.ChampionEntity;
+import pl.jakubkozlowski.learning.firststeps.shared.Page;
+import pl.jakubkozlowski.learning.firststeps.shared.Pageable;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -23,8 +24,8 @@ public class ChampionServiceImpl implements ChampionService {
     }
 
     @Override
-    public Optional<List<ChampionDTO>> findAll() {
-        return Optional.ofNullable(championConverter.convertListEntity(championMapper.findAll()));
+    public Optional<Page<ChampionDTO>> findPage(Pageable pageable) {
+        return Optional.ofNullable(championConverter.convertPageEntity(championMapper.findPage(pageable)));
     }
 
     @Override
@@ -48,6 +49,5 @@ public class ChampionServiceImpl implements ChampionService {
     public void deleteById(Long id) {
         championMapper.deleteById(id);
     }
-
 
 }

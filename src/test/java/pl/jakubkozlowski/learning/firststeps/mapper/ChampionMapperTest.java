@@ -9,8 +9,10 @@ import org.springframework.dao.DuplicateKeyException;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
 import pl.jakubkozlowski.learning.firststeps.model.ChampionEntity;
+import pl.jakubkozlowski.learning.firststeps.shared.Page;
+import pl.jakubkozlowski.learning.firststeps.shared.Pageable;
 
-import java.util.List;
+import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static pl.jakubkozlowski.learning.firststeps.descriptor.ChampionTestConstants.*;
@@ -25,11 +27,15 @@ public class ChampionMapperTest {
     private ChampionMapper championMapper;
     private ChampionEntity expectedAatrox;
     private ChampionEntity expectedAhri;
+    private Pageable pageable;
+    private Page<ChampionEntity> page;
 
     @Before
     public void setUp() throws Exception {
         expectedAatrox = new ChampionEntity(ID_1, AATROX);
         expectedAhri = new ChampionEntity(ID_2, AHRI);
+        pageable = new Pageable(PAGE_0, SIZE_2);
+        page = new Page<>(Arrays.asList(expectedAatrox, expectedAhri), PAGE_0, TOTAL_COUNT_2);
     }
 
 
@@ -45,19 +51,15 @@ public class ChampionMapperTest {
     }
 
     @Test
-    public void whenFindAll_thenReturnListOfChampions() {
+    public void whenFindPage_thenReturnPageOfChampions() {
         //given
         championMapper.save(expectedAatrox);
         championMapper.save(expectedAhri);
         //when
-        List<ChampionEntity> actual = championMapper.findAll();
+        Page<ChampionEntity> actual = championMapper.findPage(pageable);
         //then
-        assertThat(actual.size())
-                .isEqualTo(2);
-        assertThat(actual.get(0))
-                .isEqualTo(expectedAatrox);
-        assertThat(actual.get(1))
-                .isEqualTo(expectedAhri);
+        assertThat(actual)
+                .isEqualTo(page);
     }
 
     @Test

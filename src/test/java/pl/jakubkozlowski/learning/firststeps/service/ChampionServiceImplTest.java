@@ -13,10 +13,10 @@ import pl.jakubkozlowski.learning.firststeps.converter.ChampionConverter;
 import pl.jakubkozlowski.learning.firststeps.dto.ChampionDTO;
 import pl.jakubkozlowski.learning.firststeps.mapper.ChampionMapper;
 import pl.jakubkozlowski.learning.firststeps.model.ChampionEntity;
+import pl.jakubkozlowski.learning.firststeps.shared.Page;
+import pl.jakubkozlowski.learning.firststeps.shared.Pageable;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static pl.jakubkozlowski.learning.firststeps.descriptor.ChampionTestConstants.*;
@@ -34,11 +34,8 @@ public class ChampionServiceImplTest {
     @Autowired
     private ChampionConverter championConverter;
 
-    private void createNewChampionDTOs() {
-        championDTOAatrox = new ChampionDTO(ID_1, AATROX);
-        championDTOAhri = new ChampionDTO(ID_2, AHRI);
-        championDTOAnivia = new ChampionDTO(ID_3, ANIVIA);
-    }
+
+    private Pageable pageable;
 
     private ChampionEntity championEntityAatrox;
     private ChampionEntity championEntityAhri;
@@ -47,55 +44,60 @@ public class ChampionServiceImplTest {
     private ChampionDTO championDTOAatrox;
     private ChampionDTO championDTOAhri;
     private ChampionDTO championDTOAnivia;
-
-    private List<ChampionEntity> championEntityList;
-    private List<ChampionDTO> championDTOList;
-
-    private void createNewChampionEntities() {
-        championEntityAatrox = new ChampionEntity(ID_1, AATROX);
-        championEntityAhri = new ChampionEntity(ID_2, AHRI);
-        championEntityAnivia = new ChampionEntity(ID_3, ANIVIA);
-    }
-
-    private void createNewChampionEntityList() {
-        championEntityList = new ArrayList<>(3);
-        championEntityList = Arrays.asList(championEntityAatrox, championEntityAhri, championEntityAnivia);
-    }
-
-    private void createNewChampionDTOList() {
-        championDTOList = new ArrayList<>(3);
-        championDTOList = Arrays.asList(championDTOAatrox, championDTOAhri, championDTOAnivia);
-    }
-
-    @Test
-    public void whenFindAll_thenReturnChampionDTOList() {
-        //when
-        List<ChampionDTO> expectedChampionDTOList = championService.findAll().get();
-        //then
-        assertThat(expectedChampionDTOList)
-                .isEqualTo(championDTOList);
-
-    }
+    private Page<ChampionEntity> championEntityPage;
+    private Page<ChampionDTO> championDTOPage;
 
     @Before
     public void setUp() throws Exception {
-        createNewChampionEntities();
-        createNewChampionDTOs();
-        createNewChampionEntityList();
-        createNewChampionDTOList();
+
+        championEntityAatrox = new ChampionEntity(ID_1, AATROX);
+        championEntityAhri = new ChampionEntity(ID_2, AHRI);
+        championEntityAnivia = new ChampionEntity(ID_3, ANIVIA);
+
+        championDTOAatrox = new ChampionDTO(ID_1, AATROX);
+        championDTOAhri = new ChampionDTO(ID_2, AHRI);
+        championDTOAnivia = new ChampionDTO(ID_3, ANIVIA);
+
+        pageable = new Pageable(PAGE_0, SIZE_1);
+        championEntityPage = new Page<>(Arrays.asList(championEntityAatrox, championEntityAhri, championEntityAnivia), PAGE_0, TOTAL_COUNT_3);
+        championDTOPage = new Page<>(Arrays.asList(championDTOAatrox, championDTOAhri, championDTOAnivia), PAGE_0, TOTAL_COUNT_3);
 
         Mockito.when(championMapper.findById(championEntityAatrox.getId()))
                 .thenReturn(championEntityAatrox);
-        Mockito.when(championMapper.findAll())
-                .thenReturn(championEntityList);
+        Mockito.when(championMapper.findPage(pageable))
+                .thenReturn(championEntityPage);
         Mockito.when(championConverter.convertEntity(championEntityAatrox))
                 .thenReturn(championDTOAatrox);
         Mockito.when(championConverter.convertDTO(championDTOAatrox))
                 .thenReturn(championEntityAatrox);
-        Mockito.when(championConverter.convertListDTO(championDTOList))
-                .thenReturn(championEntityList);
-        Mockito.when(championConverter.convertListEntity(championEntityList))
-                .thenReturn(championDTOList);
+        Mockito.when(championConverter.convertPageEntity(championEntityPage))
+                .thenReturn(championDTOPage);
+    }
+
+    @Test
+    public void whenFindPage_thenReturnChampionDTOPage() {
+        //when
+        Page<ChampionDTO> expectedChampionDTOPage = championService.findPage(pageable).get();
+        //then
+        assertThat(expectedChampionDTOPage)
+                .isEqualTo(championDTOPage);
+
+    }
+
+    @TestConfiguration
+    static class ChampionServiceImplTestContextConfiguration {
+
+        @MockBean
+        private ChampionMapper championMapper;
+
+        @MockBean
+        private ChampionConverter championConverter;
+
+        @Bean
+        public ChampionService championService() {
+            return new ChampionServiceImpl(championMapper, championConverter);
+        }
+
     }
 
     @Test
@@ -114,22 +116,6 @@ public class ChampionServiceImplTest {
         //then
         assertThat(actual)
                 .isEqualTo(championDTOAatrox);
-    }
-
-    @TestConfiguration
-    static class ChampionServiceImplTestContextConfiguration {
-
-        @MockBean
-        private ChampionMapper championMapper;
-
-        @MockBean
-        private ChampionConverter championConverter;
-
-        @Bean
-        public ChampionService championService() {
-            return new ChampionServiceImpl(championMapper, championConverter);
-        }
-
     }
 
     @Test

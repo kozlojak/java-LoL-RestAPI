@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.*;
 import pl.jakubkozlowski.learning.firststeps.dto.ChampionDTO;
 import pl.jakubkozlowski.learning.firststeps.exception.ChampionException;
 import pl.jakubkozlowski.learning.firststeps.service.ChampionService;
-
-import java.util.List;
+import pl.jakubkozlowski.learning.firststeps.shared.Page;
+import pl.jakubkozlowski.learning.firststeps.shared.Pageable;
 
 import static pl.jakubkozlowski.learning.firststeps.controller.descriptor.ChampionControllerDescriptor.BY_ID;
 import static pl.jakubkozlowski.learning.firststeps.controller.descriptor.ChampionControllerDescriptor.CHAMPION_BASE_PATH;
@@ -24,9 +24,10 @@ public class ChampionController {
         this.championService = championService;
     }
 
-    @GetMapping
-    public ResponseEntity<List<ChampionDTO>> findAll() {
-        return championService.findAll().map(ResponseEntity::ok).orElse(ResponseEntity.badRequest().build());
+    @GetMapping(params = {"page", "size"})
+    public ResponseEntity<Page<ChampionDTO>> findPage(@RequestParam("page") Integer page, @RequestParam("size") Integer size) {
+        Pageable pageable = new Pageable(page, size);
+        return championService.findPage(pageable).map(ResponseEntity::ok).orElse(ResponseEntity.badRequest().build());
     }
 
     @GetMapping(value = BY_ID)
