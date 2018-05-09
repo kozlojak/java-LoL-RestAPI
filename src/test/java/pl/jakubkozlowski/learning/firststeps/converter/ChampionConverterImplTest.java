@@ -67,11 +67,11 @@ public class ChampionConverterImplTest extends ModelMapperConverterTest<Champion
     @Override
     public List<Function<ChampionDTO, ChampionDTO>> getFunctions() {
         Function<ChampionDTO, ChampionDTO> removeLettersAFromName = (dto) -> {
-            dto.setName(dto.getName().replace("A", ""));
+            dto.setName(dto.getName().replace(REPLACE_LETTER_A, EMPTY_STRING));
             return dto;
         };
         Function<ChampionDTO, ChampionDTO> addXYZToNameEnd = dto -> {
-            dto.setName(dto.getName() + "XYZ");
+            dto.setName(dto.getName() + LAST_LETTERS);
             return dto;
         };
         return Arrays.asList(removeLettersAFromName, addXYZToNameEnd);
@@ -80,8 +80,8 @@ public class ChampionConverterImplTest extends ModelMapperConverterTest<Champion
     @Override
     public ChampionDTO getConvertedAfterAdditionalFunctions() {
         ChampionDTO dto = prepareDTO();
-        dto.setName(dto.getName().replace("A", ""));
-        dto.setName(dto.getName() + "XYZ");
+        dto.setName(dto.getName().replace(REPLACE_LETTER_A, EMPTY_STRING));
+        dto.setName(dto.getName() + LAST_LETTERS);
         return dto;
     }
 }

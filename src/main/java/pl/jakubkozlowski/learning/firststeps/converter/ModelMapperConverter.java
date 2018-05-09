@@ -23,9 +23,6 @@ public interface ModelMapperConverter<DTO, Entity> {
             return null;
         }
         DTO dto = getModelMapper().map(entity, getDTOClass());
-        if (CollectionUtils.isEmpty(additionalConverters)) {
-            return dto;
-        }
         return additionalConverters.stream().reduce(Function.identity(), Function::andThen).apply(dto);
     }
 

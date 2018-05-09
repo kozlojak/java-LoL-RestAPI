@@ -67,11 +67,11 @@ public class UserConverterImplTest extends ModelMapperConverterTest<UserDTO, Use
     @Override
     public List<Function<UserDTO, UserDTO>> getFunctions() {
         Function<UserDTO, UserDTO> removeLettersAFromName = (dto) -> {
-            dto.setEmail(dto.getEmail().replace("A", ""));
+            dto.setEmail(dto.getEmail().replace(REPLACE_LETTER_A, EMPTY_STRING));
             return dto;
         };
         Function<UserDTO, UserDTO> addXYZToNameEnd = dto -> {
-            dto.setEmail(dto.getEmail() + "XYZ");
+            dto.setEmail(dto.getEmail() + LAST_LETTERS);
             return dto;
         };
         return Arrays.asList(removeLettersAFromName, addXYZToNameEnd);
@@ -80,8 +80,8 @@ public class UserConverterImplTest extends ModelMapperConverterTest<UserDTO, Use
     @Override
     public UserDTO getConvertedAfterAdditionalFunctions() {
         UserDTO dto = prepareDTO();
-        dto.setEmail(dto.getEmail().replace("A", ""));
-        dto.setEmail(dto.getEmail() + "XYZ");
+        dto.setEmail(dto.getEmail().replace(REPLACE_LETTER_A, EMPTY_STRING));
+        dto.setEmail(dto.getEmail() + LAST_LETTERS);
         return dto;
     }
 }

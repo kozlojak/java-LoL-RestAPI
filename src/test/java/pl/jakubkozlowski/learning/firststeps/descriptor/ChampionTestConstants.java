@@ -9,4 +9,7 @@ public class ChampionTestConstants {
     public static final Long ID_1 = 1L;
     public static final Long ID_2 = 2L;
     public static final Long ID_3 = 3L;
+    public static final String REPLACE_LETTER_A = "A";
+    public static final String EMPTY_STRING = "";
+    public static final String LAST_LETTERS = "XYZ";
 }
