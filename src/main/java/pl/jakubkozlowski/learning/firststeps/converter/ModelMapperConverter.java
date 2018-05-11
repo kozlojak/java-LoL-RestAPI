@@ -19,10 +19,11 @@ public interface ModelMapperConverter<DTO, Entity> {
     }
 
     default DTO convertEntity(Entity entity, List<Function<DTO, DTO>> additionalConverters) {
-        if (entity == null) {
-            return null;
+        DTO dto = convertEntity(entity);
+
+        if (dto == null || CollectionUtils.isEmpty(additionalConverters)) {
+            return dto;
         }
-        DTO dto = getModelMapper().map(entity, getDTOClass());
         return additionalConverters.stream().reduce(Function.identity(), Function::andThen).apply(dto);
     }
 

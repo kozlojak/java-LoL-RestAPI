@@ -66,21 +66,21 @@ public class ItemOrderConverterImplTest extends ModelMapperConverterTest<ItemOrd
 
     @Override
     public List<Function<ItemOrderDTO, ItemOrderDTO>> getFunctions() {
-        Function<ItemOrderDTO, ItemOrderDTO> substractFromItemId = (dto) -> {
+        Function<ItemOrderDTO, ItemOrderDTO> decreasedItemId = (dto) -> {
             dto.setItemId(dto.getItemId() - 5L);
             return dto;
         };
-        Function<ItemOrderDTO, ItemOrderDTO> multipleItemId = dto -> {
+        Function<ItemOrderDTO, ItemOrderDTO> multipledItemId = dto -> {
             dto.setItemId(dto.getItemId() * 3L);
             return dto;
         };
-        return Arrays.asList(substractFromItemId, multipleItemId);
+        return Arrays.asList(decreasedItemId, multipledItemId);
     }
 
     @Override
     public ItemOrderDTO getConvertedAfterAdditionalFunctions() {
         ItemOrderDTO dto = prepareDTO();
-        dto.setItemId(339L);
+        dto.setItemId((dto.getItemId() - 5L) * 3L);
         return dto;
     }
 }
