@@ -35,16 +35,19 @@ public interface ModelMapperConverter<DTO, Entity> {
     }
 
     default List<Entity> convertListDTO(List<DTO> dTOList) {
-        if (CollectionUtils.isEmpty(dTOList))
+        if (CollectionUtils.isEmpty(dTOList)) {
             return Collections.emptyList();
-        else
+        } else {
             return dTOList.stream().map(this::convertDTO).collect(Collectors.toList());
+        }
     }
 
     default Page<DTO> convertPageEntity(Page<Entity> entityPage) {
         if (entityPage.equals(Page.empty())) {
             return Page.empty();
-        } else
-            return new Page<>(convertListEntity(entityPage.getContent()), entityPage.getPage(), entityPage.getTotalCount());
+        } else {
+            return entityPage.map(this::convertEntity);
+        }
     }
+
 }
