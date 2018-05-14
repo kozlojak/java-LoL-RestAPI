@@ -42,7 +42,7 @@ public interface ModelMapperConverter<DTO, Entity> {
     }
 
     default Page<DTO> convertPageEntity(Page<Entity> entityPage) {
-        if (entityPage == Page.empty()) {
+        if (entityPage.equals(Page.empty())) {
             return Page.empty();
         } else
             return new Page<>(convertListEntity(entityPage.getContent()), entityPage.getPage(), entityPage.getTotalCount());
