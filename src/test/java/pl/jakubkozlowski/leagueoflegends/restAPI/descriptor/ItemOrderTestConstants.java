@@ -1,4 +1,4 @@
-package pl.jakubkozlowski.learning.firststeps.descriptor;
+package pl.jakubkozlowski.leagueoflegends.restAPI.descriptor;
 
 public class ItemOrderTestConstants {
     public static final String ITEM_ORDER_BASE_PATH = "/item_orders";

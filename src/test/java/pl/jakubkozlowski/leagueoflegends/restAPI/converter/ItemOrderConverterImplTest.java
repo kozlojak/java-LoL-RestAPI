@@ -1,4 +1,4 @@
-package pl.jakubkozlowski.learning.firststeps.converter;
+package pl.jakubkozlowski.leagueoflegends.restAPI.converter;
 
 import org.junit.runner.RunWith;
 import org.modelmapper.ModelMapper;
@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.test.context.junit4.SpringRunner;
-import pl.jakubkozlowski.learning.firststeps.dto.ItemOrderDTO;
-import pl.jakubkozlowski.learning.firststeps.model.ItemOrderEntity;
+import pl.jakubkozlowski.leagueoflegends.restAPI.dto.ItemOrderDTO;
+import pl.jakubkozlowski.leagueoflegends.restAPI.model.ItemOrderEntity;
 
 import java.util.Arrays;
 import java.util.List;

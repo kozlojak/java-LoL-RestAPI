@@ -1,4 +1,4 @@
-package pl.jakubkozlowski.learning.firststeps.mapper;
+package pl.jakubkozlowski.leagueoflegends.restAPI.mapper;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -7,12 +7,12 @@ import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
-import pl.jakubkozlowski.learning.firststeps.model.ItemPageEntity;
+import pl.jakubkozlowski.leagueoflegends.restAPI.descriptor.ItemPageTestConstans;
+import pl.jakubkozlowski.leagueoflegends.restAPI.model.ItemPageEntity;
 
 import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static pl.jakubkozlowski.learning.firststeps.descriptor.ItemPageTestConstans.*;
 
 @RunWith(SpringRunner.class)
 @MybatisTest
@@ -26,8 +26,8 @@ public class ItemPageMapperTest {
 
     @Before
     public void SetUp() throws Exception {
-        expectedAttack = new ItemPageEntity(ID_1, ATTACK, ATTACK_DSC, ATTACK_CHAMPION_ID, ATTACK_ROLE_ID, ATTACK_USER_ID);
-        expectedDefence = new ItemPageEntity(ID_2, DEFENCE, DEFENCE_DSC, DEFENCE_CHAMPION_ID, DEFENCE_ROLE_ID, DEFENCE_USER_ID);
+        expectedAttack = new ItemPageEntity(ItemPageTestConstans.ID_1, ItemPageTestConstans.ATTACK, ItemPageTestConstans.ATTACK_DSC, ItemPageTestConstans.ATTACK_CHAMPION_ID, ItemPageTestConstans.ATTACK_ROLE_ID, ItemPageTestConstans.ATTACK_USER_ID);
+        expectedDefence = new ItemPageEntity(ItemPageTestConstans.ID_2, ItemPageTestConstans.DEFENCE, ItemPageTestConstans.DEFENCE_DSC, ItemPageTestConstans.DEFENCE_CHAMPION_ID, ItemPageTestConstans.DEFENCE_ROLE_ID, ItemPageTestConstans.DEFENCE_USER_ID);
     }
 
     @Test
@@ -51,7 +51,7 @@ public class ItemPageMapperTest {
         //given
         itemPageMapper.save(expectedAttack);
         //when
-        ItemPageEntity actual = itemPageMapper.findById(ID_1);
+        ItemPageEntity actual = itemPageMapper.findById(ItemPageTestConstans.ID_1);
         //then
         assertThat(actual)
                 .isEqualTo(expectedAttack);
@@ -62,7 +62,7 @@ public class ItemPageMapperTest {
         //given
         itemPageMapper.save(expectedAttack);
         //when
-        ItemPageEntity actual = itemPageMapper.findByPagename(ATTACK);
+        ItemPageEntity actual = itemPageMapper.findByPagename(ItemPageTestConstans.ATTACK);
         //then
         assertThat(actual)
                 .isEqualTo(expectedAttack);
@@ -73,8 +73,8 @@ public class ItemPageMapperTest {
         //given
         itemPageMapper.save(expectedAttack);
         //when
-        itemPageMapper.update(ID_1, expectedDefence);
-        ItemPageEntity actual = itemPageMapper.findById(ID_1);
+        itemPageMapper.update(ItemPageTestConstans.ID_1, expectedDefence);
+        ItemPageEntity actual = itemPageMapper.findById(ItemPageTestConstans.ID_1);
         //then
         assertThat(actual.getPagename())
                 .isEqualTo(expectedDefence.getPagename());
@@ -87,8 +87,8 @@ public class ItemPageMapperTest {
         //given
         itemPageMapper.save(expectedAttack);
         //when
-        itemPageMapper.deleteById(ID_1);
-        ItemPageEntity actual = itemPageMapper.findById(ID_1);
+        itemPageMapper.deleteById(ItemPageTestConstans.ID_1);
+        ItemPageEntity actual = itemPageMapper.findById(ItemPageTestConstans.ID_1);
         //then
         assertThat(actual)
                 .isNull();

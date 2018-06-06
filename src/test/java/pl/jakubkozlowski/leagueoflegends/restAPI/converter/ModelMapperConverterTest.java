@@ -1,4 +1,4 @@
-package pl.jakubkozlowski.learning.firststeps.converter;
+package pl.jakubkozlowski.leagueoflegends.restAPI.converter;
 
 import org.junit.Test;
 

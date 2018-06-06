@@ -1,4 +1,4 @@
-package pl.jakubkozlowski.learning.firststeps.mapper;
+package pl.jakubkozlowski.leagueoflegends.restAPI.mapper;
 
 
 import org.junit.Before;
@@ -8,12 +8,12 @@ import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
-import pl.jakubkozlowski.learning.firststeps.model.ItemOrderEntity;
+import pl.jakubkozlowski.leagueoflegends.restAPI.descriptor.ItemOrderTestConstants;
+import pl.jakubkozlowski.leagueoflegends.restAPI.model.ItemOrderEntity;
 
 import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static pl.jakubkozlowski.learning.firststeps.descriptor.ItemOrderTestConstants.*;
 
 @RunWith(SpringRunner.class)
 @MybatisTest
@@ -28,8 +28,8 @@ public class ItemOrderMapperTest {
 
     @Before
     public void SetUp() throws Exception {
-        expectedSet1 = new ItemOrderEntity(ID_1, ITEM_1, ORDER_1);
-        expectedSet2 = new ItemOrderEntity(ID_2, ITEM_2, ORDER_2);
+        expectedSet1 = new ItemOrderEntity(ItemOrderTestConstants.ID_1, ItemOrderTestConstants.ITEM_1, ItemOrderTestConstants.ORDER_1);
+        expectedSet2 = new ItemOrderEntity(ItemOrderTestConstants.ID_2, ItemOrderTestConstants.ITEM_2, ItemOrderTestConstants.ORDER_2);
     }
 
     @Test
@@ -53,7 +53,7 @@ public class ItemOrderMapperTest {
         //given
         itemOrderMapper.save(expectedSet1);
         //when
-        ItemOrderEntity actual = itemOrderMapper.findById(ID_1);
+        ItemOrderEntity actual = itemOrderMapper.findById(ItemOrderTestConstants.ID_1);
         //then
         assertThat(actual)
                 .isEqualTo(expectedSet1);
@@ -64,8 +64,8 @@ public class ItemOrderMapperTest {
         //given
         itemOrderMapper.save(expectedSet1);
         //when
-        itemOrderMapper.update(ID_1, expectedSet2);
-        ItemOrderEntity actual = itemOrderMapper.findById(ID_2);
+        itemOrderMapper.update(ItemOrderTestConstants.ID_1, expectedSet2);
+        ItemOrderEntity actual = itemOrderMapper.findById(ItemOrderTestConstants.ID_2);
         //then
         assertThat(actual)
                 .isEqualTo(expectedSet2);
@@ -76,8 +76,8 @@ public class ItemOrderMapperTest {
         //given
         itemOrderMapper.save(expectedSet1);
         //when
-        itemOrderMapper.deleteById(ID_1);
-        ItemOrderEntity actual = itemOrderMapper.findById(ID_1);
+        itemOrderMapper.deleteById(ItemOrderTestConstants.ID_1);
+        ItemOrderEntity actual = itemOrderMapper.findById(ItemOrderTestConstants.ID_1);
         //then
         assertThat(actual)
                 .isNull();

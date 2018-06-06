@@ -1,4 +1,4 @@
-package pl.jakubkozlowski.learning.firststeps.service;
+package pl.jakubkozlowski.leagueoflegends.restAPI.service;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -9,13 +9,13 @@ import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.test.context.junit4.SpringRunner;
-import pl.jakubkozlowski.learning.firststeps.converter.UserConverter;
-import pl.jakubkozlowski.learning.firststeps.dto.UserDTO;
-import pl.jakubkozlowski.learning.firststeps.mapper.UserMapper;
-import pl.jakubkozlowski.learning.firststeps.model.UserEntity;
+import pl.jakubkozlowski.leagueoflegends.restAPI.converter.UserConverter;
+import pl.jakubkozlowski.leagueoflegends.restAPI.descriptor.UserTestConstants;
+import pl.jakubkozlowski.leagueoflegends.restAPI.dto.UserDTO;
+import pl.jakubkozlowski.leagueoflegends.restAPI.mapper.UserMapper;
+import pl.jakubkozlowski.leagueoflegends.restAPI.model.UserEntity;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static pl.jakubkozlowski.learning.firststeps.descriptor.UserTestConstants.*;
 
 @RunWith(SpringRunner.class)
 public class UserServiceImplTest {
@@ -54,10 +54,10 @@ public class UserServiceImplTest {
 
     @Before
     public void setUp() throws Exception {
-        userEntityMark = new UserEntity(ID_1, MARK, MARK_EMAIL, MARK_PASSWORD, MARK_FAV_ROLE_ID, MARK_FAV_CHAMP_ID);
-        userDTOMark = new UserDTO(ID_1, MARK, MARK_EMAIL, MARK_PASSWORD, MARK_FAV_ROLE_ID, MARK_FAV_CHAMP_ID);
-        userEntityMarkWithSelectedFields = new UserEntity(MARK, MARK_EMAIL, MARK_FAV_ROLE_ID, MARK_FAV_CHAMP_ID);
-        userDTOMarkWithSelectedFields = new UserDTO(MARK, MARK_EMAIL, MARK_FAV_ROLE_ID, MARK_FAV_CHAMP_ID);
+        userEntityMark = new UserEntity(UserTestConstants.ID_1, UserTestConstants.MARK, UserTestConstants.MARK_EMAIL, UserTestConstants.MARK_PASSWORD, UserTestConstants.MARK_FAV_ROLE_ID, UserTestConstants.MARK_FAV_CHAMP_ID);
+        userDTOMark = new UserDTO(UserTestConstants.ID_1, UserTestConstants.MARK, UserTestConstants.MARK_EMAIL, UserTestConstants.MARK_PASSWORD, UserTestConstants.MARK_FAV_ROLE_ID, UserTestConstants.MARK_FAV_CHAMP_ID);
+        userEntityMarkWithSelectedFields = new UserEntity(UserTestConstants.MARK, UserTestConstants.MARK_EMAIL, UserTestConstants.MARK_FAV_ROLE_ID, UserTestConstants.MARK_FAV_CHAMP_ID);
+        userDTOMarkWithSelectedFields = new UserDTO(UserTestConstants.MARK, UserTestConstants.MARK_EMAIL, UserTestConstants.MARK_FAV_ROLE_ID, UserTestConstants.MARK_FAV_CHAMP_ID);
 
         Mockito.when(userMapper.findUserById(userEntityMark.getId()))
                 .thenReturn(userEntityMark);
@@ -100,17 +100,17 @@ public class UserServiceImplTest {
     @Test
     public void whenUpdate_thenReturnUpdatedUserDTO() {
         //when
-        userService.update(ID_1, userDTOMark);
+        userService.update(UserTestConstants.ID_1, userDTOMark);
         //then
-        Mockito.verify(userMapper, Mockito.times(1)).updateUser(ID_1, userEntityMark);
+        Mockito.verify(userMapper, Mockito.times(1)).updateUser(UserTestConstants.ID_1, userEntityMark);
     }
 
     @Test
     public void whenDeleteById_thenDeleteUserDTO() {
         //when
-        userService.deleteById(ID_1);
+        userService.deleteById(UserTestConstants.ID_1);
         //then
-        Mockito.verify(userMapper, Mockito.times(1)).deleteById(ID_1);
+        Mockito.verify(userMapper, Mockito.times(1)).deleteById(UserTestConstants.ID_1);
     }
 
 }

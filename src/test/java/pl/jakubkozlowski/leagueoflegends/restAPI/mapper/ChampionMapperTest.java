@@ -1,4 +1,4 @@
-package pl.jakubkozlowski.learning.firststeps.mapper;
+package pl.jakubkozlowski.leagueoflegends.restAPI.mapper;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -8,14 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
-import pl.jakubkozlowski.learning.firststeps.model.ChampionEntity;
-import pl.jakubkozlowski.learning.firststeps.shared.Page;
-import pl.jakubkozlowski.learning.firststeps.shared.Pageable;
+import pl.jakubkozlowski.leagueoflegends.restAPI.model.ChampionEntity;
+import pl.jakubkozlowski.leagueoflegends.restAPI.shared.Page;
+import pl.jakubkozlowski.leagueoflegends.restAPI.shared.Pageable;
 
 import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static pl.jakubkozlowski.learning.firststeps.descriptor.ChampionTestConstants.*;
+import static pl.jakubkozlowski.leagueoflegends.restAPI.descriptor.ChampionTestConstants.*;
 
 @RunWith(SpringRunner.class)
 @MybatisTest

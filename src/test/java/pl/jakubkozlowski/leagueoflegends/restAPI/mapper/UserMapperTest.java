@@ -1,4 +1,4 @@
-package pl.jakubkozlowski.learning.firststeps.mapper;
+package pl.jakubkozlowski.leagueoflegends.restAPI.mapper;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -7,10 +7,10 @@ import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
-import pl.jakubkozlowski.learning.firststeps.model.UserEntity;
+import pl.jakubkozlowski.leagueoflegends.restAPI.descriptor.UserTestConstants;
+import pl.jakubkozlowski.leagueoflegends.restAPI.model.UserEntity;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static pl.jakubkozlowski.learning.firststeps.descriptor.UserTestConstants.*;
 
 @RunWith(SpringRunner.class)
 @MybatisTest
@@ -24,8 +24,8 @@ public class UserMapperTest {
 
     @Before
     public void SetUp() throws Exception {
-        expectedMark = new UserEntity(ID_1, MARK, MARK_EMAIL, MARK_PASSWORD, MARK_FAV_ROLE_ID, MARK_FAV_CHAMP_ID);
-        expectedKate = new UserEntity(ID_2, KATE, KATE_EMAIL, KATE_PASSWORD, KATE_FAV_ROLE_ID, KATE_FAV_CHAMP_ID);
+        expectedMark = new UserEntity(UserTestConstants.ID_1, UserTestConstants.MARK, UserTestConstants.MARK_EMAIL, UserTestConstants.MARK_PASSWORD, UserTestConstants.MARK_FAV_ROLE_ID, UserTestConstants.MARK_FAV_CHAMP_ID);
+        expectedKate = new UserEntity(UserTestConstants.ID_2, UserTestConstants.KATE, UserTestConstants.KATE_EMAIL, UserTestConstants.KATE_PASSWORD, UserTestConstants.KATE_FAV_ROLE_ID, UserTestConstants.KATE_FAV_CHAMP_ID);
     }
 
     @Test
@@ -33,7 +33,7 @@ public class UserMapperTest {
         //given
         userMapper.saveUser(expectedMark);
         //when
-        UserEntity actual = userMapper.findUserById(ID_1);
+        UserEntity actual = userMapper.findUserById(UserTestConstants.ID_1);
         //then
         assertThat(actual)
                 .isEqualTo(expectedMark);
@@ -44,7 +44,7 @@ public class UserMapperTest {
         //given
         userMapper.saveUser(expectedMark);
         //when
-        UserEntity actual = userMapper.findUserByUsername(MARK);
+        UserEntity actual = userMapper.findUserByUsername(UserTestConstants.MARK);
         //then
         assertThat(actual.getUsername())
                 .isEqualTo(expectedMark.getUsername());
@@ -57,8 +57,8 @@ public class UserMapperTest {
         //given
         userMapper.saveUser(expectedMark);
         //when
-        userMapper.updateUser(ID_1, expectedKate);
-        UserEntity actual = userMapper.findUserById(ID_1);
+        userMapper.updateUser(UserTestConstants.ID_1, expectedKate);
+        UserEntity actual = userMapper.findUserById(UserTestConstants.ID_1);
         //then
         assertThat(actual.getUsername())
                 .isEqualTo(expectedKate.getUsername());
@@ -71,8 +71,8 @@ public class UserMapperTest {
         //given
         userMapper.saveUser(expectedMark);
         //when
-        userMapper.deleteById(ID_1);
-        UserEntity actual = userMapper.findUserById(ID_1);
+        userMapper.deleteById(UserTestConstants.ID_1);
+        UserEntity actual = userMapper.findUserById(UserTestConstants.ID_1);
         //then
         assertThat(actual)
                 .isNull();

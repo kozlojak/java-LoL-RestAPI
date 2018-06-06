@@ -1,4 +1,4 @@
-package pl.jakubkozlowski.learning.firststeps.controller;
+package pl.jakubkozlowski.leagueoflegends.restAPI.controller;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -12,15 +12,15 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import pl.jakubkozlowski.learning.firststeps.dto.UserDTO;
-import pl.jakubkozlowski.learning.firststeps.service.UserService;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import pl.jakubkozlowski.leagueoflegends.restAPI.descriptor.UserTestConstants;
+import pl.jakubkozlowski.leagueoflegends.restAPI.dto.UserDTO;
+import pl.jakubkozlowski.leagueoflegends.restAPI.service.UserService;
 
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static pl.jakubkozlowski.learning.firststeps.descriptor.UserTestConstants.*;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(UserController.class)
@@ -38,17 +38,17 @@ public class UserControllerTest {
 
     @Before
     public void setUp() throws Exception {
-        userDTOMark = new UserDTO(ID_1, MARK, MARK_EMAIL, MARK_PASSWORD, MARK_FAV_ROLE_ID, MARK_FAV_CHAMP_ID);
-        userDTOMarkWithSelectedFields = new UserDTO(MARK, MARK_EMAIL, MARK_FAV_ROLE_ID, MARK_FAV_CHAMP_ID);
+        userDTOMark = new UserDTO(UserTestConstants.ID_1, UserTestConstants.MARK, UserTestConstants.MARK_EMAIL, UserTestConstants.MARK_PASSWORD, UserTestConstants.MARK_FAV_ROLE_ID, UserTestConstants.MARK_FAV_CHAMP_ID);
+        userDTOMarkWithSelectedFields = new UserDTO(UserTestConstants.MARK, UserTestConstants.MARK_EMAIL, UserTestConstants.MARK_FAV_ROLE_ID, UserTestConstants.MARK_FAV_CHAMP_ID);
         objectMapper = new ObjectMapper();
 
-        Mockito.when(userService.findById(ID_1)).thenReturn(Optional.of(userDTOMark));
+        Mockito.when(userService.findById(UserTestConstants.ID_1)).thenReturn(Optional.of(userDTOMark));
         Mockito.when(userService.findByUsername(userDTOMark.getUsername())).thenReturn(Optional.of(userDTOMarkWithSelectedFields));
     }
 
     @Test
     public void whenSaveUser_thenReturnUserDTO() throws Exception {
-        String content = mvc.perform(post(BASE_PATH)
+        String content = mvc.perform(MockMvcRequestBuilders.post(UserTestConstants.BASE_PATH)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(userDTOMark)))
                 .andExpect(status().isCreated())
@@ -61,7 +61,7 @@ public class UserControllerTest {
 
     @Test
     public void whenFindUserById_thenReturntJsonArrayOfUserWithGivenId() throws Exception {
-        String content = mvc.perform(get(BASE_PATH + BY_ID)
+        String content = mvc.perform(MockMvcRequestBuilders.get(UserTestConstants.BASE_PATH + UserTestConstants.BY_ID)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
@@ -74,7 +74,7 @@ public class UserControllerTest {
 
     @Test
     public void whenFindUserByName_thenReturnJsonArrayOfUserWithGivenName() throws Exception {
-        String content = mvc.perform(get(BASE_PATH + USERNAME)
+        String content = mvc.perform(MockMvcRequestBuilders.get(UserTestConstants.BASE_PATH + UserTestConstants.USERNAME)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
@@ -87,7 +87,7 @@ public class UserControllerTest {
 
     @Test
     public void whenUpdateUser_thenReturnJsonArrayOfUpdatedUser() throws Exception {
-        String content = mvc.perform(put(BASE_PATH + BY_ID)
+        String content = mvc.perform(MockMvcRequestBuilders.put(UserTestConstants.BASE_PATH + UserTestConstants.BY_ID)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(userDTOMark)))
                 .andExpect(status().isOk())
@@ -100,7 +100,7 @@ public class UserControllerTest {
 
     @Test
     public void whenDeleteById_thenReturnStatusNoContent() throws Exception {
-        mvc.perform(delete(BASE_PATH + BY_ID)
+        mvc.perform(MockMvcRequestBuilders.delete(UserTestConstants.BASE_PATH + UserTestConstants.BY_ID)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent());
     }

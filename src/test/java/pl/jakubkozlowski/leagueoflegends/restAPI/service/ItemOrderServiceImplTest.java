@@ -1,4 +1,4 @@
-package pl.jakubkozlowski.learning.firststeps.service;
+package pl.jakubkozlowski.leagueoflegends.restAPI.service;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -9,16 +9,16 @@ import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.test.context.junit4.SpringRunner;
-import pl.jakubkozlowski.learning.firststeps.converter.ItemOrderConverter;
-import pl.jakubkozlowski.learning.firststeps.dto.ItemOrderDTO;
-import pl.jakubkozlowski.learning.firststeps.mapper.ItemOrderMapper;
-import pl.jakubkozlowski.learning.firststeps.model.ItemOrderEntity;
+import pl.jakubkozlowski.leagueoflegends.restAPI.converter.ItemOrderConverter;
+import pl.jakubkozlowski.leagueoflegends.restAPI.descriptor.ItemOrderTestConstants;
+import pl.jakubkozlowski.leagueoflegends.restAPI.dto.ItemOrderDTO;
+import pl.jakubkozlowski.leagueoflegends.restAPI.mapper.ItemOrderMapper;
+import pl.jakubkozlowski.leagueoflegends.restAPI.model.ItemOrderEntity;
 
 import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
-import static pl.jakubkozlowski.learning.firststeps.descriptor.ItemOrderTestConstants.*;
 
 @RunWith(SpringRunner.class)
 public class ItemOrderServiceImplTest {
@@ -43,10 +43,10 @@ public class ItemOrderServiceImplTest {
 
     @Before
     public void setUp() throws Exception {
-        itemOrderEntitySet1 = new ItemOrderEntity(ID_1, ITEM_1, ORDER_1);
-        itemOrderDTOSet1 = new ItemOrderDTO(ID_1, ITEM_1, ORDER_1);
-        itemOrderEntitySet2 = new ItemOrderEntity(ID_2, ITEM_2, ORDER_2);
-        itemOrderDTOSet2 = new ItemOrderDTO(ID_2, ITEM_2, ORDER_2);
+        itemOrderEntitySet1 = new ItemOrderEntity(ItemOrderTestConstants.ID_1, ItemOrderTestConstants.ITEM_1, ItemOrderTestConstants.ORDER_1);
+        itemOrderDTOSet1 = new ItemOrderDTO(ItemOrderTestConstants.ID_1, ItemOrderTestConstants.ITEM_1, ItemOrderTestConstants.ORDER_1);
+        itemOrderEntitySet2 = new ItemOrderEntity(ItemOrderTestConstants.ID_2, ItemOrderTestConstants.ITEM_2, ItemOrderTestConstants.ORDER_2);
+        itemOrderDTOSet2 = new ItemOrderDTO(ItemOrderTestConstants.ID_2, ItemOrderTestConstants.ITEM_2, ItemOrderTestConstants.ORDER_2);
         itemOrderEntityList = Arrays.asList(itemOrderEntitySet1, itemOrderEntitySet2);
         itemOrderDTOList = Arrays.asList(itemOrderDTOSet1, itemOrderDTOSet2);
 
@@ -108,16 +108,16 @@ public class ItemOrderServiceImplTest {
     @Test
     public void whenUpdate_thenReturnUpdatedItemOrderDTO() {
         //when
-        itemOrderService.update(ID_1, itemOrderDTOSet1);
+        itemOrderService.update(ItemOrderTestConstants.ID_1, itemOrderDTOSet1);
         //then
-        Mockito.verify(itemOrderMapper, Mockito.times(1)).update(ID_1, itemOrderEntitySet1);
+        Mockito.verify(itemOrderMapper, Mockito.times(1)).update(ItemOrderTestConstants.ID_1, itemOrderEntitySet1);
     }
 
     @Test
     public void whenDeleteById_thenDeleteItemOrderDTO() {
         //when
-        itemOrderService.deleteById(ID_1);
+        itemOrderService.deleteById(ItemOrderTestConstants.ID_1);
         //then
-        Mockito.verify(itemOrderMapper, Mockito.times(1)).deleteById(ID_1);
+        Mockito.verify(itemOrderMapper, Mockito.times(1)).deleteById(ItemOrderTestConstants.ID_1);
     }
 }

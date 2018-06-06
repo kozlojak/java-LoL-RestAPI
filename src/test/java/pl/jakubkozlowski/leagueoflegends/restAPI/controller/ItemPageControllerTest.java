@@ -1,4 +1,4 @@
-package pl.jakubkozlowski.learning.firststeps.controller;
+package pl.jakubkozlowski.leagueoflegends.restAPI.controller;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -12,17 +12,17 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import pl.jakubkozlowski.learning.firststeps.dto.ItemPageDTO;
-import pl.jakubkozlowski.learning.firststeps.service.ItemPageService;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import pl.jakubkozlowski.leagueoflegends.restAPI.descriptor.ItemPageTestConstans;
+import pl.jakubkozlowski.leagueoflegends.restAPI.dto.ItemPageDTO;
+import pl.jakubkozlowski.leagueoflegends.restAPI.service.ItemPageService;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static pl.jakubkozlowski.learning.firststeps.descriptor.ItemPageTestConstans.*;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(ItemPageController.class)
@@ -41,19 +41,19 @@ public class ItemPageControllerTest {
 
     @Before
     public void setUp() throws Exception {
-        itemPageDTOAttack = new ItemPageDTO(ID_1, ATTACK, ATTACK_DSC, ATTACK_CHAMPION_ID, ATTACK_ROLE_ID, ATTACK_USER_ID);
-        itemPageDTODefence = new ItemPageDTO(ID_2, DEFENCE, DEFENCE_DSC, DEFENCE_CHAMPION_ID, DEFENCE_ROLE_ID, DEFENCE_USER_ID);
+        itemPageDTOAttack = new ItemPageDTO(ItemPageTestConstans.ID_1, ItemPageTestConstans.ATTACK, ItemPageTestConstans.ATTACK_DSC, ItemPageTestConstans.ATTACK_CHAMPION_ID, ItemPageTestConstans.ATTACK_ROLE_ID, ItemPageTestConstans.ATTACK_USER_ID);
+        itemPageDTODefence = new ItemPageDTO(ItemPageTestConstans.ID_2, ItemPageTestConstans.DEFENCE, ItemPageTestConstans.DEFENCE_DSC, ItemPageTestConstans.DEFENCE_CHAMPION_ID, ItemPageTestConstans.DEFENCE_ROLE_ID, ItemPageTestConstans.DEFENCE_USER_ID);
         itemPageDTOList = Arrays.asList(itemPageDTOAttack, itemPageDTODefence);
         objectMapper = new ObjectMapper();
 
-        Mockito.when(itemPageService.findById(ID_1)).thenReturn(Optional.of(itemPageDTOAttack));
-        Mockito.when(itemPageService.findByPagename(ATTACK)).thenReturn(Optional.of(itemPageDTOAttack));
+        Mockito.when(itemPageService.findById(ItemPageTestConstans.ID_1)).thenReturn(Optional.of(itemPageDTOAttack));
+        Mockito.when(itemPageService.findByPagename(ItemPageTestConstans.ATTACK)).thenReturn(Optional.of(itemPageDTOAttack));
         Mockito.when(itemPageService.findAll()).thenReturn(Optional.of(itemPageDTOList));
     }
 
     @Test
     public void whenSaveItemPage_thenReturnItemPageDTO() throws Exception {
-        String content = mvc.perform(post(BASE_PATH)
+        String content = mvc.perform(MockMvcRequestBuilders.post(ItemPageTestConstans.BASE_PATH)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(itemPageDTOAttack)))
                 .andExpect(status().isCreated())
@@ -66,7 +66,7 @@ public class ItemPageControllerTest {
 
     @Test
     public void whenFindAll_thenReturntJsonArrayOfItemPages() throws Exception {
-        String content = mvc.perform(get(BASE_PATH)
+        String content = mvc.perform(MockMvcRequestBuilders.get(ItemPageTestConstans.BASE_PATH)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
@@ -79,7 +79,7 @@ public class ItemPageControllerTest {
 
     @Test
     public void whenFindItemPageById_thenReturntJsonArrayOfItemPageWithGivenId() throws Exception {
-        String content = mvc.perform(get(BASE_PATH + BY_ID)
+        String content = mvc.perform(MockMvcRequestBuilders.get(ItemPageTestConstans.BASE_PATH + ItemPageTestConstans.BY_ID)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
@@ -92,7 +92,7 @@ public class ItemPageControllerTest {
 
     @Test
     public void whenFindItemPageByName_thenReturnJsonArrayOfItemPageWithGivenName() throws Exception {
-        String content = mvc.perform(get(BASE_PATH + PAGENAME)
+        String content = mvc.perform(MockMvcRequestBuilders.get(ItemPageTestConstans.BASE_PATH + ItemPageTestConstans.PAGENAME)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
@@ -105,7 +105,7 @@ public class ItemPageControllerTest {
 
     @Test
     public void whenUpdateItemPage_thenReturnJsonArrayOfUpdatedItemPage() throws Exception {
-        String content = mvc.perform(put(BASE_PATH + BY_ID)
+        String content = mvc.perform(MockMvcRequestBuilders.put(ItemPageTestConstans.BASE_PATH + ItemPageTestConstans.BY_ID)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(itemPageDTOAttack)))
                 .andExpect(status().isOk())
@@ -118,7 +118,7 @@ public class ItemPageControllerTest {
 
     @Test
     public void whenDeleteById_thenReturnStatusNoContent() throws Exception {
-        mvc.perform(delete(BASE_PATH + BY_ID)
+        mvc.perform(MockMvcRequestBuilders.delete(ItemPageTestConstans.BASE_PATH + ItemPageTestConstans.BY_ID)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent());
     }

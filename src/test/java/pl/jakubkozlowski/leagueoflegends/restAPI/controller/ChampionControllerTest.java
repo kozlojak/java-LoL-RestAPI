@@ -1,4 +1,4 @@
-package pl.jakubkozlowski.learning.firststeps.controller;
+package pl.jakubkozlowski.leagueoflegends.restAPI.controller;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -12,10 +12,10 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import pl.jakubkozlowski.learning.firststeps.dto.ChampionDTO;
-import pl.jakubkozlowski.learning.firststeps.service.ChampionService;
-import pl.jakubkozlowski.learning.firststeps.shared.Page;
-import pl.jakubkozlowski.learning.firststeps.shared.Pageable;
+import pl.jakubkozlowski.leagueoflegends.restAPI.dto.ChampionDTO;
+import pl.jakubkozlowski.leagueoflegends.restAPI.service.ChampionService;
+import pl.jakubkozlowski.leagueoflegends.restAPI.shared.Page;
+import pl.jakubkozlowski.leagueoflegends.restAPI.shared.Pageable;
 
 import java.util.Arrays;
 import java.util.Optional;
@@ -23,7 +23,7 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static pl.jakubkozlowski.learning.firststeps.descriptor.ChampionTestConstants.*;
+import static pl.jakubkozlowski.leagueoflegends.restAPI.descriptor.ChampionTestConstants.*;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(ChampionController.class)

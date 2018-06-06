@@ -1,4 +1,4 @@
-package pl.jakubkozlowski.learning.firststeps.descriptor;
+package pl.jakubkozlowski.leagueoflegends.restAPI.descriptor;
 
 public class ItemPageTestConstans {
     public static final String BASE_PATH = "/item_pages";
