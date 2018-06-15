@@ -11,6 +11,9 @@ import pl.jakubkozlowski.leagueoflegends.restAPI.model.ChampionEntity;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Function;
+
+import static pl.jakubkozlowski.learning.firststeps.descriptor.ChampionTestConstants.*;
 
 @RunWith(SpringRunner.class)
 public class ChampionConverterImplTest extends ModelMapperConverterTest<ChampionDTO, ChampionEntity> {
@@ -37,27 +40,48 @@ public class ChampionConverterImplTest extends ModelMapperConverterTest<Champion
 
     @Override
     public ChampionDTO prepareDTO() {
-        return new ChampionDTO();
+        return new ChampionDTO(ID_1, AATROX);
     }
 
     @Override
     public ChampionEntity prepareEntity() {
-        return new ChampionEntity();
+        return new ChampionEntity(ID_1, AATROX);
     }
 
     @Override
     public List<ChampionDTO> prepareListDTO() {
-        return Arrays.asList(new ChampionDTO(), new ChampionDTO());
+        return Arrays.asList(new ChampionDTO(ID_1, AATROX), new ChampionDTO(ID_2, ANIVIA));
     }
 
     @Override
     public List<ChampionEntity> prepareListEntity() {
 
-        return Arrays.asList(new ChampionEntity(), new ChampionEntity());
+        return Arrays.asList(new ChampionEntity(ID_1, AATROX), new ChampionEntity(ID_2, ANIVIA));
     }
 
     @Override
     public ModelMapperConverter<ChampionDTO, ChampionEntity> getConverter() {
         return championConverter;
+    }
+
+    @Override
+    public List<Function<ChampionDTO, ChampionDTO>> getFunctions() {
+        Function<ChampionDTO, ChampionDTO> removeLettersAFromName = (dto) -> {
+            dto.setName(dto.getName().replace(REPLACE_LETTER_A, EMPTY_STRING));
+            return dto;
+        };
+        Function<ChampionDTO, ChampionDTO> addXYZToNameEnd = dto -> {
+            dto.setName(dto.getName() + LAST_LETTERS);
+            return dto;
+        };
+        return Arrays.asList(removeLettersAFromName, addXYZToNameEnd);
+    }
+
+    @Override
+    public ChampionDTO getConvertedAfterAdditionalFunctions() {
+        ChampionDTO dto = prepareDTO();
+        dto.setName(dto.getName().replace(REPLACE_LETTER_A, EMPTY_STRING));
+        dto.setName(dto.getName() + LAST_LETTERS);
+        return dto;
     }
 }

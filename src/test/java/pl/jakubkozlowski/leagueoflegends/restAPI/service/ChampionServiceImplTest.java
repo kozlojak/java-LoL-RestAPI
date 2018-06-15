@@ -21,6 +21,10 @@ import java.util.Arrays;
 import static org.assertj.core.api.Assertions.assertThat;
 import static pl.jakubkozlowski.leagueoflegends.restAPI.descriptor.ChampionTestConstants.*;
 
+<<<<<<<Updated upstream:src/test/java/pl/jakubkozlowski/leagueoflegends/restAPI/service/ChampionServiceImplTest.java
+        =======
+        >>>>>>>Stashed changes:src/test/java/pl/jakubkozlowski/leagueoflegends/restAPI/service/ChampionServiceImplTest.java
+
 @RunWith(SpringRunner.class)
 //@SpringBootTest ->1st solution- to Integration Testing. All @Beans are injected
 public class ChampionServiceImplTest {

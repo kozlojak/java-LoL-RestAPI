@@ -17,6 +17,10 @@ import java.util.Arrays;
 import static org.assertj.core.api.Assertions.assertThat;
 import static pl.jakubkozlowski.leagueoflegends.restAPI.descriptor.ChampionTestConstants.*;
 
+<<<<<<<Updated upstream:src/test/java/pl/jakubkozlowski/leagueoflegends/restAPI/mapper/ChampionMapperTest.java
+        =======
+        >>>>>>>Stashed changes:src/test/java/pl/jakubkozlowski/leagueoflegends/restAPI/mapper/ChampionMapperTest.java
+
 @RunWith(SpringRunner.class)
 @MybatisTest
 //For autoincrement reset between tests
