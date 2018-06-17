@@ -33,15 +33,6 @@ public class ItemPageServiceImplTest {
     @Autowired
     private ItemPageConverter itemPageConverter;
 
-    @Test
-    public void whenFindAll_thenReturnListOfItemPagesDTO() {
-        //when
-        List<ItemPageDTO> actual = itemPageService.findAll().get();
-        //then
-        assertThat(actual)
-                .isEqualTo(itemPageDTOList);
-    }
-
     private ItemPageEntity itemPageEntityAttack;
     private ItemPageDTO itemPageDTOAttack;
     private ItemPageEntity itemPageEntityDefence;
@@ -50,7 +41,7 @@ public class ItemPageServiceImplTest {
     private List<ItemPageDTO> itemPageDTOList;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         itemPageEntityAttack = new ItemPageEntity(ItemPageTestConstans.ID_1, ItemPageTestConstans.ATTACK, ItemPageTestConstans.ATTACK_DSC, ItemPageTestConstans.ATTACK_CHAMPION_ID, ItemPageTestConstans.ATTACK_ROLE_ID, ItemPageTestConstans.ATTACK_USER_ID);
         itemPageDTOAttack = new ItemPageDTO(ItemPageTestConstans.ID_1, ItemPageTestConstans.ATTACK, ItemPageTestConstans.ATTACK_DSC, ItemPageTestConstans.ATTACK_CHAMPION_ID, ItemPageTestConstans.ATTACK_ROLE_ID, ItemPageTestConstans.ATTACK_USER_ID);
         itemPageEntityDefence = new ItemPageEntity(ItemPageTestConstans.ID_2, ItemPageTestConstans.DEFENCE, ItemPageTestConstans.DEFENCE_DSC, ItemPageTestConstans.DEFENCE_CHAMPION_ID, ItemPageTestConstans.DEFENCE_ROLE_ID, ItemPageTestConstans.DEFENCE_USER_ID);
@@ -72,6 +63,15 @@ public class ItemPageServiceImplTest {
                 .thenReturn(itemPageEntityList);
         Mockito.when(itemPageConverter.convertListEntity(itemPageEntityList))
                 .thenReturn(itemPageDTOList);
+    }
+
+    @Test
+    public void whenFindAll_thenReturnListOfItemPagesDTO() {
+        //when
+        List<ItemPageDTO> actual = itemPageService.findAll().get();
+        //then
+        assertThat(actual)
+                .isEqualTo(itemPageDTOList);
     }
 
     @Test

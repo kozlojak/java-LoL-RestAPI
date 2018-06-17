@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Function;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -19,9 +20,19 @@ public abstract class ModelMapperConverterTest<DTO, Entity> {
 
     public abstract ModelMapperConverter<DTO, Entity> getConverter();
 
+    public abstract List<Function<DTO, DTO>> getFunctions();
+
+    public abstract DTO getConvertedAfterAdditionalFunctions();
+
     @Test
     public void whenConvertEntity_thenReturnDto() {
         assertThat(getConverter().convertEntity(prepareEntity())).isEqualTo(prepareDTO());
+    }
+
+    @Test
+    public void whenConvertWithAdditionalConverters_thenReturnDto() {
+        DTO dto = getConverter().convertEntity(prepareEntity(), getFunctions());
+        assertThat(dto).isEqualTo(getConvertedAfterAdditionalFunctions());
     }
 
     @Test

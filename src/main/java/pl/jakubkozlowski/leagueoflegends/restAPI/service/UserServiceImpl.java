@@ -7,7 +7,9 @@ import pl.jakubkozlowski.leagueoflegends.restAPI.dto.UserDTO;
 import pl.jakubkozlowski.leagueoflegends.restAPI.mapper.UserMapper;
 import pl.jakubkozlowski.leagueoflegends.restAPI.model.UserEntity;
 
+import java.util.Collections;
 import java.util.Optional;
+import java.util.function.Function;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -15,8 +17,13 @@ public class UserServiceImpl implements UserService {
     private UserMapper userMapper;
     private UserConverter userConverter;
 
+    private static final Function<UserDTO, UserDTO> shadowUserEmail = res -> {
+        res.setEmail("");
+        return res;
+    };
+
     @Autowired
-    public UserServiceImpl(UserMapper userMapper, UserConverter userConverter) {
+    UserServiceImpl(UserMapper userMapper, UserConverter userConverter) {
         this.userMapper = userMapper;
         this.userConverter = userConverter;
     }
@@ -45,6 +52,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<UserDTO> findByUsername(String username) {
-        return Optional.ofNullable(userConverter.convertEntity(userMapper.findUserByUsername(username)));
+        return Optional.ofNullable(userConverter.convertEntity(userMapper.findUserByUsername(username), Collections.singletonList(shadowUserEmail)));
     }
 }

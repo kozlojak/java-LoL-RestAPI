@@ -13,7 +13,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
 
-import static pl.jakubkozlowski.learning.firststeps.descriptor.ChampionTestConstants.*;
+import static pl.jakubkozlowski.leagueoflegends.restAPI.descriptor.ChampionTestConstants.*;
 
 @RunWith(SpringRunner.class)
 public class ChampionConverterImplTest extends ModelMapperConverterTest<ChampionDTO, ChampionEntity> {

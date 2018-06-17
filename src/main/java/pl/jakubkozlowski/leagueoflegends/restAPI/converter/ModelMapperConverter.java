@@ -7,13 +7,26 @@ import pl.jakubkozlowski.leagueoflegends.restAPI.shared.Page;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public interface ModelMapperConverter<DTO, Entity> {
 
 
     default DTO convertEntity(Entity entity) {
-        return entity == null ? null : getModelMapper().map(entity, getDTOClass());
+        if (entity == null) {
+            return null;
+        }
+
+        return getModelMapper().map(entity, getDTOClass());
+    }
+
+    default DTO convertEntity(Entity entity, List<Function<DTO, DTO>> additionalConverters) {
+        DTO dto = convertEntity(entity);
+        if (dto == null || CollectionUtils.isEmpty(additionalConverters)) {
+            return dto;
+        }
+        return additionalConverters.stream().reduce(Function.identity(), Function::andThen).apply(dto);
     }
 
     default Entity convertDTO(DTO dto) {

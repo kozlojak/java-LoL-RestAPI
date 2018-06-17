@@ -17,10 +17,6 @@ import java.util.Arrays;
 import static org.assertj.core.api.Assertions.assertThat;
 import static pl.jakubkozlowski.leagueoflegends.restAPI.descriptor.ChampionTestConstants.*;
 
-<<<<<<<Updated upstream:src/test/java/pl/jakubkozlowski/leagueoflegends/restAPI/mapper/ChampionMapperTest.java
-        =======
-        >>>>>>>Stashed changes:src/test/java/pl/jakubkozlowski/leagueoflegends/restAPI/mapper/ChampionMapperTest.java
-
 @RunWith(SpringRunner.class)
 @MybatisTest
 //For autoincrement reset between tests
@@ -35,7 +31,7 @@ public class ChampionMapperTest {
     private Page<ChampionEntity> page;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         expectedAatrox = new ChampionEntity(ID_1, AATROX);
         expectedAhri = new ChampionEntity(ID_2, AHRI);
         pageable = new Pageable(PAGE_0, SIZE_2);

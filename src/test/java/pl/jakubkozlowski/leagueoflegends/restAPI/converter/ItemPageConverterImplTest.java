@@ -13,7 +13,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
 
-import static pl.jakubkozlowski.learning.firststeps.descriptor.ItemPageTestConstans.*;
+import static pl.jakubkozlowski.leagueoflegends.restAPI.descriptor.ItemPageTestConstans.*;
+
 
 @RunWith(SpringRunner.class)
 public class ItemPageConverterImplTest extends ModelMapperConverterTest<ItemPageDTO, ItemPageEntity> {
