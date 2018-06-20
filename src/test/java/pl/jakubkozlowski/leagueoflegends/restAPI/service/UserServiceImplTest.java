@@ -14,7 +14,6 @@ import pl.jakubkozlowski.leagueoflegends.restAPI.dto.UserDTO;
 import pl.jakubkozlowski.leagueoflegends.restAPI.mapper.UserMapper;
 import pl.jakubkozlowski.leagueoflegends.restAPI.model.UserEntity;
 
-import java.util.Collections;
 import java.util.function.Function;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -23,13 +22,12 @@ import static pl.jakubkozlowski.leagueoflegends.restAPI.descriptor.UserTestConst
 @RunWith(SpringRunner.class)
 public class UserServiceImplTest {
 
-    private static final Function<UserDTO, UserDTO> shadowUserEmail = res -> {
-        res.setEmail("");
-        return res;
-    };
-
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private UserServiceImpl userServiceImpl;
+    private UserDTO userDTOMarkWithoutMail;
 
     @Autowired
     private UserMapper userMapper;
@@ -43,16 +41,13 @@ public class UserServiceImplTest {
     private UserDTO userDTOMarkWithSelectedFields;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
+
         userEntityMark = new UserEntity(ID_1, MARK, MARK_EMAIL, MARK_PASSWORD, MARK_FAV_ROLE_ID, MARK_FAV_CHAMP_ID);
         userDTOMark = new UserDTO(ID_1, MARK, MARK_EMAIL, MARK_PASSWORD, MARK_FAV_ROLE_ID, MARK_FAV_CHAMP_ID);
         userEntityMarkWithSelectedFields = new UserEntity(MARK, MARK_EMAIL, MARK_FAV_ROLE_ID, MARK_FAV_CHAMP_ID);
         userDTOMarkWithSelectedFields = new UserDTO(MARK, MARK_EMAIL, MARK_FAV_ROLE_ID, MARK_FAV_CHAMP_ID);
-
-        Function<UserDTO, UserDTO> shadowUserEmail = res -> {
-            res.setEmail("");
-            return res;
-        };
+        userDTOMarkWithoutMail = new UserDTO(MARK, EMPTY_MAIL, MARK_FAV_ROLE_ID, MARK_FAV_CHAMP_ID);
 
         Mockito.when(userMapper.findUserById(userEntityMark.getId()))
                 .thenReturn(userEntityMark);
@@ -64,20 +59,38 @@ public class UserServiceImplTest {
                 .thenReturn(userDTOMark);
         Mockito.when(userConverter.convertDTO(userDTOMarkWithSelectedFields))
                 .thenReturn(userEntityMarkWithSelectedFields);
-        Mockito.when(userConverter.convertEntity(userEntityMarkWithSelectedFields, Collections.singletonList(shadowUserEmail)))
+        Mockito.when(userConverter.convertEntity(userEntityMarkWithSelectedFields))
                 .thenReturn(userDTOMarkWithSelectedFields);
-
     }
 
     @Test
     public void whenFindByUsername_thenReturnUncompletedUserDTO() {
+        //given
+        Function<UserDTO, UserDTO> shadowUserEmail = res -> {
+            res.setEmail(EMPTY_MAIL);
+            return res;
+        };
         //when
+        UserDTO actual = userConverter.convertEntity(userMapper.findUserByUsername(userEntityMark.getUsername()));
+        //then
 
-        UserDTO actual = userService.findByUsername(userEntityMark.getUsername()).get();
-//
-//        //then
-        assertThat(actual)
-                .isEqualTo(userDTOMarkWithSelectedFields);
+        assertThat(shadowUserEmail.apply(actual))
+                .isEqualTo(userDTOMarkWithoutMail);
+    }
+
+    @TestConfiguration
+    static class UserServiceImplTestContextConfiguration {
+
+        @MockBean
+        private UserMapper userMapper;
+
+        @MockBean
+        private UserConverter userConverter;
+
+        @Bean
+        public UserService userService() {
+            return new UserServiceImpl(userMapper, userConverter);
+        }
     }
 
     @Test
@@ -113,20 +126,4 @@ public class UserServiceImplTest {
         //then
         Mockito.verify(userMapper, Mockito.times(1)).deleteById(ID_1);
     }
-
-    @TestConfiguration
-    static class UserServiceImplTestContextConfiguration {
-
-        @MockBean
-        private UserMapper userMapper;
-
-        @MockBean
-        private UserConverter userConverter;
-
-        @Bean
-        public UserService userService() {
-            return new UserServiceImpl(userMapper, userConverter);
-        }
-    }
-
 }

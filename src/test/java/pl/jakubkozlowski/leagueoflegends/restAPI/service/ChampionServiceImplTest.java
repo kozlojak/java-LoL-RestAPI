@@ -28,6 +28,23 @@ public class ChampionServiceImplTest {
     @Autowired
     private ChampionService championService;
 
+    @TestConfiguration
+    static class ChampionServiceImplTestContextConfiguration {
+
+        @MockBean
+        private ChampionMapper championMapper;
+
+        @MockBean
+        private ChampionConverter championConverter;
+
+        @Bean
+        public ChampionService championService() {
+            return new ChampionServiceImpl(championMapper, championConverter);
+        }
+
+    }
+
+
     @Autowired
     private ChampionMapper championMapper;
 
@@ -81,22 +98,6 @@ public class ChampionServiceImplTest {
         //then
         assertThat(expectedChampionDTOPage)
                 .isEqualTo(championDTOPage);
-
-    }
-
-    @TestConfiguration
-    static class ChampionServiceImplTestContextConfiguration {
-
-        @MockBean
-        private ChampionMapper championMapper;
-
-        @MockBean
-        private ChampionConverter championConverter;
-
-        @Bean
-        public ChampionService championService() {
-            return new ChampionServiceImpl(championMapper, championConverter);
-        }
 
     }
 

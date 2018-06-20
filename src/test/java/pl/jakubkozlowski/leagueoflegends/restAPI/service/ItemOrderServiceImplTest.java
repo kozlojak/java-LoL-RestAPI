@@ -26,23 +26,21 @@ public class ItemOrderServiceImplTest {
     @Autowired
     private ItemOrderService itemOrderService;
 
+    private ItemOrderEntity itemOrderEntitySet1;
+
     @Autowired
     private ItemOrderMapper itemOrderMapper;
 
     @Autowired
     private ItemOrderConverter itemOrderConverter;
-
-    @Test
-    public void whenFindAll_thenReturnListOfItemOrdersDTO() {
-        //when
-        List<ItemOrderDTO> actual = itemOrderService.findAll().get();
-        //then
-        assertThat(actual)
-                .isEqualTo(itemOrderDTOList);
-    }
+    private ItemOrderDTO itemOrderDTOSet1;
+    private ItemOrderEntity itemOrderEntitySet2;
+    private ItemOrderDTO itemOrderDTOSet2;
+    private List<ItemOrderEntity> itemOrderEntityList;
+    private List<ItemOrderDTO> itemOrderDTOList;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         itemOrderEntitySet1 = new ItemOrderEntity(ItemOrderTestConstants.ID_1, ItemOrderTestConstants.ITEM_1, ItemOrderTestConstants.ORDER_1);
         itemOrderDTOSet1 = new ItemOrderDTO(ItemOrderTestConstants.ID_1, ItemOrderTestConstants.ITEM_1, ItemOrderTestConstants.ORDER_1);
         itemOrderEntitySet2 = new ItemOrderEntity(ItemOrderTestConstants.ID_2, ItemOrderTestConstants.ITEM_2, ItemOrderTestConstants.ORDER_2);
@@ -64,12 +62,30 @@ public class ItemOrderServiceImplTest {
                 .thenReturn(itemOrderDTOList);
     }
 
-    private ItemOrderEntity itemOrderEntitySet1;
-    private ItemOrderDTO itemOrderDTOSet1;
-    private ItemOrderEntity itemOrderEntitySet2;
-    private ItemOrderDTO itemOrderDTOSet2;
-    private List<ItemOrderEntity> itemOrderEntityList;
-    private List<ItemOrderDTO> itemOrderDTOList;
+    @Test
+    public void whenFindAll_thenReturnListOfItemOrdersDTO() {
+        //when
+        List<ItemOrderDTO> actual = itemOrderService.findAll().get();
+        //then
+        assertThat(actual)
+                .isEqualTo(itemOrderDTOList);
+    }
+
+    @TestConfiguration
+    static class ItemOrderServiceImplTestContextConfiguration {
+
+        @MockBean
+        private ItemOrderMapper itemOrderMapper;
+
+        @MockBean
+        private ItemOrderConverter itemOrderConverter;
+
+        @Bean
+        public ItemOrderService itemOrderService() {
+            return new ItemOrderServiceImpl(itemOrderMapper, itemOrderConverter);
+        }
+
+    }
 
     @Test
     public void whenFindById_thenReturnItemOrderDTO() {
@@ -87,22 +103,6 @@ public class ItemOrderServiceImplTest {
         //then
         assertThat(actual)
                 .isEqualTo(itemOrderDTOSet1);
-    }
-
-    @TestConfiguration
-    static class ItemOrderServiceImplTestContextConfiguration {
-
-        @MockBean
-        private ItemOrderMapper itemOrderMapper;
-
-        @MockBean
-        private ItemOrderConverter itemOrderConverter;
-
-        @Bean
-        public ItemOrderService itemOrderService() {
-            return new ItemOrderServiceImpl(itemOrderMapper, itemOrderConverter);
-        }
-
     }
 
     @Test

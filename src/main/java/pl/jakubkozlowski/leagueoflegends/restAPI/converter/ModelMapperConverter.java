@@ -28,7 +28,6 @@ public interface ModelMapperConverter<DTO, Entity> {
         }
         return additionalConverters.stream().reduce(Function.identity(), Function::andThen).apply(dto);
     }
-
     default Entity convertDTO(DTO dto) {
         return dto == null ? null : getModelMapper().map(dto, getEntityClass());
     }

@@ -27,6 +27,22 @@ public class ItemPageServiceImplTest {
     @Autowired
     private ItemPageService itemPageService;
 
+    @TestConfiguration
+    static class ItemPageServiceImplTestContextConfiguration {
+
+        @MockBean
+        private ItemPageMapper itemPageMapper;
+
+        @MockBean
+        private ItemPageConverter itemPageConverter;
+
+        @Bean
+        public ItemPageService itemPageService() {
+            return new ItemPageServiceImpl(itemPageMapper, itemPageConverter);
+        }
+
+    }
+
     @Autowired
     private ItemPageMapper itemPageMapper;
 
@@ -99,22 +115,6 @@ public class ItemPageServiceImplTest {
         //then
         assertThat(actual)
                 .isEqualTo(itemPageDTOAttack);
-    }
-
-    @TestConfiguration
-    static class ItemPageServiceImplTestContextConfiguration {
-
-        @MockBean
-        private ItemPageMapper itemPageMapper;
-
-        @MockBean
-        private ItemPageConverter itemPageConverter;
-
-        @Bean
-        public ItemPageService itemPageService() {
-            return new ItemPageServiceImpl(itemPageMapper, itemPageConverter);
-        }
-
     }
 
     @Test

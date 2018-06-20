@@ -12,4 +12,5 @@ public class UserTestConstants {
     public static final String KATE = "girlsPowaaa", KATE_EMAIL = "girl_on_fire@yaho.com", KATE_PASSWORD = "nowomannocry420";
     public static final Integer KATE_FAV_ROLE_ID = 5;
     public static final Long KATE_FAV_CHAMP_ID = 110L;
+    public static final String EMPTY_MAIL = "";
 }
